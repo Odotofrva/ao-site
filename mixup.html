@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALMIGHTY ODOT!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet"> <!-- Orbitron Font -->
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000000; /* Updated background color */
+
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+ 
+
+        }
+        .menu {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            z-index: 1;
+        }
+        .menu-button {
+            background: transparent;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 253, 253, 0.836);
+            position: relative;
+            
+        }
+        .menu-options {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: rgba(255, 255, 255, 0);
+            border-radius: 8px;
+           
+            box-shadow: 0 4px 10px rgba(255, 253, 253, 0.836);
+
+      
+        }
+        .menu-options button {
+            background: transparent;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .menu-options button:hover {
+            background: #61616134;
+        }
+        .icon {
+            margin-right: 10px;
+        }
+        .image-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .car-button {
+            position: fixed;
+            top: 20px; /* Adjust as needed */
+            left: 20px; /* Adjust as needed */
+            background: transparent; /* Background color for the car button */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;opprotunites,
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1; /* Ensure it's above other elements */
+        }
+
+        .footer {
+            background-color: transparent; /* Footer background color */
+            color: white; /* Footer text color */
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="image-placeholder">
+        <img src="logo.png" alt="" width="300" height="300">
+    </div>
+
+
+    <div class="menu">
+        <button class="menu-button" onclick="toggleMenu()">☰</button>
+        <div class="menu-options" id="menuOptions">
+            <a href="index.html">
+                <button>
+                    <span class="icon"><i class="fas fa-tv"></i></span> HOME
+                </button>
+            </a>
+            <a href="https://almightyodot.bigcartel.com">
+                <button>
+                    <span class="icon"><i class="fas fa-envelope"></i></span> STORE
+                </button>
+            </a>
+            <a href="#">
+                <button>
+                    <span class="icon"><i class="fas fa-envelope"></i></span> EXTRAS
+                </button>
+            </a>
+        </div>
+    </div>
+
+
+
+    <!-- Media Player -->
+<!--
+    <div class="audio-player">
+        <audio controls>
+            <source src="your-audio-file.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Particle system setup
+        const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.03, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            const geometry = new THREE.BufferGeometry();
+            const count = 10000; // Number of particles
+            const positions = new Float32Array(count * 3); // x, y, z for each particle
+
+            for (let i = 0; i < count; i++) {
+                positions[i * 3] = (Math.random() - 0.5) * 20; // X position
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 20; // Y position
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 20; // Z position
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.02 });
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            camera.position.z = 5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.000;
+                particles.rotation.y += 0.003;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Interactive particle movement
+        function onMouseMove(event) {
+            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            camera.position.x = mouseX * 5; // Adjust the multiplier for sensitivity
+            camera.position.y = mouseY * 5; // Adjust the multiplier for sensitivity
+            camera.lookAt(scene.position);
+        }
+
+        function onTouchMove(event) {
+            const touchX = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+            const touchY = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+            camera.position.x = touchX * 5; // Adjust the multiplier for sensitivity
+            camera.position.y = touchY * 5; // Adjust the multiplier for sensitivity
+            camera.lookAt(scene.position);
+        }
+
+
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('touchmove', onTouchMove);
+
+        // Menu Functions
+        function toggleMenu() {
+            const menuOptions = document.getElementById('menuOptions');
+            menuOptions.style.display = menuOptions.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function launch(option) {
+            alert('Launching ' + option);
+            // Here you can add the logic to redirect to the respective pages
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+    </script>
+
+</body>
+</html>
