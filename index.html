@@ -3,74 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Home - Almighty ODOT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <title>Home: Almighty ODOT!</title>
     <style>
         body {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
+            background-color: black;
+            color: white;
+            font-family: 'Raleway', sans-serif;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            background-color: black;
-            color: white; 
-            font-family: "Raleway", sans-serif;
-            font-optical-sizing: auto;
-            font-weight: 400;
-            font-style: normal; 
         }
-        .main-logo {
-            margin-bottom: 20px;
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
         }
     </style>
 </head>
 <body>
-
-
-    <!-- Navigation Bar -->
+<div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <br>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="projmain.html" target="_blank">Projects</a>
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://substack.com/@almightyodot" target="_blank">Blog</a>
+                <a class="nav-link" href="about.html">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://www.instagram.com/almightyodot" target="_blank">Social</a>
+                <a class="nav-link" href="projmain.html">Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="mixup.html" target="_blank">Merch</a>
+                <a class="nav-link" href="mixup.html">Merch</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                      Extras
-                    </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="robotechi.html">RoboTechi</a>
-                      <a class="dropdown-item" href="https://www.instagram.com/menoclone" target="_blank">MENOCLONE</a>
-                      <!--<a class="dropdown-item" href="https://www.youtube.com/@AsphaltDialogue" target="_blank">Analog Dialogue</a> -->
-                    </div>
-                  </li>
+                <li class="nav-item">
+                </li>
             </ul>
+            </div>
         </div>
     </nav>
+</div>
 
-    <!-- Main Section -->
-    <div class="main-section">
-        <img src="logo.png" alt="Main Logo" class="main-logo animate__animated animate__rubberBand" style="width: 200px; height: auto;">
-        
+    <div class="main-content">
+        <img src="logo.png" alt="Logo" class="img-fluid animate__animated animate__rubberBand" width="300px" height="auto">
     </div>
-    <a href="about.html" class="btn-outline-primary">About</a>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <footer>
+        <p>&copy; 2025 Almighty Odot | All Rights Reserved</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
