@@ -6,9 +6,10 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <title>RoboTechi</title>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>  
+<title>RoboTechi</title>
     <style>
         body {
             display: flex;
@@ -19,7 +20,7 @@
             text-align: center;
             background-color: #2A3439;
             color: white; 
-            font-family: "Raleway", sans-serif;
+            font-family: "Orbitron", sans-serif;
             font-optical-sizing: auto;
             font-weight: 400;
             font-style: normal; 
@@ -32,11 +33,14 @@
     </style>
 </head>
 <body>
+    
     <div class="main-section">
-        <img src="rtlogo.png" alt="Main Logo" class="animate__animated animate__heartBeat" style="width: 300px; height: auto; ">
+        <model-viewer src="arduino_uno.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="1" camera-orbit="353.1deg 65.4deg 22.62m" field-of-view="19.42deg" auto-rotate>
+        </model-viewer>
     </div>
-
-    <a href="index.html" class="btn-outline-primary">Back</a>
+    <br>
+    <br>
+    <a href="index.html" class="btn-outline-secondary">UNDER CONSTRUCTION</a>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
