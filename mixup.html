@@ -1,222 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALMIGHTY ODOT!</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet"> <!-- Orbitron Font -->
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #000000; /* Updated background color */
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MENOCLONE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #000000;           /* black background */
+      --panel: #111111;        /* slightly lighter black */
+      --text: #ffffff;         /* white text */
+      --muted: #F8F1DC;        /* soft accent */
+      --accent: #F8F1DC;       /* main highlight */
+    }
 
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
- 
+    *{ box-sizing: border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0; background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      line-height: 1.45;
+      display:flex; flex-direction:column;
+    }
 
-        }
-        .menu {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            z-index: 1;
-        }
-        .menu-button {
-            background: transparent;
-            color: rgb(255, 255, 255);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 253, 253, 0.836);
-            position: relative;
-            
-        }
-        .menu-options {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            bottom: 70px;
-            right: 0;
-            background: rgba(255, 255, 255, 0);
-            border-radius: 8px;
-           
-            box-shadow: 0 4px 10px rgba(255, 253, 253, 0.836);
+    .container{ width: 100%; max-width: 1200px; margin-inline:auto; padding: clamp(16px, 3vw, 28px); }
+    .headline{ font-family:'Orbitron', sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+    .btn{ cursor:pointer; border:none; font: inherit; color: var(--bg); background: var(--accent); padding: 12px 18px; border-radius: 999px; box-shadow: 0 0 12px var(--accent); transition: transform .15s ease; }
+    .btn:hover{ transform: translateY(-1px); }
 
-      
-        }
-        .menu-options button {
-            background: transparent;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-        .menu-options button:hover {
-            background: #61616134;
-        }
-        .icon {
-            margin-right: 10px;
-        }
-        .image-placeholder {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .car-button {
-            position: fixed;
-            top: 20px; /* Adjust as needed */
-            left: 20px; /* Adjust as needed */
-            background: transparent; /* Background color for the car button */
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;opprotunites,
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1; /* Ensure it's above other elements */
-        }
+    .neon-frame{
+      position: relative; border-radius: 18px; padding: 1px;
+      background: var(--accent);
+      box-shadow: 0 0 20px rgba(248,241,220,.3);
+      overflow: hidden;
+    }
 
-        .footer {
-            background-color: transparent; /* Footer background color */
-            color: white; /* Footer text color */
-            text-align: center;
-            padding: 10px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    header{ position: sticky; top:0; z-index: 50; background: rgba(0,0,0,.85); backdrop-filter: blur(6px); border-bottom: 1px solid var(--accent); }
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .brand{ display:flex; align-items:center; gap:12px; }
+    .logo{
+      width: 120px; height:auto;
+    }
+    .title{ font-size: clamp(18px, 5vw, 28px); color: var(--accent); }
+
+    .hero{ padding-top: min(6vh, 28px); }
+    .grid{ display:grid; gap: clamp(16px, 2.5vw, 28px); grid-template-columns: 1fr; }
+    @media (min-width: 900px){ .grid{ grid-template-columns: 1.2fr .8fr; align-items: center; } }
+
+    .card{ background: #111; border-radius: 16px; padding: clamp(14px, 2vw, 22px); border: 1px solid var(--accent); }
+
+    .video-wrap{ position: relative; border-radius: 14px; overflow: hidden; background: #000; }
+    .video-wrap::before{ content:""; display:block; padding-top: 56.25%; }
+    .video-content{ position:absolute; inset:0; display:grid; place-items:center; }
+
+    .video{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .placeholder{
+      width:100%; height:100%; display:grid; place-items:center; text-align:center; padding: 12px;
+      background: #111;
+      color: var(--accent);
+      border: 2px dashed var(--accent);
+    }
+    .placeholder .play{
+      width: clamp(58px, 14vw, 90px); aspect-ratio: 1; border-radius: 999px; background: rgba(255,255,255,.06);
+      display:grid; place-items:center; box-shadow: 0 0 0 3px var(--accent), 0 0 20px var(--accent) inset;
+    }
+    .placeholder svg{ width: 44%; fill: var(--accent); }
+
+    footer{ margin-top:auto; padding-bottom: 28px; }
+    .footer-line{ height:1px; background: var(--accent); margin: 20px 0; }
+    .tiny{ color: var(--muted); opacity:.9; font-size:.95rem; }
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+  </style>
 </head>
 <body>
-
-    <canvas id="particleCanvas"></canvas>
-
-    <div class="image-placeholder">
-        <img src="mnclogo.png" alt="" width="300" height="300">
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="mnclogo.png" alt="MENOCLONE Logo" class="logo" />
+      </div>
+      <button class="btn" onclick="document.getElementById('video')?.scrollIntoView({behavior:'smooth'})">Access Pass</button>
     </div>
+  </header>
 
-
-    <div class="menu">
-        <button class="menu-button" onclick="toggleMenu()">☰</button>
-        <div class="menu-options" id="menuOptions">
-            <a href="index.html">
-                <button>
-                    <span class="icon"><i class="fas fa-house"></i></span> COMING SOON
-            </a>
-            <a href="https://almightyodot.bigcartel.com">
-            </a>
+  <main class="container hero">
+    <div class="grid">
+      <section class="neon-frame" id="video" aria-label="Feature video">
+        <div class="card">
+          <div class="video-wrap">
+            <div class="video-content">
+              <div class="placeholder" role="img" aria-label="Video placeholder">
+                <div class="play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                </div>
+                <p class="headline" style="margin-top:.9rem;">The Awakening</p>
+                <p style="margin:.25rem 0 0">A glimpse into the MENOCLONE world. Video coming soon.</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <section class="card" aria-label="Intro copy">
+        <h1 class="headline" style="font-size: clamp(22px, 6vw, 36px); margin:.2rem 0 .3rem">Welcome to MENOCLONE</h1>
+        <p style="margin:0 0 1rem; color:var(--muted)">MENOCLONE is a lifestyle for those who embrace originality and creativity. Our vision blends technology, art, and identity into a movement that inspires you to be unapologetically unique.</p>
+        <ul style="margin:0 0 1.25rem 1.1rem; color:var(--muted)">
+          <li>Designed with minimal, mobile-first principles</li>
+          <li>Experience-driven visuals for modern creatives</li>
+          <li>Join the awakening — Originality Has Origins</li>
+        </ul>
+        <div style="display:flex; gap:10px; flex-wrap: wrap;">
+          <a class="btn" href="#" onclick="alert('Stay tuned for MENOCLONE updates!'); return false;">Join the Movement</a>
+          <a class="btn" href="#video">Watch Trailer</a>
+        </div>
+      </section>
     </div>
+  </main>
 
+  <footer class="container" aria-label="Footer">
+    <div class="footer-line"></div>
+    <p class="tiny">© <span id="year"></span> MENOCLONE Co.</p>
+  </footer>
 
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        // Particle system setup
-        const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.03, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-
-            const geometry = new THREE.BufferGeometry();
-            const count = 10000; // Number of particles
-            const positions = new Float32Array(count * 3); // x, y, z for each particle
-
-            for (let i = 0; i < count; i++) {
-                positions[i * 3] = (Math.random() - 0.5) * 20; // X position
-                positions[i * 3 + 1] = (Math.random() - 0.5) * 20; // Y position
-                positions[i * 3 + 2] = (Math.random() - 0.5) * 20; // Z position
-            }
-
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-            const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.02 });
-            const particles = new THREE.Points(geometry, material);
-            scene.add(particles);
-
-            camera.position.z = 5;
-
-            function animate() {
-                requestAnimationFrame(animate);
-                particles.rotation.x += 0.000;
-                particles.rotation.y += 0.003;
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // Interactive particle movement
-        function onMouseMove(event) {
-            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-            camera.position.x = mouseX * 5; // Adjust the multiplier for sensitivity
-            camera.position.y = mouseY * 5; // Adjust the multiplier for sensitivity
-            camera.lookAt(scene.position);
-        }
-
-        function onTouchMove(event) {
-            const touchX = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
-            const touchY = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
-            camera.position.x = touchX * 5; // Adjust the multiplier for sensitivity
-            camera.position.y = touchY * 5; // Adjust the multiplier for sensitivity
-            camera.lookAt(scene.position);
-        }
-
-
-
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('touchmove', onTouchMove);
-
-        // Menu Functions
-        function toggleMenu() {
-            const menuOptions = document.getElementById('menuOptions');
-            menuOptions.style.display = menuOptions.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function launch(option) {
-            alert('Launching ' + option);
-            // Here you can add the logic to redirect to the respective pages
-        }
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-    </script>
-
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
+
