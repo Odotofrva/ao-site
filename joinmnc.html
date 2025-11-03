@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MENOCLONE Landing Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #000000;           /* black background */
+      --panel: #111111;        /* slightly lighter black */
+      --text: #ffffff;         /* white text */
+      --muted: #F8F1DC;        /* soft accent */
+      --accent: #F8F1DC;       /* main highlight */
+      --error: #ff5151;
+      --ok: #7CFF9E;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0; background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      line-height: 1.45;
+      display:flex; flex-direction:column;
+    }
+
+    .container{ width: 100%; max-width: 1100px; margin-inline:auto; padding: clamp(16px, 3vw, 28px); }
+    .headline{ font-family:'Orbitron', sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+    .btn{ cursor:pointer; border:none; font: inherit; color: var(--bg); background: var(--accent); padding: 12px 18px; border-radius: 999px; box-shadow: 0 0 12px var(--accent); transition: transform .15s ease; }
+    .btn:hover{ transform: translateY(-1px); }
+
+    .neon-frame{
+      position: relative; border-radius: 18px; padding: 1px;
+      background: var(--accent);
+      box-shadow: 0 0 20px rgba(248,241,220,.3);
+      overflow: hidden;
+    }
+
+    header{ position: sticky; top:0; z-index: 50; background: rgba(0,0,0,.85); backdrop-filter: blur(6px); border-bottom: 1px solid var(--accent); }
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .brand{ display:flex; align-items:center; gap:12px; }
+    .logo{ width: 120px; height:auto; }
+    .title{ font-size: clamp(18px, 5vw, 28px); color: var(--accent); }
+
+    .hero{ padding-top: min(6vh, 28px); }
+    .grid{ display:grid; gap: clamp(16px, 2.5vw, 28px); grid-template-columns: 1fr; }
+    @media (min-width: 900px){ .grid{ grid-template-columns: 1.2fr .8fr; align-items: center; } }
+
+    .card{ background: #111; border-radius: 16px; padding: clamp(14px, 2vw, 22px); border: 1px solid var(--accent); }
+
+    .video-wrap{ position: relative; border-radius: 14px; overflow: hidden; background: #000; }
+    .video-wrap::before{ content:""; display:block; padding-top: 56.25%; }
+    .video-content{ position:absolute; inset:0; display:grid; place-items:center; }
+
+    .video{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    .placeholder{
+      width:100%; height:100%; display:grid; place-items:center; text-align:center; padding: 12px;
+      background: #111; color: var(--accent); border: 2px dashed var(--accent);
+    }
+    .placeholder .play{
+      width: clamp(58px, 14vw, 90px); aspect-ratio: 1; border-radius: 999px; background: rgba(255,255,255,.06);
+      display:grid; place-items:center; box-shadow: 0 0 0 3px var(--accent), 0 0 20px var(--accent) inset;
+    }
+    .placeholder svg{ width: 44%; fill: var(--accent); }
+
+    footer{ margin-top:auto; padding-bottom: 28px; }
+    .footer-line{ height:1px; background: var(--accent); margin: 20px 0; }
+    .tiny{ color: var(--muted); opacity:.9; font-size:.95rem; }
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    /* --- Join The Movement form --- */
+    #join{ scroll-margin-top: 90px; }
+    .form{ display:grid; gap: 14px; }
+    .label{ font-family:'Orbitron', sans-serif; letter-spacing:.05em; color: var(--muted); font-size: .95rem; }
+    .input, .captcha-input{ width:100%; padding: 14px 14px; border-radius: 12px; background: #0a0a0a; color: var(--text); border: 1px solid rgba(248,241,220,.55); outline: none; }
+    .input:focus, .captcha-input:focus{ border-color: var(--accent); box-shadow: 0 0 0 3px rgba(248,241,220,.18); }
+    .row{ display:grid; gap: 12px; grid-template-columns: 1fr; }
+    @media (min-width:700px){ .row{ grid-template-columns: 1fr 1fr; } }
+
+    .captcha{ display:grid; gap: 8px; align-items:center; }
+    .captcha-box{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; border:1px dashed var(--accent); border-radius:12px; background:#0b0b0b; }
+    .captcha-q{ font-family:'Orbitron', sans-serif; color: var(--accent); }
+    .msg{ margin-top:6px; font-size:.95rem; }
+    .msg.ok{ color: var(--ok); }
+    .msg.err{ color: var(--error); }
+
+    .hidden{ display:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="mnclogo.png" alt="MENOCLONE Logo" class="logo" />
+      </div>
+      <a class="btn" href="#join">Access Pass</a>
+    </div>
+  </header>
+
+  <main class="container hero">
+    <div class="grid">
+      <section class="neon-frame" id="video" aria-label="Feature video">
+        <div class="card">
+          <div class="video-wrap">
+            <div class="video-content">
+              <div class="placeholder" role="img" aria-label="Video placeholder">
+                <div class="play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+                </div>
+                <p class="headline" style="margin-top:.9rem;">The Awakening</p>
+                <p style="margin:.25rem 0 0">A glimpse into the MENOCLONE world. Video coming soon.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-label="Intro copy">
+        <h1 class="headline" style="font-size: clamp(22px, 6vw, 36px); margin:.2rem 0 .3rem">Welcome to MENOCLONE</h1>
+        <p style="margin:0 0 1rem; color:var(--muted)">MENOCLONE is a lifestyle for those who embrace originality and creativity. Our vision blends technology, art, and identity into a movement that inspires you to be unapologetically unique.</p>
+        <ul style="margin:0 0 1.25rem 1.1rem; color:var(--muted)">
+          <li>Designed with minimal, mobile-first principles</li>
+          <li>Experience-driven visuals for modern creatives</li>
+          <li>Join the awakening — Originality Has Origins</li>
+        </ul>
+        <div style="display:flex; gap:10px; flex-wrap: wrap;">
+          <a class="btn" href="#join">Join the Movement</a>
+          <a class="btn" href="#video">Watch Trailer</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- Join The Movement: signup form -->
+    <section id="join" class="neon-frame" aria-label="Join the Movement form" style="margin-top: clamp(20px, 6vw, 40px);">
+      <div class="card">
+        <h2 class="headline" style="margin:0 0 .5rem; font-size: clamp(18px, 5vw, 28px);">Join the Movement</h2>
+        <p class="tiny" style="margin:0 0 1rem;">Sign up to get early access to drops, events, and <em>The Awakening</em> trailer.</p>
+
+        <form id="joinForm" class="form" novalidate>
+          <div class="row">
+            <div>
+              <label class="label" for="name">Name</label>
+              <input class="input" id="name" name="name" type="text" placeholder="Your name" required />
+            </div>
+            <div>
+              <label class="label" for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+          <div>
+            <label class="label" for="instagram">Instagram</label>
+            <input class="input" id="instagram" name="instagram" type="text" placeholder="@yourhandle" pattern="^@?[A-Za-z0-9._]{1,30}$" />
+          </div>
+
+          <!-- Simple CAPTCHA placeholder -->
+          <div class="captcha">
+            <span class="label">Human Check</span>
+            <div class="captcha-box">
+              <span class="captcha-q" id="captchaQ" aria-live="polite"></span>
+              <input class="captcha-input" id="captchaA" name="captcha" type="text" placeholder="Answer" inputmode="numeric" required style="max-width:160px;" />
+            </div>
+            <span id="captchaMsg" class="msg hidden"></span>
+          </div>
+
+          <button class="btn" type="submit" style="width:fit-content;">Request Access</button>
+          <span id="formMsg" class="msg hidden" aria-live="polite"></span>
+        </form>
+
+        <!-- Email placeholder: Replace with your backend or service (Formspree, EmailJS, etc.) -->
+        <details style="margin-top:12px;">
+          <summary class="tiny">Integration notes (dev)</summary>
+          <div class="tiny">Wire this form to your email via your preferred method. Example options:
+            <ul>
+              <li>POST to <code>/api/join</code> on your server and send an email.</li>
+              <li>Use Formspree / Netlify Forms / EmailJS. (Add their script/action here.)</li>
+              <li>Fallback: a <code>mailto:</code> link (not recommended for production).</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container" aria-label="Footer">
+    <div class="footer-line"></div>
+    <p class="tiny">© <span id="year"></span> MENOCLONE Co.</p>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple math CAPTCHA
+    const cap = {
+      a: 0, b: 0,
+      gen(){ this.a = Math.floor(Math.random()*8)+1; this.b = Math.floor(Math.random()*8)+1; },
+      q(){ return `${this.a} + ${this.b} = ?`; },
+      ok(x){ return Number(x) === (this.a + this.b); }
+    };
+    const cq = document.getElementById('captchaQ');
+    const ca = document.getElementById('captchaA');
+    const cm = document.getElementById('captchaMsg');
+    function resetCaptcha(){ cap.gen(); cq.textContent = cap.q(); ca.value = ''; cm.className = 'msg hidden'; }
+    resetCaptcha();
+
+    // Form handler (placeholder submit)
+    const form = document.getElementById('joinForm');
+    const fm = document.getElementById('formMsg');
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      fm.className = 'msg hidden'; cm.className = 'msg hidden';
+
+      // Validate basic fields
+      if(!form.checkValidity()){
+        fm.textContent = 'Please complete the required fields.'; fm.className = 'msg err'; return;
+      }
+      if(!cap.ok(ca.value)){
+        cm.textContent = 'Captcha incorrect. Try again.'; cm.className = 'msg err'; resetCaptcha(); return;
+      }
+
+      const payload = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        instagram: form.instagram.value.trim()
+      };
+
+      // TODO: Replace this with your email integration
+      // Example placeholder: POST to /api/join (uncomment and implement server)
+      /*
+      const res = await fetch('/api/join', {
+        method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('Request failed');
+      */
+
+      // Placeholder success UI
+      fm.textContent = 'Thanks! Your request was recorded. (Email integration placeholder)';
+      fm.className = 'msg ok';
+      form.reset(); resetCaptcha();
+
+      // Alternative (dev): open a mailto prefill (commented; not recommended for prod)
+      // window.location.href = `mailto:you@example.com?subject=MENOCLONE Join Request&body=${encodeURIComponent(JSON.stringify(payload, null, 2))}`;
+    });
+
+    // Navigate to #join if hash present on load
+    if(location.hash === '#join'){
+      document.getElementById('join')?.scrollIntoView({behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>
