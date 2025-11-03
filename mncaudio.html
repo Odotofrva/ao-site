@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MENOCLONE AUDIO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#000;          /* black */
+      --panel:#111;       /* near-black */
+      --text:#fff;        /* white */
+      --muted:#F8F1DC;    /* accent text */
+      --accent:#F8F1DC;   /* highlight */
+      --track:#2a2a2a;    /* progress bg */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:'Rajdhani',system-ui,Segoe UI,Roboto,Arial;display:flex;flex-direction:column}
+
+    /* Utility */
+    .container{width:100%;max-width:1100px;margin-inline:auto;padding:clamp(14px,3vw,28px)}
+    .headline{font-family:'Orbitron',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+    .subtle{color:var(--muted)}
+    .btn{cursor:pointer;border:none;font:inherit;color:#000;background:var(--accent);padding:10px 16px;border-radius:999px;box-shadow:0 0 12px var(--accent);}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);border-bottom:1px solid var(--accent)}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:120px;height:auto}
+
+    /* Shell */
+    .neon-frame{position:relative;border-radius:18px;padding:1px;background:var(--accent);box-shadow:0 0 20px rgba(248,241,220,.25);overflow:hidden}
+    .card{background:var(--panel);border:1px solid var(--accent);border-radius:16px;padding:clamp(14px,2vw,22px)}
+
+    /* Layout: playlist left, player right on desktop */
+    .grid{display:grid;gap:clamp(14px,2.5vw,24px);grid-template-columns:1fr}
+    @media(min-width:980px){.grid{grid-template-columns:.9fr 1.1fr}}
+
+    /* Playlist */
+    .list{display:grid;border:1px solid var(--accent);border-radius:12px;overflow:hidden}
+    .row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 12px;background:#0a0a0a;border-bottom:1px dashed rgba(248,241,220,.35)}
+    .row:last-child{border-bottom:none}
+    .row.active{background:#0f0f0f}
+    .cover{width:42px;height:42px;border-radius:8px;object-fit:cover;border:1px solid var(--accent)}
+    .meta{display:flex;flex-direction:column;line-height:1.1}
+    .title{font-weight:700}
+    .artist{font-size:.95rem;color:var(--muted)}
+
+    /* Player */
+    .player{display:grid;gap:14px}
+    .now{display:grid;grid-template-columns:100px 1fr;gap:14px;align-items:center}
+    .art{width:100px;height:100px;object-fit:cover;border-radius:14px;border:1px solid var(--accent)}
+    .now h2{margin:0;font-size:clamp(16px,3.5vw,22px)}
+
+    .controls{display:grid;gap:10px}
+
+    .transport{display:flex;align-items:center;gap:10px;justify-content:center}
+    .icon-btn{background:#0a0a0a;border:1px solid var(--accent);color:var(--muted);padding:10px;border-radius:999px;display:grid;place-items:center;width:44px;height:44px}
+    .icon-btn.primary{background:var(--accent);color:#000;width:54px;height:54px}
+
+    .seek{display:grid;gap:6px}
+    .times{display:flex;justify-content:space-between;font-size:.95rem;color:var(--muted)}
+    input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:8px;background:var(--track);outline:none}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);border:1px solid #000}
+    input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);border:1px solid #000}
+    
+    .bottom{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between;border-top:1px dashed rgba(248,241,220,.35);padding-top:10px}
+    .vol{display:flex;align-items:center;gap:10px}
+
+    /* Visualizer (fake, cosmetic) */
+    .viz{display:flex;gap:3px;align-items:flex-end;height:38px}
+    .bar{width:5px;background:var(--accent);opacity:.85;border-radius:3px;animation:beat 1.2s linear infinite;}
+    .bar:nth-child(2){animation-delay:.1s}
+    .bar:nth-child(3){animation-delay:.2s}
+    .bar:nth-child(4){animation-delay:.3s}
+    .bar:nth-child(5){animation-delay:.4s}
+    @keyframes beat{0%,100%{height:6px}50%{height:34px}}
+
+    footer{margin-top:auto}
+    .footer-line{height:1px;background:var(--accent);margin:20px 0}
+    .tiny{color:var(--muted);opacity:.9;font-size:.95rem;text-align:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container brand">
+      <img src="mnclogo.png" alt="MENOCLONE Logo" class="logo" />
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="neon-frame" aria-label="MENOCLONE Player">
+      <div class="card">
+        <h1 class="headline" style="margin:0 0 .5rem;font-size:clamp(18px,5vw,28px)">Audio Player</h1>
+        <p class="subtle" style="margin:0 0 1rem">&copy; 2025 MENOCLONE Co.</p>
+
+        <div class="grid">
+          <!-- Playlist -->
+          <div class="list" id="playlist"></div>
+
+          <!-- Player area -->
+          <div class="player">
+            <div class="now">
+              <img id="art" class="art" src="cover1.jpg" alt="Album Art"/>
+              <div>
+                <h2 id="nowTitle">—</h2>
+                <div class="subtle" id="nowArtist">—</div>
+                <div class="viz" aria-hidden="true">
+                  <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="controls">
+              <div class="transport">
+                <button class="icon-btn" id="btnShuffle" title="Shuffle" aria-label="Shuffle">
+                  <!-- shuffle icon -->
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 3h4v4h-2V6.41l-4.29 4.3-1.42-1.42L17.59 5H17V3zM7.41 7.41 5 5H3v2h1.59l3.7 3.7-3.7 3.7H3v2h2l4-4 2.29 2.29 1.42-1.42L9 10l4.71-4.71-1.42-1.42L7.41 7.41zM19 14h2v4h-4v-2h1.59l-4.3-4.29 1.42-1.42L19 14.59V14z"/></svg>
+                </button>
+                <button class="icon-btn" id="btnPrev" title="Previous" aria-label="Previous">
+                  <!-- previous -->
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM9.5 12 20 18V6z"/></svg>
+                </button>
+                <button class="icon-btn primary" id="btnPlay" title="Play/Pause" aria-label="Play or Pause">
+                  <!-- play -->
+                  <svg id="iconPlay" width="24" height="24" viewBox="0 0 24 24" fill="#000"><path d="M8 5v14l11-7z"/></svg>
+                  <!-- pause (hidden initially) -->
+                  <svg id="iconPause" style="display:none" width="24" height="24" viewBox="0 0 24 24" fill="#000"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+                </button>
+                <button class="icon-btn" id="btnNext" title="Next" aria-label="Next">
+                  <!-- next -->
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM4 6l10.5 6L4 18z"/></svg>
+                </button>
+                <button class="icon-btn" id="btnRepeat" title="Repeat" aria-label="Repeat">
+                  <!-- repeat icon -->
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h8V5l4 3-4 3V9H7a3 3 0 0 0-3 3v1H2v-1a5 5 0 0 1 5-5zm10 10H9v2l-4-3 4-3v2h8a3 3 0 0 0 3-3v-1h2v1a5 5 0 0 1-5 5z"/></svg>
+                </button>
+              </div>
+
+              <div class="seek">
+                <input id="seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek" />
+                <div class="times"><span id="cur">0:00</span><span id="dur">0:00</span></div>
+              </div>
+
+              <div class="bottom">
+                <div class="vol">
+                  <span class="subtle" style="min-width:58px">Volume</span>
+                  <input id="vol" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Volume"/>
+                </div>
+                <button class="btn" id="btnQueue" type="button">Open Queue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden audio element -->
+        <audio id="audio" preload="metadata"></audio>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div class="footer-line"></div>
+    <p class="tiny">© <span id="year"></span> MENOCLONE. Originality Has Origins. Player prototype in black, white, and #F8F1DC.</p>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- Demo playlist (replace src with your real MP3 URLs) ---
+    const TRACKS = [
+      { title:'Neon Aisles', artist:'MENOCLONE', cover:'cover1.jpg', src:'track1.mp3', length: 212 },
+      { title:'Originality', artist:'MENOCLONE', cover:'cover2.jpg', src:'track2.mp3', length: 188 },
+      { title:'The Awakening', artist:'MENOCLONE', cover:'cover3.jpg', src:'track3.mp3', length: 234 },
+      { title:'Grid Runner', artist:'MENOCLONE', cover:'cover4.jpg', src:'track4.mp3', length: 205 }
+    ];
+
+    // DOM
+    const $ = s => document.querySelector(s);
+    const playlistEl = $('#playlist');
+    const audio = $('#audio');
+    const art = $('#art');
+    const nowTitle = $('#nowTitle');
+    const nowArtist = $('#nowArtist');
+    const seek = $('#seek');
+    const cur = $('#cur');
+    const dur = $('#dur');
+    const vol = $('#vol');
+    const btnPlay = $('#btnPlay');
+    const iconPlay = $('#iconPlay');
+    const iconPause = $('#iconPause');
+    const btnPrev = $('#btnPrev');
+    const btnNext = $('#btnNext');
+    const btnShuffle = $('#btnShuffle');
+    const btnRepeat = $('#btnRepeat');
+    const btnQueue = $('#btnQueue');
+
+    let state = {
+      index: 0,
+      shuffled: false,
+      repeat: 'off', // off | one | all
+      order: [...Array(TRACKS.length).keys()]
+    };
+
+    function fmtTime(s){
+      if(!isFinite(s)) return '0:00';
+      const m = Math.floor(s/60); const r = Math.floor(s%60).toString().padStart(2,'0');
+      return `${m}:${r}`;
+    }
+
+    function buildPlaylist(){
+      playlistEl.innerHTML = '';
+      state.order.forEach((i, rowIdx)=>{
+        const t = TRACKS[i];
+        const row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'row';
+        row.innerHTML = `
+          <img class="cover" src="${t.cover}" alt="${t.title} cover"/>
+          <div class="meta"><span class="title">${t.title}</span><span class="artist">${t.artist}</span></div>
+          <span class="artist">${fmtTime(t.length||0)}</span>
+        `;
+        row.addEventListener('click',()=> loadIndex(rowIdx,true));
+        playlistEl.appendChild(row);
+      });
+      markActive();
+    }
+
+    function markActive(){
+      [...playlistEl.children].forEach((el, idx)=>{
+        el.classList.toggle('active', idx===state.index);
+      })
+    }
+
+    function loadIndex(listIndex, autoplay=false){
+      state.index = listIndex;
+      const trackIdx = state.order[listIndex];
+      const t = TRACKS[trackIdx];
+      audio.src = t.src;
+      art.src = t.cover; nowTitle.textContent = t.title; nowArtist.textContent = t.artist;
+      if(autoplay){ audio.play(); togglePlayIcon(true); }
+      markActive();
+    }
+
+    function togglePlayIcon(playing){
+      iconPlay.style.display = playing ? 'none':'block';
+      iconPause.style.display = playing ? 'block':'none';
+    }
+
+    // Transport
+    btnPlay.addEventListener('click',()=>{
+      if(audio.paused){ audio.play(); } else { audio.pause(); }
+    });
+    audio.addEventListener('play', ()=> togglePlayIcon(true));
+    audio.addEventListener('pause', ()=> togglePlayIcon(false));
+
+    btnPrev.addEventListener('click',()=>{
+      const n = (state.index - 1 + state.order.length) % state.order.length;
+      loadIndex(n,true);
+    });
+    btnNext.addEventListener('click',()=> nextTrack(true));
+
+    function nextTrack(play){
+      if(state.repeat==='one'){ audio.currentTime=0; if(play) audio.play(); return; }
+      let n = state.index + 1;
+      if(n >= state.order.length){ n = (state.repeat==='all') ? 0 : state.index; }
+      loadIndex(n, play);
+    }
+
+    btnShuffle.addEventListener('click',()=>{
+      state.shuffled = !state.shuffled;
+      btnShuffle.style.background = state.shuffled ? 'var(--accent)' : '#0a0a0a';
+      btnShuffle.style.color = state.shuffled ? '#000' : 'var(--muted)';
+      // create a new order
+      state.order = [...Array(TRACKS.length).keys()];
+      if(state.shuffled){ state.order.sort(()=> Math.random()-0.5); }
+      buildPlaylist();
+    });
+
+    btnRepeat.addEventListener('click',()=>{
+      state.repeat = state.repeat==='off' ? 'all' : state.repeat==='all' ? 'one' : 'off';
+      // simple color hint
+      btnRepeat.style.background = state.repeat==='off' ? '#0a0a0a' : 'var(--accent)';
+      btnRepeat.style.color = state.repeat==='off' ? 'var(--muted)' : '#000';
+    });
+
+    // Seek
+    audio.addEventListener('timeupdate',()=>{
+      const p = (audio.currentTime / (audio.duration||1))*100; seek.value = p || 0; cur.textContent = fmtTime(audio.currentTime); dur.textContent = fmtTime(audio.duration);
+    });
+    seek.addEventListener('input',()=>{
+      audio.currentTime = (seek.value/100) * (audio.duration||0);
+    });
+
+    // Volume
+    vol.addEventListener('input',()=>{ audio.volume = vol.value; });
+
+    // Ended
+    audio.addEventListener('ended',()=> nextTrack(true));
+
+    // Queue button: scroll playlist into view on mobile
+    btnQueue.addEventListener('click',()=>{
+      playlistEl.scrollIntoView({behavior:'smooth'});
+    });
+
+    // Init
+    buildPlaylist();
+    loadIndex(0,false);
+    audio.volume = vol.value;
+  </script>
+</body>
+</html>
