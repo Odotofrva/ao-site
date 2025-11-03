@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MENOCLONE Member Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #000000;
+      --panel: #111111;
+      --text: #ffffff;
+      --muted: #F8F1DC;
+      --accent: #F8F1DC;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Rajdhani',sans-serif;
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(0,0,0,.85);
+      border-bottom:1px solid var(--accent);
+      backdrop-filter:blur(6px);
+    }
+
+    .container{width:100%;max-width:1100px;margin:auto;padding:clamp(16px,3vw,28px);}
+    .headline{font-family:'Orbitron',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);}
+    .btn{cursor:pointer;border:none;font:inherit;color:var(--bg);background:var(--accent);padding:12px 18px;border-radius:999px;box-shadow:0 0 12px var(--accent);transition:transform .15s ease;}
+    .btn:hover{transform:translateY(-1px);}
+    .brand{display:flex;align-items:center;gap:12px;}
+    .logo{width:120px;height:auto;}
+    .title{font-size:clamp(18px,5vw,28px);color:var(--accent);}
+
+    .neon-frame{position:relative;border-radius:18px;padding:1px;background:var(--accent);box-shadow:0 0 20px rgba(248,241,220,.3);overflow:hidden;}
+    .card{background:#111;border-radius:16px;padding:clamp(14px,2vw,22px);border:1px solid var(--accent);}
+
+    /* Dashboard */
+    #member{scroll-margin-top:90px;}
+    .dash{display:grid;gap:clamp(14px,2.5vw,24px);grid-template-columns:1fr;}
+    @media(min-width:980px){.dash{grid-template-columns:1fr 1fr;}}
+    .controls{display:grid;gap:12px;}
+    .label{font-family:'Orbitron',sans-serif;letter-spacing:.05em;color:var(--muted);font-size:.95rem;}
+    .select,.input{width:100%;padding:14px;border-radius:12px;background:#0a0a0a;color:var(--text);border:1px solid rgba(248,241,220,.55);}
+    .select:focus,.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(248,241,220,.18);}
+    .kvs{display:grid;gap:8px;}
+    .kv{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed rgba(248,241,220,.35);padding-bottom:8px;}
+    .qr{width:140px;height:140px;border-radius:10px;background:#fff;display:block;}
+    .map{width:100%;height:220px;border:0;border-radius:12px;}
+    .preview{display:grid;place-items:center;background:#0a0a0a;border-radius:14px;border:1px solid var(--accent);min-height:360px;}
+    .product-img{width:100%;max-width:420px;aspect-ratio:1;border-radius:12px;background:repeating-linear-gradient(45deg,#0f0f0f 0 12px,#121212 12px 24px);display:grid;place-items:center;color:var(--muted);font-family:'Orbitron',sans-serif;letter-spacing:.06em;}
+    .subtle{color:var(--muted);font-size:.95rem;}
+
+    footer{margin-top:auto;padding-bottom:28px;text-align:center;}
+    .footer-line{height:1px;background:var(--accent);margin:20px 0;}
+    .tiny{color:var(--muted);opacity:.9;font-size:.95rem;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container brand">
+      <img src="menoclone_logo.png" alt="MENOCLONE Logo" class="logo" />
+      <div>
+        <div class="headline title">MENOCLONE</div>
+        <div class="tiny" aria-hidden="true">Originality Has Origins</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="member" class="neon-frame" aria-label="Member Dashboard">
+      <div class="card">
+        <h2 class="headline" style="margin:0 0 .5rem;font-size:clamp(18px,5vw,28px);">Member Dashboard</h2>
+        <p class="subtle" style="margin:0 0 1rem;">Select your MENOCLONE product to view order details, QR pass, and a city map for delivery or pickup.</p>
+        <div class="dash">
+          <div class="controls">
+            <div class="label">Product</div>
+            <select id="product" class="select">
+              <option value="neo-tee">MENOCLONE X01 Tee</option>
+              <option value="grid-tee">MENOCLONE HACIM Anime Tee</option>
+              <option value="mono-tee">MENOCLONE Culture Core Crewneck</option>
+            </select>
+            <div class="label">Size</div>
+            <select id="size" class="select">
+              <option>XS</option>
+              <option>S</option>
+              <option selected>M</option>
+              <option>L</option>
+              <option>XL</option>
+            </select>
+
+            <div class="kvs" id="orderKVs">
+              <div class="kv"><span class="subtle">Date Purchased</span><span id="kvDate">—</span></div>
+              <div class="kv"><span class="subtle">T‑Shirt</span><span id="kvName">—</span></div>
+              <div class="kv"><span class="subtle">Size</span><span id="kvSize">—</span></div>
+              <div class="kv"><span class="subtle">Price</span><span id="kvPrice">—</span></div>
+            </div>
+
+            <div class="label">QR Pass</div>
+            <img id="qr" class="qr" alt="Order QR" src=""/>
+
+            <div class="label">City</div>
+            <input id="city" class="input" placeholder="e.g., New York" />
+            <iframe id="map" class="map" title="City map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <div class="preview">
+            <div id="productImg" class="product-img">PRODUCT PREVIEW</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container" aria-label="Footer">
+    <div class="footer-line"></div>
+    <p class="tiny">© <span id="year"></span> MENOCLONE. Originality Has Origins. Crafted in black, white, and #F8F1DC.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const productData = {
+      'neo-tee': { name:'MENOCLONE X01 Tee', price:38, imgText:'MENOCLONE X01 Tee' },
+      'grid-tee': { name:'MENOCLONE HACIM Anime Tee', price:42, imgText:'MENOCLONE HACIM Anime Tee' },
+      'mono-tee': { name:'MENOCLONE Culture Core Crewneck', price:36, imgText:'MENOCLONE Culture Core Crewneck' }
+    };
+
+    const $ = (s)=>document.querySelector(s);
+    const productSel = $('#product');
+    const sizeSel = $('#size');
+    const kvDate = $('#kvDate');
+    const kvName = $('#kvName');
+    const kvSize = $('#kvSize');
+    const kvPrice = $('#kvPrice');
+    const qr = $('#qr');
+    const productImg = $('#productImg');
+    const city = $('#city');
+    const map = $('#map');
+
+    function formatUSD(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);}
+
+    function setOrder(){
+      const id = productSel.value;
+      const p = productData[id];
+      const now = new Date();
+      const dateStr = now.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'2-digit'});
+      kvDate.textContent = dateStr;
+      kvName.textContent = p.name;
+      kvSize.textContent = sizeSel.value;
+      kvPrice.textContent = formatUSD(p.price);
+      productImg.textContent = `${p.imgText} — ${sizeSel.value}`;
+      const payload = encodeURIComponent(JSON.stringify({brand:'MENOCLONE',product:p.name,size:sizeSel.value,price:p.price,date:dateStr}));
+      qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${payload}`;
+    }
+
+    function setMap(){
+      const q = (city.value||'New York').trim().toLowerCase();
+      const presets={
+        'new york':{bbox:'-74.259,40.477,-73.700,40.917',marker:'40.7128,-74.0060'},
+        'los angeles':{bbox:'-118.668,33.704,-118.155,34.337',marker:'34.0522,-118.2437'},
+        'chicago':{bbox:'-87.940,41.644,-87.524,42.023',marker:'41.8781,-87.6298'},
+        'atlanta':{bbox:'-84.551,33.646,-84.289,33.886',marker:'33.7490,-84.3880'},
+        'miami':{bbox:'-80.320,25.709,-80.131,25.855',marker:'25.7617,-80.1918'}
+      };
+      const c=presets[q]||presets['new york'];
+      map.src=`https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(c.bbox)}&layer=mapnik&marker=${encodeURIComponent(c.marker)}`;
+    }
+
+    productSel.addEventListener('change',setOrder);
+    sizeSel.addEventListener('change',setOrder);
+    city.addEventListener('change',setMap);
+
+    setOrder();
+    setMap();
+  </script>
+</body>
+</html>
