@@ -4,128 +4,387 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MENOCLONE</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="description" content="A futuristic, responsive thrift store storefront with video hero, product grid, and cart." />
   <style>
     :root{
-      --bg: #000000;           /* black background */
-      --panel: #111111;        /* slightly lighter black */
-      --text: #ffffff;         /* white text */
-      --muted: #F8F1DC;        /* soft accent */
-      --accent: #F8F1DC;       /* main highlight */
+      --bg:#0b0b0c;           /* deep black */
+      --panel:#121215;        /* card bg */
+      --ink:#f1f1f1;          /* white */
+      --muted:#a6a6a6;        /* silver */
+      --silver:#c0c0c0;       /* accent */
+      --line:linear-gradient(90deg,#ffffff40,#c0c0c07a,#ffffff40);
+      --ring:0 0 0 1px #ffffff1a, 0 0 30px #c0c0c03b inset, 0 10px 40px #000;
+      --radius:18px;
+      --shadow:0 10px 40px #000, inset 0 1px 0 #ffffff0d, inset 0 -1px 0 #000;
     }
-
-    *{ box-sizing: border-box; }
-    html, body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; background: var(--bg);
-      color: var(--text);
-      font-family: 'Rajdhani', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-      line-height: 1.45;
-      display:flex; flex-direction:column;
+      margin:0; background:radial-gradient(1200px 800px at 10% -10%,#1a1a1f 0%,#0b0b0c 40%,#000 100%);
+      color:var(--ink); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      line-height:1.5;
     }
+    a{color:inherit; text-decoration:none}
+    .wrapper{max-width:1200px; margin:auto; padding:24px}
 
-    .container{ width: 100%; max-width: 1200px; margin-inline:auto; padding: clamp(16px, 3vw, 28px); }
-    .headline{ font-family:'Orbitron', sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
-    .btn{ cursor:pointer; border:none; font: inherit; color: var(--bg); background: var(--accent); padding: 12px 18px; border-radius: 999px; box-shadow: 0 0 12px var(--accent); transition: transform .15s ease; }
-    .btn:hover{ transform: translateY(-1px); }
+    /* ======= Splash Overlay ======= */
+    #splash{position:fixed; inset:0; background:#000; display:grid; place-items:center; z-index:1000; transition:opacity 800ms ease;}
+    #splash.fade{opacity:0; pointer-events:none}
+    #splash .logoMark{width:min(220px,40vw); aspect-ratio:1/1; border-radius:22px; display:grid; place-items:center; background:radial-gradient(80% 80% at 50% 35%, #222 0%, #0b0b0c 60%, #000 100%); box-shadow: 0 0 0 1px #ffffff10, 0 30px 80px #000;}
+    #splash .logoMark img{width:70%; filter:drop-shadow(0 6px 24px #000)}
+    #splash .ring{position:absolute; width:60vmin; height:60vmin; border-radius:50%; border:1px solid #ffffff18; animation:spin 8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-    .neon-frame{
-      position: relative; border-radius: 18px; padding: 1px;
-      background: var(--accent);
-      box-shadow: 0 0 20px rgba(248,241,220,.3);
-      overflow: hidden;
-    }
+    /* ======= Header ======= */
+    header{ position:sticky; top:0; z-index:50; backdrop-filter: blur(12px); background:linear-gradient(#0b0b0cCC,#0b0b0c99 30%,#0b0b0c00); border-bottom:1px solid #ffffff14; }
+    .nav{ display:flex; align-items:center; gap:16px; justify-content:space-between; }
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:38px;height:38px;border-radius:12px;background:conic-gradient(from 0deg,#fff 0,#bbb 25%,#999 50%,#ddd 75%,#fff 100%); box-shadow:var(--ring)}
+    .title{font-weight:800; letter-spacing:1px}
+    .nav-actions{display:flex; align-items:center; gap:10px}
+    .btn{ padding:10px 14px; border-radius:12px; background: #15151a; color:#f7f7f7; border:1px solid #ffffff22; box-shadow: var(--shadow); display:inline-flex; align-items:center; gap:8px; cursor:pointer; transition:transform .15s ease, border-color .15s ease, background .15s ease; }
+    .btn:hover{transform:translateY(-1px); border-color:#ffffff55}
+    .btn.ghost{background:#0e0e12; color:#d7d7d7}
+    .pill{ padding:6px 10px; border-radius:999px; background:#0e0e12; border:1px solid #ffffff14; color:#cfcfcf; font-size:12px; }
 
-    header{ position: sticky; top:0; z-index: 50; background: rgba(0,0,0,.85); backdrop-filter: blur(6px); border-bottom: 1px solid var(--accent); }
-    .nav{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-    .brand{ display:flex; align-items:center; gap:12px; }
-    .logo{
-      width: 120px; height:auto;
-    }
-    .title{ font-size: clamp(18px, 5vw, 28px); color: var(--accent); }
+    /* ======= Hero with Video ======= */
+    .hero{ position:relative; border-radius:var(--radius); overflow:hidden; margin-top:18px; isolation:isolate; box-shadow:var(--shadow); }
+    .hero video{ width:100%; height:60vh; object-fit:cover; display:block; filter:grayscale(.1) contrast(1.05) brightness(.9)}
+    .hero::after{content:""; position:absolute; inset:0; background:radial-gradient(100% 80% at 50% 20%,#00000000, #00000090 70%, #000000 100%)}
+    .hero .overlay{ position:absolute; inset:0; display:grid; place-items:end start; padding:28px; }
+    .hero h1{ font-size: clamp(28px, 4vw, 48px); margin:0 0 8px; letter-spacing:1px }
+    .hero p{ max-width: 700px; color:var(--muted); margin:0 0 16px }
 
-    .hero{ padding-top: min(6vh, 28px); }
-    .grid{ display:grid; gap: clamp(16px, 2.5vw, 28px); grid-template-columns: 1fr; }
-    @media (min-width: 900px){ .grid{ grid-template-columns: 1.2fr .8fr; align-items: center; } }
+    .badge-row{display:flex; gap:10px; flex-wrap:wrap}
+    .badge{ border:1px solid #ffffff2a; padding:8px 12px; border-radius:999px; background:#0d0d11b3; color:#dcdcdc; font-size:13px; box-shadow:var(--ring)}
 
-    .card{ background: #111; border-radius: 16px; padding: clamp(14px, 2vw, 22px); border: 1px solid var(--accent); }
+    /* ======= Toolbar ======= */
+    .toolbar{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; padding:16px; margin-top:18px; background: #0e0e12; border:1px solid #ffffff14; border-radius:var(--radius); box-shadow:var(--shadow)}
+    .search{flex:1; min-width:220px; display:flex; align-items:center; gap:8px; background:#0b0b0f; border:1px solid #ffffff18; padding:10px 12px; border-radius:12px}
+    .search input{flex:1; background:transparent; border:0; outline:0; color:var(--ink)}
+    .select{ background:#0b0b0f; border:1px solid #ffffff18; padding:10px 12px; border-radius:12px; color:#e6e6e6 }
 
-    .video-wrap{ position: relative; border-radius: 14px; overflow: hidden; background: #000; }
-    .video-wrap::before{ content:""; display:block; padding-top: 56.25%; }
-    .video-content{ position:absolute; inset:0; display:grid; place-items:center; }
+    /* ======= Product Grid ======= */
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:14px; margin-top:18px }
+    .card{ grid-column: span 12; background:linear-gradient(180deg,#121217,#0e0e12); border:1px solid #ffffff14; border-radius:16px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column }
+    @media(min-width:640px){ .card{ grid-column: span 6 } }
+    @media(min-width:980px){ .card{ grid-column: span 4 } }
+    .imgwrap{ aspect-ratio: 4/3; background: radial-gradient(600px 300px at 80% -30%, #ffffff1c, #ffffff05 40%, #0000 70%), #0a0a0d; display:grid; place-items:center; border-bottom:1px solid #ffffff10 }
+    .imgwrap svg{ width:52%; opacity:.9; filter:drop-shadow(0 8px 24px #000) }
+    .content{ padding:14px }
+    .row{ display:flex; align-items:center; justify-content:space-between; gap:10px }
+    .price{ font-weight:800; letter-spacing:.5px }
+    .meta{ color:var(--muted); font-size:13px }
+    .actions{ display:flex; gap:8px; margin-top:10px }
+    .chip{ font-size:12px; padding:6px 8px; border-radius:999px; background:#0b0b0f; border:1px solid #ffffff18; color:#cfcfcf }
 
-    .video{ width:100%; height:100%; object-fit:cover; display:block; }
+    /* Divider */
+    .divider{ height:1px; background:var(--line); border-radius:999px; margin:28px 0 }
 
-    .placeholder{
-      width:100%; height:100%; display:grid; place-items:center; text-align:center; padding: 12px;
-      background: #111;
-      color: var(--accent);
-      border: 2px dashed var(--accent);
-    }
-    .placeholder .play{
-      width: clamp(58px, 14vw, 90px); aspect-ratio: 1; border-radius: 999px; background: rgba(255,255,255,.06);
-      display:grid; place-items:center; box-shadow: 0 0 0 3px var(--accent), 0 0 20px var(--accent) inset;
-    }
-    .placeholder svg{ width: 44%; fill: var(--accent); }
+    /* ======= Cart Drawer ======= */
+    .cart-drawer{ position:fixed; inset:0 0 0 auto; width:min(420px, 100%); transform: translateX(105%); transition: transform .25s ease; z-index:60; }
+    .cart-drawer.open{ transform: translateX(0) }
+    .cart-panel{ height:100%; background:#0f0f13; border-left:1px solid #ffffff1f; box-shadow:-30px 0 60px #000c; display:flex; flex-direction:column }
+    .cart-header{ display:flex; justify-content:space-between; align-items:center; padding:16px; border-bottom:1px solid #ffffff14 }
+    .cart-items{ flex:1; overflow:auto; padding:12px }
+    .cart-item{ display:grid; grid-template-columns:56px 1fr auto; gap:10px; align-items:center; padding:10px; border:1px solid #ffffff12; border-radius:12px; background:#0c0c11; margin-bottom:10px }
+    .cart-item .thumb{ width:56px; height:56px; border-radius:10px; background:#141419; display:grid; place-items:center }
+    .cart-footer{ padding:16px; border-top:1px solid #ffffff14; display:grid; gap:10px }
+    .total-row{ display:flex; justify-content:space-between; align-items:center; font-weight:700 }
 
-    footer{ margin-top:auto; padding-bottom: 28px; }
-    .footer-line{ height:1px; background: var(--accent); margin: 20px 0; }
-    .tiny{ color: var(--muted); opacity:.9; font-size:.95rem; }
-    a{ color: var(--accent); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
+    /* ======= Footer ======= */
+    footer{ margin-top:40px; border-top:1px solid #ffffff14; padding:28px 0 48px; color:#bdbdbd }
+    .foot-grid{ display:grid; grid-template-columns:1fr; gap:16px }
+    @media(min-width:800px){ .foot-grid{ grid-template-columns: 1fr 1fr 1fr } }
+    .foot-col h4{ margin:0 0 10px; color:#e6e6e6 }
+    .small{ font-size:12px; color:#9f9f9f }
+
+    /* Micro-animations */
+    .shine{ position:relative; overflow:hidden }
+    .shine::before{ content:""; position:absolute; inset:-200% -200% auto auto; width:120%; height:120%; transform:rotate(25deg); background:linear-gradient(90deg, #ffffff00 0, #ffffff18 48%, #ffffff00 55%); animation:shine 5s infinite ease }
+
+    /* Utility */
+    .hidden{ display:none }
   </style>
 </head>
 <body>
+  <!-- Splash Screen (MENOCLONE) -->
+  <div id="splash" aria-label="MENOCLONE Splash">
+    <div class="logoMark">
+      <!-- Replace with your real MENOCLONE logo path -->
+      <img src="mnclogo.png" alt="MENOCLONE Logo" />
+    </div>
+  </div>
+
+  <!-- Header/Nav -->
   <header>
-    <div class="container nav">
+    <div class="wrapper nav">
       <div class="brand">
-        <img src="mnclogo.png" alt="MENOCLONE Logo" class="logo" />
+        <div class="logo shine" aria-hidden="true"></div>
+        <div>
+          <div class="title">MENOCLONE</div>
+          <div class="pill">Originiality Has Origins!</div>
+        </div>
       </div>
-      <button class="btn" href="dashboard.html" >DASHBOARD</button>
+      <div class="nav-actions">
+        <button class="btn ghost" id="openCart" aria-label="Open cart">🛒 Cart <span id="cartCount" class="pill">0</span></button>
+        <a href="#catalog" class="btn">Shop Now</a>
+      </div>
     </div>
   </header>
 
-  <main class="container hero">
-    <div class="grid">
-      <section class="neon-frame" id="video" aria-label="Feature video">
-        <div class="card">
-          <div class="video-wrap">
-            <div class="video-content">
-              <div class="placeholder" role="img" aria-label="Video placeholder">
-                <div class="play" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
-                </div>
-                <p class="headline" style="margin-top:.9rem;">X01 Trailer</p>
-                <p style="margin:.25rem 0 0">A glimpse into the MENOCLONE world. Video coming soon.</p>
-              </div>
-            </div>
+  <!-- Hero with background video -->
+  <section class="wrapper">
+    <div class="hero">
+      <!-- Replace src with your hosted fashion video (muted + playsinline are required for autoplay on mobile) -->
+      <video src="https://cdn.coverr.co/videos/coverr-a-slow-motion-shot-of-a-woman-walking-in-a-city-street-7457/1080p.mp4" autoplay muted loop playsinline></video>
+      <div class="overlay">
+        <div>
+          <h1>Originality Has Origins</h1>
+          <p>Thrift smarter with authenticated finds and a sleek, sci‑fi storefront. Minimal palette, maximum drip — black, white & sterling silver.</p>
+          <div class="badge-row">
+            <span class="badge">♻️ Sustainable</span>
+            <span class="badge">✨ Quality</span>
+            <span class="badge">🚀 Tech-Merch</span>
           </div>
         </div>
-      </section>
-
-      <section class="card" aria-label="Intro copy">
-        <h1 class="headline" style="font-size: clamp(22px, 6vw, 36px); margin:.2rem 0 .3rem">Welcome to MENOCLONE</h1>
-        <p style="margin:0 0 1rem; color:var(--muted)">MENOCLONE is a lifestyle for those who embrace originality and creativity. Our vision blends technology, art, and identity into a movement that inspires you to be unapologetically unique.</p>
-        <ul style="margin:0 0 1.25rem 1.1rem; color:var(--muted)">
-        </ul>
-        <div style="display:flex; gap:10px; flex-wrap: wrap;">
-          <a class="btn" href="joinmnc.html">Join the Movement</a>
-          <a class="btn" href="mncaudio.html">MNC Player</a>
-        </div>
-      </section>
+      </div>
     </div>
-  </main>
+  </section>
 
-  <footer class="container" aria-label="Footer">
-    <div class="footer-line"></div>
-    <p class="tiny">© <span id="year"></span> MENOCLONE Co.</p>
+  <!-- Toolbar -->
+  <section class="wrapper toolbar" id="catalog">
+    <div class="search">
+      <span>🔎</span>
+      <input id="searchInput" type="search" placeholder="Search jackets, denim, tees…" />
+    </div>
+    <select class="select" id="categoryFilter">
+      <option value="all">All Categories</option>
+      <option value="jackets">Jackets</option>
+      <option value="denim">Denim</option>
+      <option value="tees">Tees</option>
+      <option value="sneakers">Sneakers</option>
+      <option value="accessories">Accessories</option>
+    </select>
+    <select class="select" id="sortSelect">
+      <option value="featured">Sort: Featured</option>
+      <option value="price-asc">Price: Low → High</option>
+      <option value="price-desc">Price: High → Low</option>
+      <option value="alpha">Alphabetical</option>
+    </select>
+  </section>
+
+  <!-- Product Grid -->
+  <section class="wrapper">
+    <div class="grid" id="productGrid"></div>
+    <div class="divider"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="wrapper">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>About MENOCLONE</h4>
+        <p>Designed for those who embrace individuality and innovation, MENOCLONE represents a fusion of art, technology, and lifestyle. Each piece carries a symbolic message: “ORIGINALITY HAS ORIGINS”.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <p class="small">Questions? Email <a href="#">support@menoclone.xyz</a>. Returns accepted within 14 days. Authenticity guaranteed.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Newsletter</h4>
+        <p class="small">Join drops & early access.</p>
+        <form onsubmit="event.preventDefault(); alert('Subscribed!');">
+          <div class="search" style="margin-top:8px">
+            <input type="email" placeholder="you@example.com" required />
+            <button class="btn" type="submit">Join</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <p class="small" style="margin-top:18px">© <span id="year"></span> MENOCLONE. Originality Has Origins.  </p>
   </footer>
 
+  <!-- Cart Drawer -->
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-panel">
+      <div class="cart-header">
+        <strong>🛒 Your Cart</strong>
+        <button class="btn ghost" id="closeCart">Close</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-footer">
+        <div class="total-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+        <button class="btn" id="checkoutBtn">Proceed to Checkout</button>
+      </div>
+    </div>
+  </aside>
+
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // ===== Splash control =====
+    const splash = document.getElementById('splash');
+    setTimeout(()=>{ splash.classList.add('fade'); setTimeout(()=> splash.remove(), 900); }, 3000);
+
+    // ===== Demo Data =====
+    const PRODUCTS = [
+      {id:'p1', name:'MNC Signature Crew', price:80, cat:'crewnecks'},
+      {id:'p2', name:'MNC X01 Crew', price:80, cat:'crewnecks'},
+      {id:'p3', name:'MNC 4Deep Tee', price:80, cat:'tees'},
+      {id:'p4', name:'Retro High‑Tops', price:80, cat:'hoodies'},
+      {id:'p5', name:'MNC Sticker Pack', price:20, cat:'accessories'},
+      {id:'p6', name:'MNC Hat Pin', price:40, cat:'accessoies'}
+    ];
+
+    // Inline SVG placeholder (monochrome garment)
+    const placeholderSVG = (label='') => `
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label}">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="50%" stop-color="#0f0f14"/>
+            <stop offset="100%" stop-color="#050508"/>
+          </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#g)"/>
+        <g fill="#cfcfcf" opacity="0.92">
+          <rect x="120" y="60" width="160" height="170" rx="22"/>
+          <rect x="100" y="80" width="40" height="80" rx="12"/>
+          <rect x="260" y="80" width="40" height="80" rx="12"/>
+          <circle cx="200" cy="135" r="22" fill="#e5e5e5"/>
+        </g>
+        <text x="200" y="270" text-anchor="middle" fill="#d0d0d0" font-size="18" font-family="ui-sans-serif, system-ui">${label}</text>
+      </svg>`;
+
+    // ===== DOM Helpers =====
+    const $ = (q,root=document)=>root.querySelector(q);
+    const $$ = (q,root=document)=>Array.from(root.querySelectorAll(q));
+
+    // ===== Render Products =====
+    const grid = $('#productGrid');
+    function renderProducts(list){
+      grid.innerHTML = '';
+      list.forEach(p=>{
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="imgwrap">${placeholderSVG(p.name)}</div>
+          <div class="content">
+            <div class="row">
+              <strong>${p.name}</strong>
+              <span class="price">$${p.price.toFixed(2)}</span>
+            </div>
+            <div class="row" style="margin-top:6px">
+              <span class="meta">${p.cat}</span>
+              <span class="chip">Authentic</span>
+            </div>
+            <div class="actions">
+              <button class="btn add" data-id="${p.id}">Add to Cart</button>
+              <button class="btn ghost view" data-id="${p.id}">Quick View</button>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+      // bind add buttons
+      $$('.add', grid).forEach(b=>b.addEventListener('click', ()=>addToCart(b.dataset.id)));
+      $$('.view', grid).forEach(b=>b.addEventListener('click', ()=>alert('Replace with a modal product viewer.')));
+    }
+
+    // ===== Filters & Search & Sort =====
+    const searchInput = $('#searchInput');
+    const categoryFilter = $('#categoryFilter');
+    const sortSelect = $('#sortSelect');
+
+    function applyFilters(){
+      const q = searchInput.value.trim().toLowerCase();
+      const cat = categoryFilter.value;
+      let list = PRODUCTS.filter(p=> (cat==='all' || p.cat===cat) && (!q || p.name.toLowerCase().includes(q)));
+      switch(sortSelect.value){
+        case 'price-asc': list = list.sort((a,b)=>a.price-b.price); break;
+        case 'price-desc': list = list.sort((a,b)=>b.price-a.price); break;
+        case 'alpha': list = list.sort((a,b)=>a.name.localeCompare(b.name)); break;
+      }
+      renderProducts(list);
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+    categoryFilter.addEventListener('change', applyFilters);
+    sortSelect.addEventListener('change', applyFilters);
+
+    // ===== Cart Logic =====
+    const openCartBtn = $('#openCart');
+    const closeCartBtn = $('#closeCart');
+    const cartDrawer = $('#cartDrawer');
+    const cartItems = $('#cartItems');
+    const cartCount = $('#cartCount');
+    const cartSubtotal = $('#cartSubtotal');
+
+    const CART = new Map(); // id -> qty
+
+    function addToCart(id){
+      CART.set(id, (CART.get(id)||0)+1);
+      updateCartUI();
+      cartDrawer.classList.add('open');
+      cartDrawer.setAttribute('aria-hidden','false');
+    }
+
+    function removeFromCart(id){
+      CART.delete(id);
+      updateCartUI();
+    }
+
+    function changeQty(id, delta){
+      const q = (CART.get(id)||0) + delta;
+      if(q<=0) CART.delete(id); else CART.set(id,q);
+      updateCartUI();
+    }
+
+    function updateCartUI(){
+      let total=0, count=0;
+      cartItems.innerHTML='';
+      CART.forEach((qty,id)=>{
+        const p = PRODUCTS.find(x=>x.id===id);
+        const line = p.price*qty; total+=line; count+=qty;
+        const item = document.createElement('div');
+        item.className='cart-item';
+        item.innerHTML = `
+          <div class='thumb'>🧥</div>
+          <div>
+            <div style='display:flex; justify-content:space-between; gap:8px;'>
+              <strong>${p.name}</strong>
+              <span>$${line.toFixed(2)}</span>
+            </div>
+            <div class='small'>${p.cat} • $${p.price.toFixed(2)} ea</div>
+            <div style='margin-top:6px; display:flex; gap:8px; align-items:center;'>
+              <button class='btn ghost' aria-label='decrease' onclick="(${changeQty})(\'${id}\',-1)">−</button>
+              <span class='pill'>${qty}</span>
+              <button class='btn' aria-label='increase' onclick="(${changeQty})(\'${id}\',1)">+</button>
+              <button class='btn ghost' style='margin-left:auto' onclick="(${removeFromCart})(\'${id}\')">Remove</button>
+            </div>
+          </div>
+        `;
+        cartItems.appendChild(item);
+      });
+      cartSubtotal.textContent = `$${total.toFixed(2)}`;
+      cartCount.textContent = count;
+    }
+
+    openCartBtn.addEventListener('click', ()=>{ cartDrawer.classList.add('open'); cartDrawer.setAttribute('aria-hidden','false'); });
+    closeCartBtn.addEventListener('click', ()=>{ cartDrawer.classList.remove('open'); cartDrawer.setAttribute('aria-hidden','true'); });
+    cartDrawer.addEventListener('click', (e)=>{ if(e.target===cartDrawer){ cartDrawer.classList.remove('open'); cartDrawer.setAttribute('aria-hidden','true'); } });
+
+    // ===== Checkout Demo =====
+    $('#checkoutBtn').addEventListener('click', ()=>{
+      const items = [];
+      CART.forEach((qty,id)=>{ const p=PRODUCTS.find(x=>x.id===id); items.push({id,qty,price:p.price,name:p.name}); });
+      alert('Checkout demo. Connect Shopify/Stripe. Items: '+JSON.stringify(items));
+    });
+
+    // ===== Init =====
+    renderProducts(PRODUCTS);
+    applyFilters();
+    $('#year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
+
 
