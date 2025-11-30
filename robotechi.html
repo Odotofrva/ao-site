@@ -1,128 +1,493 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - RoboTechi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: #202121;
-            color: white; 
-            font-family: 'Orbitron', sans-serif;
-        }
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        footer {
-            background-color: #202121;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoboTechi – Web, Electronics & IoT</title>
+
+  <style>
+    /* ---------- BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #05060f;
+      color: #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    :root {
+      --primary: #22d3ee;
+      --accent: #a855f7;
+      --glass: rgba(255, 255, 255, 0.06);
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    /* ---------- NAV / BRAND ---------- */
+    header {
+      width: 100%;
+      max-width: 1200px;
+      padding: 15px 0;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle at top, #111827, #020617);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(34, 211, 238, 0.4);
+      padding: 10px;
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-name {
+      font-size: 1.3rem;
+      text-transform: uppercase;
+    }
+
+    .brand-tagline {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      max-width: 900px;
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 40px 20px;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.08);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      line-height: 1.15;
+    }
+
+    .gradient {
+      background: linear-gradient(120deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 640px;
+      font-size: 1rem;
+      color: #9ca3af;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #000;
+      box-shadow: 0 10px 30px rgba(34, 211, 238, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    /* ---------- SECTIONS ---------- */
+    section {
+      max-width: 900px;
+      margin-top: 70px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .section-description {
+      color: #9ca3af;
+      max-width: 700px;
+      margin: 10px auto 30px auto;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 25px;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(34, 211, 238, 0.12);
+    }
+
+    /* ---------- GALLERY ---------- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 20px;
+    }
+
+    .gallery-item {
+      background: var(--glass);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+      text-align: left;
+    }
+
+    .gallery-thumb {
+      width: 100%;
+      height: 160px;
+      background: #020617;
+      overflow: hidden;
+    }
+
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-body {
+      padding: 14px 16px 18px;
+    }
+
+    .gallery-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #a5b4fc;
+      margin-bottom: 6px;
+    }
+
+    .gallery-body h3 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .gallery-body p {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      line-height: 1.5;
+    }
+
+    /* ---------- CONTACT FORM ---------- */
+    form {
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 18px;
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      text-align: left;
+    }
+
+    label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding-bottom: 20px;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <br>
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="https://medium.com/@Odotofrva">Blog</a>
-                </li>
-                <li class="nav-item active">
-                <a class="nav-link active" href="robotechi.html">RoboTechi</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="mnc.html">MNC</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="mixup.html">Store</a>
-                </li>
-                <li class="nav-item">
-                </li>
-            </ul>
-            </div>
-        </div>
-    </nav>
-</div>
-    <div class="container">
-        <div class="px-4 py-5 my-5 text-center">
-    <img class="d-block mx-auto mb-4 animate__animated animate__animated" src="rtlogo.png" alt="" width="130" height="auto">
-    <h1 class="display-5 fw-bold">ROBOTECHI</h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">ROBOTECHI is a pioneering company at the forefront of custom-built electronics tailored for the Internet of Things (IoT), cybersecurity, and the vibrant maker community. With a commitment to innovation and quality, ROBOTECHI specializes in developing bespoke electronic solutions that empower businesses and individuals to harness the full potential of technology.</p>
-      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Learn More</button>
-        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Store</button>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="rtlogoi.png" alt="RoboTechi Logo">
+      </div>
+      <div class="brand-name">ROBOTECHI</div>
+      <div class="brand-tagline">Web · Electronics · IoT</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>
+      Building <span class="gradient">futuristic</span> web, electronics,<br />
+      and IoT systems for creators and innovators.
+    </h1>
+
+    <p>
+      RoboTechi designs digital experiences, custom electronics, and intelligent IoT solutions.
+      Everything we build is centered around accessibility, creativity, and clean futuristic design.
+    </p>
+
+    <div class="hero-buttons">
+      <button class="btn btn-primary" onclick="scrollToSection('contact')">Start a Project</button>
+      <button class="btn btn-outline" onclick="scrollToSection('services')">Explore Services</button>
+      <button class="btn btn-outline" onclick="scrollToSection('gallery')">View Gallery</button>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <h2>What We Do</h2>
+    <p class="section-description">
+      We combine modern web development, hands-on electronics engineering, and IoT connectivity
+      into a single unified workflow.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>Web Development</h3>
+        <p>Modern websites, dashboards, landing pages, and full web apps with futuristic UI.</p>
+      </div>
+
+      <div class="card">
+        <h3>Electronics Design</h3>
+        <p>Custom circuit boards, RT-ONE educational hardware, prototypes, and schematics.</p>
+      </div>
+
+      <div class="card">
+        <h3>IoT Solutions</h3>
+        <p>Connected devices, sensors, data dashboards, and real-world automation.</p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <hr>
+  <!-- GALLERY -->
+  <section id="gallery">
+    <h2>Project Gallery</h2>
+    <p class="section-description">
+      A snapshot of the systems we build: sleek web platforms, custom electronics, and connected IoT experiences.
+      Replace these images with your own screenshots and photos as your portfolio grows.
+    </p>
 
-
-<!-- First Product -->
-
-    <div class="container">
-        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6">
-        <img src="obiosc1.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
-      </div>
-      <div class="col-lg-6">
-        <h1 class="display-5 fw-bold lh-1 mb-3">OBIOSCARD v1</h1>
-        <p class="lead">
-        The OBIOSCARD v1 is a custom-designed PCB that integrates a range of features for interactive displays and notifications. At its core, the card is powered by the versatile ATMEGA328 microcontroller, providing robust processing capabilities for various applications.</p>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Docs</button>
+    <div class="gallery-grid">
+      <!-- Web Project -->
+      <article class="gallery-item">
+        <div class="gallery-thumb">
+          <!-- Swap this placeholder with a real screenshot -->
+          <img src="robotechi.png" alt="RoboTechi Web Project">
         </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">Web</span>
+          <h3>Startup Landing & Dashboard</h3>
+          <p>
+            Responsive landing page and analytics dashboard for a SaaS startup, built with a futuristic UI
+            and clean user flow.
+          </p>
+        </div>
+      </article>
+
+      <!-- Electronics Project -->
+      <article class="gallery-item">
+        <div class="gallery-thumb">
+          <!-- Swap this placeholder with a photo/render of your board -->
+          <img src="rtlogo.png" alt="RoboTechi Electronics Project">
+        </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">Electronics</span>
+          <h3>RT-ONE Microcontroller Board</h3>
+          <p>
+            Custom educational microcontroller designed for students and makers, optimized for low cost and
+            hands-on learning.
+          </p>
+        </div>
+      </article>
+
+      <!-- IoT Project -->
+      <article class="gallery-item">
+        <div class="gallery-thumb">
+          <!-- Swap this placeholder with a photo of the IoT setup -->
+          <img src="rtlogo.png" alt="RoboTechi IoT Project">
+        </div>
+        <div class="gallery-body">
+          <span class="gallery-tag">IoT</span>
+          <h3>Sensor Network Dashboard</h3>
+          <p>
+            Real-time monitoring platform connecting multiple sensors to a live dashboard, delivering useful,
+            visual insights.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <h2>About RoboTechi</h2>
+
+    <!-- Logo / Image Display -->
+    <div style="
+      margin: 25px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    ">
+      <div style="
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 25px rgba(34, 211, 238, 0.25);
+      ">
+        <img 
+          src="robotechi.png" 
+          alt="RoboTechi Logo" 
+          style="width: 100%; height: 100%; object-fit: contain;"
+        >
       </div>
     </div>
 
+    <!-- Description -->
+    <p class="section-description">
+      RoboTechi is a forward-thinking technology company specializing in 
+      <strong>web development</strong>, <strong>electronics engineering</strong>, 
+      and <strong>Internet-of-Things (IoT) innovation</strong>. Built at the 
+      intersection of creativity and technical excellence, RoboTechi develops 
+      powerful digital experiences and intelligent hardware solutions designed to 
+      empower makers, students, and businesses of all sizes.
+      <br><br>
+      At our core, we believe technology should be <strong>accessible</strong>, 
+      <strong>affordable</strong>, and <strong>transformative</strong>. From 
+      building responsive, modern web platforms to designing custom 
+      microcontroller boards and connected devices, RoboTechi bridges the gap 
+      between software and hardware with seamless integration and 
+      user-centered design.
+    </p>
+  </section>
 
-    <hr>
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Start Your Project</h2>
+    <p class="section-description">
+      Tell us what you want to build, and we’ll help bring it to reality.
+    </p>
 
-<!-- Second Product -->
-        
-        <div class="container">
-        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6">
-        <img src="ardshi2.png" class="d-block mx-lg-auto img-fluid" alt="MP-4Key" width="700" height="500" loading="lazy">
-      </div>
-      <div class="col-lg-6">
-        <h1 class="display-5 fw-bold lh-1 mb-3">Micropad 4 Key v1</h1>
-        <p class="lead">
-        The (MP-4Key) Micropad Shield is an innovative accessory designed to enhance productivity for makers, programmers, and tech enthusiasts. Featuring four customizable MX keyswitches, this compact shield seamlessly integrates with Arduino Uno boards, providing a versatile solution for improving workflow and efficiency.</p>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Docs</button>
-        </div>
-      </div>
-    </div>
- <footer>
-        <p>&copy; 2025 Almighty ODOT | All Rights Reserved</p>
-    </footer>
+    <!-- Add your Google Apps Script URL in the action attribute when ready -->
+    <form>
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Your name">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+      <label>Email</label>
+      <input type="email" name="email" placeholder="you@example.com">
+
+      <label>Project Type</label>
+      <input type="text" name="projectType" placeholder="Website, IoT, RT-ONE board, etc">
+
+      <label>Message</label>
+      <textarea name="message" placeholder="Tell us about your idea..."></textarea>
+
+      <button class="btn btn-primary" style="width: 100%;">Send</button>
+    </form>
+  </section>
+
+  <footer>
+    © <span id="year"></span> RoboTechi – All Rights Reserved
+  </footer>
+
+  <script>
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
 </body>
 </html>
