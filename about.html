@@ -1,99 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Almighty ODOT</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AlmightyOdot | About</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: black;
-            color: white;
-            font-family: 'Raleway', sans-serif;
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: #0a0a0a;
+        color: #f5f5f5;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      
+      .brand-logo {
+        height: 32px;
+        width: auto;
+        display: block;
         }
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* NAVBAR */
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #333;
+      }
+
+      .nav-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0.9rem 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .brand-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #ffffff;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .nav-links a {
+        opacity: 0.75;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        opacity: 1;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 0;
+        height: 2px;
+        background: #ffffff;
+        transition: width 0.25s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* LAYOUT */
+      .page-wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2.5rem 1.2rem 3.5rem;
+        flex: 1;
+      }
+
+      .about-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+        gap: 2rem;
+        align-items: flex-start;
+        margin-top: 2rem;
+      }
+
+      /* TEXT */
+      .section-tag {
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #666666;
+        margin-bottom: 0.75rem;
+      }
+
+      .about-title {
+        font-size: 2.1rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: #ffffff;
+      }
+
+      .about-sub {
+        font-size: 1rem;
+        color: #cccccc;
+        margin-bottom: 1rem;
+      }
+
+      .about-body p {
+        font-size: 0.95rem;
+        color: #d1d1d1;
+        margin-bottom: 0.8rem;
+      }
+
+      .about-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.3rem;
+      }
+
+      .pill {
+        padding: 0.4rem 1rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        border: 1px solid #555555;
+        background: #111111;
+        color: #eeeeee;
+      }
+
+      /* PHOTOS */
+      .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+      }
+
+      .photo-card {
+        position: relative;
+        border-radius: 1.2rem;
+        overflow: hidden;
+        background: #111111;
+        border: 1px solid #444444;
+        min-height: 150px;
+      }
+
+      .photo-card.large {
+        grid-row: span 2;
+        min-height: 320px;
+      }
+
+      .photo-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .photo-label {
+        position: absolute;
+        left: 0.8rem;
+        bottom: 0.8rem;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 0.25rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        border: 1px solid #666666;
+        color: #ffffff;
+      }
+
+      /* CONTACT CTA */
+      .contact-cta {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid #333333;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .contact-cta p {
+        font-size: 0.95rem;
+        color: #d1d1d1;
+      }
+
+      .btn-primary {
+        padding: 0.6rem 1.4rem;
+        background: #ffffff;
+        color: #000000;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      /* FOOTER */
+      footer {
+        text-align: center;
+        padding: 1.4rem 0;
+        color: #aaaaaa;
+        font-size: 0.85rem;
+        border-top: 1px solid #333333;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 800px) {
+        .about-layout {
+          grid-template-columns: minmax(0, 1fr);
         }
-        footer {
-            background-color: black;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
+
+        .photo-grid {
+          order: -1;
         }
+
+        .nav-links {
+          display: none;
+        }
+      }
     </style>
-</head>
-<body>
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <br>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="https://medium.com/@Odotofrva">Tech Blog</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="robotechi.html">RoboTechi</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="nacc.html">NACC</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="http://www.zabbagrabba.xyz">ZabbaGrabba</a>
-                </li>
-            </ul> 
-            </div>
+  </head>
+
+  <body>
+    <!-- NAVIGATION -->
+    <header class="navbar">
+      <div class="nav-inner">
+        <a href="#home" class="brand">
+        <img src="logo.png" alt="AlmightyOdot Logo" class="brand-logo" />
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="https://medium.com/@Odotofrva">Blog</a>
+          <a href="robotechi.html">RoboTechi</a>
+          <a href="nacc.html">New Agendas</a>
+          <a href="http://www.zabbagrabba.xyz">ZabbaGrabba</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page-wrap" id="home">
+      <!-- ABOUT SECTION -->
+      <section id="about" class="about-layout">
+        <!-- TEXT SIDE -->
+        <div>
+          <div class="section-tag">About</div>
+          <h1 class="about-title">Who is AlmightyOdot?</h1>
+          <p class="about-sub">
+            A brief look into my love for technology, innovation, and the
+            entrepreneurial mindset that drives everything I do.
+          </p>
+
+          <div class="about-body">
+            <p>
+              Hey, I’m AlmightyOdot — a creator who’s fueled by technology,
+              innovation, and the drive to build something meaningful. I’ve
+              always been drawn to what’s possible with modern tech, from
+              digital creativity to hands-on engineering, and I bring that same
+              curiosity into everything I do.
+            </p>
+
+            <p>
+              My entrepreneurial spirit keeps me moving forward. I’m constantly
+              exploring new ideas, launching projects, and finding smarter ways
+              to transform concepts into reality. Whether I'm working on
+              tech-driven solutions, content, or full-scale brand ideas, I
+              approach every challenge with intention and ambition.
+            </p>
+
+            <p>
+              This space reflects my journey — the innovation, the evolution,
+              and the mindset behind AlmightyOdot. As I continue to grow, this
+              brand grows with me, expanding into a larger ecosystem built on
+              creativity, tech, and relentless forward momentum.
+            </p>
+          </div>
+
+          <div class="about-meta">
+            <div class="pill">Tech Innovator</div>
+            <div class="pill">Entrepreneurial Spirit</div>
+            <div class="pill">Creative Builder</div>
+          </div>
         </div>
-    </nav>
-</div>
 
-    <!-- Main Section -->
+        <!-- PHOTO SIDE -->
+        <div id="gallery">
+          <div class="photo-grid">
+            <div class="photo-card large">
+              <img src="odot1.jpg" alt="AlmightyOdot main portrait" />
+              
+            </div>
 
-    <div class="main-content">
-    <div class="container col-xxl-8 px-4 py-5">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-      <div class="col-10 col-sm-8 col-lg-6">
-        <img src="AlmightyOdot.jpg" class="d-block mx-lg-auto img-fluid" alt="Almighty Odot" width="700" height="500" loading="lazy">
-      </div>
-      <div class="col-lg-6">
-        <h1 class="display-5 fw-bold lh-1 mb-3">Who is Almighty Odot?</h1>
-        <p class="lead">Almighty Odot is a multifaceted innovator whose journey through various artistic and technical realms has shaped his unique identity. With a rich background in fashion design, art, and music, he has always been driven by creativity and expression. His passion for aesthetics seamlessly translated into a pursuit of self-taught web design and programming, where he mastered HTML, CSS, and Python.</p>
+            <div class="photo-card">
+              <img
+                src="images/odot-lifestyle.jpg"
+                alt="AlmightyOdot lifestyle photo"
+              />
+              
+            </div>
 
-        <p>This creative exploration led him to a promising opportunity with a startup focused on robotics, utilizing Raspberry Pi technology. However, the venture faced setbacks when the pandemic struck, limiting the capital necessary for growth. Undeterred, Almighty Odot pivoted towards mastering Linux and C programming for embedded systems, particularly working with Programmable Logic Controllers (PLCs) and cabling.</p>
+            <div class="photo-card">
+              <img
+                src="images/odot-behind-scenes.jpg"
+                alt="AlmightyOdot behind the scenes"
+              />
+              
+            </div>
+          </div>
+        </div>
+      </section>
 
-       <p>His zeal for continuous learning propelled him deeper into the tech world, where he embraced the fields of data and artificial intelligence. Recognizing the transformative power of automation, he firmly believes it represents the future of innovation.</p>
+      <!-- CONTACT -->
+      <section id="contact" class="contact-cta">
+        <p>
+          Interested in collaborating, building something new, or sharing ideas?
+          Reach out and let’s connect.
+        </p>
+        <a href="mailto:youremail@example.com" class="btn-primary">
+          Contact Me
+        </a>
+      </section>
+    </main>
 
-        <p>Almighty Odot's journey is a testament to resilience and adaptability, blending artistry with technology to forge a path that is uniquely his own. As he continues to explore and expand his skills, he stands at the intersection of creativity and technical mastery, embodying the spirit of a true modern-day Renaissance individual.</p>
-
-</p>
-      </div>
-    </div>
-  </div>
-    </div>
-
+    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2025 Almighty ODOT | All Rights Reserved</p>
+      &copy; 2025 AlmightyOdot | All Rights Are Reserved
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>
+
