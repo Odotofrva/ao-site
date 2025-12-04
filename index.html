@@ -64,6 +64,22 @@
         border-radius: 999px;
         background: #ffffff;
       }
+      .nav-toggle {
+        display: none;              /* hidden on desktop */
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+      }
+      
+      .nav-toggle-bar {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background: #ffffff;
+        margin: 4px 0;
+      }
+
 
       .nav-links {
         display: flex;
@@ -230,13 +246,35 @@
 
       /* MOBILE */
       @media (max-width: 800px) {
-        .nav-links {
-          display: none;
-        }
-        .logo-placeholder {
-          padding: 3rem 2rem;
-        }
-      }
+  .about-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .photo-grid {
+    order: -1;
+  }
+
+  /* SHOW TOGGLE, HIDE LINKS BY DEFAULT */
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;                 /* hidden until opened */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: #000000;
+    padding: 0.75rem 1.2rem 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-bottom: 1px solid #333333;
+  }
+
+  .nav-links.open {
+    display: flex;                 /* show when JS adds .open */
+  }
     </style>
   </head>
 
@@ -272,6 +310,23 @@
     <footer>
       &copy; 2025 AlmightyOdot | All Rights Are Reserved
     </footer>
+    <script>
+      const navToggle = document.querySelector('.nav-toggle');
+      const navLinks = document.querySelector('.nav-links');
+    
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+          navLinks.classList.toggle('open');
+        });
+    
+        // Optional: close menu when a link is clicked (nice on mobile)
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+          });
+        });
+      }
+  </script>
   </body>
 </html>
 
