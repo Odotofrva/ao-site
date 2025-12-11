@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Wiring & Cabling Basics | FordeLucas Eletrical</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Visual guide to residential wiring and cabling basics: safety, wire types, cable labels, gauges, and best practices."
+    />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brandDark: "#020617",
+              brandAccent: "#facc15",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-slate-950 text-slate-100">
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-20 border-b border-slate-800 bg-slate-950/90 backdrop-blur"
+    >
+      <div
+        class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3"
+      >
+        <!-- Clickable logo/title back to home -->
+        <a href="robotechi.html" class="flex items-center gap-2">
+          <div
+            class="flex h-9 w-9 items-center justify-center rounded-full bg-brandAccent/10 ring-2 ring-brandAccent/60"
+          >
+            
+          </div>
+          <div class="leading-tight">
+            <p class="text-sm font-semibold uppercase tracking-wide">
+              RoboTechi
+            </p>
+            <p class="text-[11px] text-slate-400">
+              Wiring & Cabling Basics
+            </p>
+          </div>
+        </a>
+
+        <nav class="hidden gap-5 text-xs font-semibold md:flex">
+          <a href="#gallery" class="hover:text-brandAccent">Overview</a>
+          <a href="#wire-types" class="hover:text-brandAccent">Wire Types</a>
+          <a href="#cable-labels" class="hover:text-brandAccent">Cable Labels</a>
+          <a href="#gauges" class="hover:text-brandAccent">Gauges</a>
+          <a href="#safety" class="hover:text-brandAccent">Safety</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="pb-16">
+      <!-- Hero with big image -->
+      <section
+        class="border-b border-slate-800 bg-gradient-to-b from-slate-950 via-slate-950 to-slate-900"
+      >
+        <div
+          class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 md:flex-row md:items-center md:py-16"
+        >
+          <div class="md:w-1/2">
+            <span
+              class="inline-flex items-center rounded-full border border-brandAccent/40 bg-brandAccent/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-brandAccent"
+            >
+              Wiring & Cabling • Visual Guide
+            </span>
+            <h1
+              class="mt-5 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl"
+            >
+              Understanding
+              <span class="text-brandAccent">Residential Wiring</span>
+              with RoboTechi
+            </h1>
+            <p class="mt-4 text-sm text-slate-300 sm:text-base">
+              A simple, image-based overview of common wires, cables, and safety
+              concepts you’ll find in homes. This is for learning only — not a
+              DIY wiring manual.
+            </p>
+            <p class="mt-3 text-xs text-slate-400">
+              Always turn power off and call a licensed electrician for real
+              electrical work.
+            </p>
+          </div>
+
+          <!-- Hero image -->
+          <div class="md:w-1/2">
+            <div
+              class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80 shadow-2xl shadow-black/40"
+            >
+              <img
+                src="wiring1.png"
+                alt="Electrician working on a residential electrical panel"
+                class="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Visual gallery overview -->
+      <section
+        id="gallery"
+        class="border-b border-slate-800 bg-slate-950"
+      >
+        <div class="mx-auto max-w-6xl px-4 py-12">
+          <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-end">
+            <div>
+              <h2 class="text-2xl font-semibold sm:text-3xl">
+                Big Picture: How Wiring Fits Together
+              </h2>
+              <p class="mt-2 text-sm text-slate-300">
+                Use these cards as a visual map: panel → cable → box →
+                devices.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-3 text-xs">
+            <!-- Card 1 -->
+            <article
+              class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60"
+            >
+              <div class="h-40 w-full overflow-hidden">
+                <img
+                  src="wiring2.png"
+                  alt="Main electrical panel with multiple breakers"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="p-4">
+                <p class="text-[11px] font-semibold uppercase text-brandAccent">
+                  1. Main Panel
+                </p>
+                <p class="mt-2 text-slate-200">
+                  Power from the utility enters the main panel (breaker box),
+                  then splits into branch circuits that feed different areas of
+                  the home.
+                </p>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article
+              class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60"
+            >
+              <div class="h-40 w-full overflow-hidden">
+                <img
+                  src="wiring3.png"
+                  alt="Non-metallic sheathed cable bundle"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="p-4">
+                <p class="text-[11px] font-semibold uppercase text-brandAccent">
+                  2. Cables in Walls
+                </p>
+                <p class="mt-2 text-slate-200">
+                  NM-B (“Romex”) and other cables carry hot, neutral, and
+                  ground conductors through framing cavities to rooms and
+                  devices.
+                </p>
+              </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article
+              class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60"
+            >
+              <div class="h-40 w-full overflow-hidden">
+                <img
+                  src="wiring4.png"
+                  alt="Outlet box with wires being connected"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="p-4">
+                <p class="text-[11px] font-semibold uppercase text-brandAccent">
+                  3. Boxes & Devices
+                </p>
+                <p class="mt-2 text-slate-200">
+                  Junction boxes, outlets, switches, and fixtures make the
+                  wiring usable — and keep connections safe and accessible.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Wire Types as picture cards -->
+      <section
+        id="wire-types"
+        class="border-b border-slate-800 bg-slate-950"
+      >
+        <div class="mx-auto max-w-6xl px-4 py-12">
+          <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-end">
+            <div>
+              <h2 class="text-2xl font-semibold sm:text-3xl">
+                Common Wire & Cable Types (Visual)
+              </h2>
+              <p class="mt-2 text-sm text-slate-300">
+                These images represent the types of conductors and cables you’ll
+                hear about in residential work.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-3 text-xs">
+            <!-- THHN/THWN -->
+            <article
+              class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60"
+            >
+              <div class="h-36 w-full overflow-hidden bg-slate-900">
+                <img
+                  src="wiring5.png"
+                  alt="Colored insulated single conductors"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="p-4">
+                <p class="text-[11px] font-semibold uppercase text-brandAccent">
+                  THHN / THWN Conductors
+                </p>
+                <p class="mt-2 text-slate-200">
+                  Single insulated copper wires usually pulled through conduit.
+                  Common in panels, commercial work, and some residential runs.
+                </p>
+                <ul class="mt-2 space-y-1 text-slate-400">
+                  <li>• Each color is a separate conductor</li>
+                  <li>• Needs conduit or raceway for protection</li>
+                </ul>
+              </div>
+            </article>
+
+            <!-- NM-B -->
+            <article
+              class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60"
+            >
+              <div class="h-36 w-full overflow-hidden bg-slate-900">
+                <img
+                  src="wiring6.png"
+                  alt="Non-metallic sheathed cable (Romex style)"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="p-4">
+                <p class="text-[11px] font-semibold uppercase text-brandAccent">
+                  NM-B (“Romex”) Cable
+                </p>
+                <p class="mt-2 text-slate-200">
+                  A flat, plastic-jacketed cable with hot, neutral, and ground
+                  inside. Very common in modern homes.
+                </p>
+                <ul class="mt-2 space-y-1 text-slate-400">
+                  <li>• For dry, indoor use</li>
+                  <li>• Not for direct burial or wet locations</li>
+                </ul>
+              </div>
+            </article>
+
+            <!-- UF -->
+            <article
+              class="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60"
+            >
+              <div class="h-36 w-full overflow-hidden bg-slate-900">
+                <img
+                  src="wiring7.png"
+                  alt="Outdoor cable being laid underground"
+                  class="h-full w-full object-cover"
+                />
+              </div>
+              <div class="p-4">
+                <p class="text-[11px] font-semibold uppercase text-brandAccent">
+                  UF (Underground Feeder) Cable
+                </p>
+                <p class="mt-2 text-slate-200">
+                  Tougher outer jacket for direct burial or wet locations like
+                  outdoor lighting or sheds.
+                </p>
+                <ul class="mt-2 space-y-1 text-slate-400">
+                  <li>• Rated for moisture and soil contact</li>
+                  <li>• Often buried to a code-required depth</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cable labels as side image + text -->
+      <section
+        id="cable-labels"
+        class="border-b border-slate-800 bg-slate-950"
+      >
+        <div
+          class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 md:flex-row md:items-center"
+        >
+          <!-- Image -->
+          <div class="md:w-1/2">
+            <div
+              class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80"
+            >
+              <img
+                src="wiring8.png"
+                alt="Close-up of electrical cable with printed markings"
+                class="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+
+          <!-- Text -->
+          <div class="md:w-1/2">
+            <h2 class="text-2xl font-semibold sm:text-3xl">
+              Reading Cable Markings (12/2, 14/3, etc.)
+            </h2>
+            <p class="mt-3 text-sm text-slate-300">
+              The print on the cable jacket tells you wire size, number of
+              conductors, type, and rating. Knowing how to read it is key.
+            </p>
+
+            <div class="mt-4 grid gap-4 text-xs text-slate-200">
+              <div
+                class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4"
+              >
+                <p class="font-semibold text-slate-100">Example: 14/2 NM-B</p>
+                <ul class="mt-2 space-y-1 text-slate-300">
+                  <li>• 14 = wire gauge (AWG)</li>
+                  <li>• 2 = two insulated conductors inside (hot + neutral)</li>
+                  <li>• Plus a bare ground wire</li>
+                  <li>• Often used on 15A lighting or receptacle circuits</li>
+                </ul>
+              </div>
+
+              <div
+                class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4"
+              >
+                <p class="font-semibold text-slate-100">Example: 12/3 NM-B</p>
+                <ul class="mt-2 space-y-1 text-slate-300">
+                  <li>• 12 gauge conductors</li>
+                  <li>• 3 insulated wires (hot, hot, neutral) + ground</li>
+                  <li>• Used for multi-wire branch circuits or 3-way switches</li>
+                  <li>• Often on 20A circuits</li>
+                </ul>
+              </div>
+            </div>
+
+            <p class="mt-3 text-[11px] text-slate-500">
+              Actual requirements depend on local electrical code and conditions.
+              This is a simplified overview.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gauges & color codes as image + cards -->
+      <section
+        id="gauges"
+        class="border-b border-slate-800 bg-slate-950"
+      >
+        <div class="mx-auto max-w-6xl px-4 py-12">
+          <div class="mb-6 flex flex-col gap-3 md:flex-row md:items-end">
+            <div>
+              <h2 class="text-2xl font-semibold sm:text-3xl">
+                Wire Gauge, Amps & Color Codes (Quick View)
+              </h2>
+              <p class="mt-2 text-sm text-slate-300">
+                Pictures help, but the numbers and colors matter just as much.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-[1.2fr,1fr] text-xs">
+            <!-- Gauge & amps image + info -->
+            <div>
+              <div
+                class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80"
+              >
+                <img
+                  src="wiring9.png"
+                  alt="Different sizes and colors of electrical wire"
+                  class="h-52 w-full object-cover"
+                />
+              </div>
+
+              <div
+                class="mt-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-4"
+              >
+                <p class="font-semibold text-slate-100">
+                  Typical copper branch-circuit pairings*
+                </p>
+                <div class="mt-3 grid grid-cols-2 gap-3 text-slate-300">
+                  <div>
+                    <p class="text-[11px] font-semibold text-slate-400">14 AWG</p>
+                    <p>• Often used on 15A circuits</p>
+                  </div>
+                  <div>
+                    <p class="text-[11px] font-semibold text-slate-400">12 AWG</p>
+                    <p>• Often used on 20A circuits</p>
+                  </div>
+                  <div>
+                    <p class="text-[11px] font-semibold text-slate-400">10 AWG</p>
+                    <p>• Often used on 30A circuits</p>
+                  </div>
+                  <div>
+                    <p class="text-[11px] font-semibold text-slate-400">8 AWG+</p>
+                    <p>• Larger appliances / feeders</p>
+                  </div>
+                </div>
+                <p class="mt-3 text-[11px] text-slate-500">
+                  *Check local code, conductor type, and temperature ratings for
+                  exact requirements.
+                </p>
+              </div>
+            </div>
+
+            <!-- Color code card -->
+            <div class="space-y-4">
+              <div
+                class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4"
+              >
+                <p class="font-semibold text-slate-100">
+                  Typical Conductor Colors (North America)
+                </p>
+                <ul class="mt-3 space-y-2 text-slate-300">
+                  <li>
+                    <span class="font-semibold text-brandAccent">Black / Red:</span>
+                    Hot (live) conductors
+                  </li>
+                  <li>
+                    <span class="font-semibold text-brandAccent">White / Gray:</span>
+                    Neutral conductors
+                  </li>
+                  <li>
+                    <span class="font-semibold text-brandAccent">Green / Bare:</span>
+                    Equipment grounding conductors
+                  </li>
+                </ul>
+                <p class="mt-3 text-slate-400">
+                  Color conventions help identify each conductor’s role in the
+                  circuit and reduce dangerous mix-ups.
+                </p>
+              </div>
+
+              <div
+                class="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-amber-100"
+              >
+                <p class="font-semibold">Why wire size matters</p>
+                <p class="mt-2 text-xs">
+                  Wire that’s too small for the breaker can overheat before the
+                  breaker trips — a serious fire hazard. Matching gauge and
+                  breaker rating correctly is critical.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Safety / When to call a pro -->
+      <section
+        id="safety"
+        class="bg-slate-950"
+      >
+        <div class="mx-auto max-w-6xl px-4 py-12">
+          <div class="grid gap-6 md:grid-cols-[1.1fr,1fr]">
+            <div>
+              <h2 class="text-2xl font-semibold sm:text-3xl">
+                Wiring Knowledge vs. Doing the Work
+              </h2>
+              <p class="mt-3 text-sm text-slate-300">
+                Learning what you’re looking at — panels, cable types, wire
+                sizes — is powerful. It helps you spot problems and talk clearly
+                with electricians.
+              </p>
+              <p class="mt-3 text-sm text-slate-300">
+                But actual wiring and rewiring should follow local code,
+                permitting, and inspection rules.
+              </p>
+
+              <div
+                class="mt-5 rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-xs text-red-100"
+              >
+                <p class="font-semibold">
+                  Call a licensed electrician immediately if you see:
+                </p>
+                <ul class="mt-2 space-y-1">
+                  <li>• Melted or charred insulation on wires</li>
+                  <li>• Burning smells near panels, outlets, or fixtures</li>
+                  <li>• Repeated tripped breakers with no clear cause</li>
+                  <li>• Exposed splices outside of junction boxes</li>
+                </ul>
+              </div>
+            </div>
+
+            <div
+              class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80"
+            >
+              <img
+                src="wiring10.png"
+                alt="Electrician inspecting a residential panel"
+                class="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950">
+      <div
+        class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-6 text-[11px] text-slate-400 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <p>
+          &copy; 2025 RoboTechi. All Rights Are Reserved.
+        </p>
+        <a href="#top" class="font-semibold hover:text-brandAccent">
+          Back to top ↑
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>
