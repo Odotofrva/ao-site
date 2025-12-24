@@ -1,452 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RoboTechi</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RoboTechi | Loading in 2026</title>
 
   <style>
-    /* ---------- BASE ---------- */
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #05060f;
-      color: #e5e7eb;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 30px 20px;
-    }
-
-    :root {
-      --primary: #22d3ee;
-      --accent: #a855f7;
-      --glass: rgba(255, 255, 255, 0.06);
-    }
-
-    h1, h2, h3 {
-      font-weight: 700;
-      letter-spacing: 0.03em;
-    }
-
-    a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    /* ---------- NAV / BRAND ---------- */
-    header {
-      width: 100%;
-      max-width: 1200px;
-      padding: 15px 0;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    .brand {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .brand-logo {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: radial-gradient(circle at top, #111827, #020617);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 25px rgba(34, 211, 238, 0.4);
-      padding: 10px;
-    }
-
-    .brand-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-
-    .brand-name {
-      font-size: 1.3rem;
-      text-transform: uppercase;
-    }
-
-    .brand-tagline {
-      font-size: 0.75rem;
-      color: #9ca3af;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    /* ---------- HERO ---------- */
-    .hero {
-      max-width: 900px;
-      margin-top: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      padding: 40px 20px;
-      background: var(--glass);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 0 40px rgba(0, 255, 255, 0.08);
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 6vw, 3rem);
-      line-height: 1.15;
-    }
-
-    .gradient {
-      background: linear-gradient(120deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero p {
-      max-width: 640px;
-      font-size: 1rem;
-      color: #9ca3af;
-      line-height: 1.6;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .btn {
-      padding: 12px 25px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      text-transform: uppercase;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #000;
-      box-shadow: 0 10px 30px rgba(34, 211, 238, 0.4);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-    }
-
-    /* ---------- SECTIONS ---------- */
-    section {
-      max-width: 900px;
-      margin-top: 70px;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .section-description {
-      color: #9ca3af;
-      max-width: 700px;
-      margin: 10px auto 30px auto;
-      line-height: 1.7;
-      font-size: 1rem;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      padding: 25px;
-      background: var(--glass);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      backdrop-filter: blur(20px);
-      transition: 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(34, 211, 238, 0.12);
-    }
-
-    /* ---------- GALLERY ---------- */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 22px;
-      margin-top: 20px;
-    }
-
-    .gallery-item {
-      background: var(--glass);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      overflow: hidden;
-      backdrop-filter: blur(18px);
-      text-align: left;
-    }
-
-    .gallery-thumb {
-      width: 100%;
-      height: 160px;
-      background: #020617;
-      overflow: hidden;
-    }
-
-    .gallery-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .gallery-body {
-      padding: 14px 16px 18px;
-    }
-
-    .gallery-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #a5b4fc;
-      margin-bottom: 6px;
-    }
-
-    .gallery-body h3 {
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-    }
-
-    .gallery-body p {
-      font-size: 0.85rem;
-      color: #9ca3af;
-      line-height: 1.5;
-    }
-
-    /* ---------- CONTACT FORM ---------- */
-    form {
-      margin-top: 30px;
-      padding: 25px;
-      border-radius: 18px;
-      background: var(--glass);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      text-align: left;
-    }
-
-    label {
-      font-size: 0.75rem;
-      color: #9ca3af;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      margin-top: 6px;
-      margin-bottom: 16px;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      background: rgba(255, 255, 255, 0.08);
+      height: 100vh;
+      background: #000;
       color: #fff;
-      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    textarea {
-      height: 120px;
-      resize: none;
+    .container {
+      text-align: center;
+      width: min(520px, 92vw);
     }
 
-    footer {
-      margin-top: 60px;
-      padding-bottom: 20px;
-      font-size: 0.75rem;
-      color: #6b7280;
+    /* Logo Placeholder */
+    .logo-placeholder {
+      width: 220px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: #777;
+    }
+
+    /* Coming Soon Text */
+    .coming-soon {
+      font-size: 24px;
+      letter-spacing: 4px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #aaa;
+      letter-spacing: 1px;
+    }
+
+    /* Loading Bar */
+    .loader-wrap {
+      margin: 18px auto 0;
+      width: min(380px, 86vw);
+    }
+
+    .loader-track {
+      width: 100%;
+      height: 10px;
+      border: 1px solid #444;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.06);
+      position: relative;
+    }
+
+    .loader-bar {
+      height: 100%;
+      width: 40%;
+      background: #fff;
+      border-radius: 999px;
+      animation: loadingSlide 1.2s ease-in-out infinite;
+    }
+
+    /* Optional loading text */
+    .loading-text {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #888;
+      letter-spacing: 2px;
+    }
+
+    @keyframes loadingSlide {
+      0%   { transform: translateX(-120%); }
+      50%  { transform: translateX(60%); }
+      100% { transform: translateX(220%); }
     }
   </style>
 </head>
+
 <body>
+  <div class="container">
+    <div class="logo-placeholder"><img src="rtlogo.png" width="300" height="auto" alt=""></div>
 
-  <!-- HEADER -->
-  <header>
-    <div class="brand">
-      <div class="brand-logo">
-        <img src="rtlogo.png" alt="RoboTechi Logo">
+
+    <div class="loader-wrap">
+      <div class="loader-track">
+        <div class="loader-bar"></div>
       </div>
-      <div class="brand-name">ROBOTECHI</div>
-      <div class="brand-tagline">Low Voltage · Cabling · Eletrical</div>
+      <div class="loading-text">SITE LOADING IN 2026…</div>
     </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <h1>
-      Amazing resources for <span class="gradient">low-voltage, cabling, and electrician</span> fundamentals.
-    </h1>
-
-    <p>
-      RoboTechi provides free, easy-to-understand resources on low-voltage systems, structured cabling, and electrician fundamentals. We empower learners to build real-world electrical skills with confidence.
-    </p>
-
-    <div class="hero-buttons">
-      <button class="btn btn-primary" onclick="scrollToSection('contact')">Start a Project</button>
-      <button class="btn btn-outline" onclick="scrollToSection('services')">Explore Services</button>
-      <button class="btn btn-outline" onclick="scrollToSection('gallery')">View Gallery</button>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section id="services">
-    <h2>Choose A Learning Path</h2>
-    <p class="section-description">
-      RoboTechi is an education-driven technology company dedicated to making electrical knowledge accessible to everyone. We provide free learning resources focused on low-voltage systems, structured cabling, and core electrician fundamentals, designed for beginners, career-changers, and aspiring tradespeople.
-    </p>
-  </section>
-
-  <!-- GALLERY -->
-  <section id="gallery">
-    <div class="gallery-grid">
-      <!-- Web Project -->
-      <article class="gallery-item">
-        <div class="gallery-thumb">
-          <!-- Swap this placeholder with a real screenshot -->
-          <img src="webdev.png" alt="RoboTechi Web">
-        </div>
-        <div class="gallery-body">
-          <span class="gallery-tag">Electronics</span>
-          <h3>Low Voltage</h3>
-          <p>
-            
-          </p>
-        </div>
-      </article>
-
-      <!-- Computer Repair Project -->
-      <article class="gallery-item">
-        <div class="gallery-thumb">
-          <!-- Swap this placeholder with a photo/render of your board -->
-          <img src="pcrepair.png" alt="RoboTechi Electronics">
-        </div>
-        <div class="gallery-body">
-          <span class="gallery-tag">Computer Repair</span>
-          <h3>Cabling</h3>
-          <p>
-            RoboTechi offers reliable remote PC repair services designed to get your computer running smoothly without the need for in-person visits. Whether you’re dealing with slow performance, software errors, malware, connectivity issues, or system glitches, our technicians can diagnose and fix most problems directly over a secure remote connection.
-          </p>
-        </div>
-      </article>
-
-      <!-- Electronics Project -->
-      <article class="gallery-item">
-        <div class="gallery-thumb">
-          <!-- Swap this placeholder with a photo/render of your board -->
-          <img src="ardshi2.png" alt="RoboTechi Electronics">
-        </div>
-        <div class="gallery-body">
-          <span class="gallery-tag">Electronics</span>
-          <h3>Electrical</h3>
-          <p>
-            RoboTechi Electronics is the hardware innovation division of RoboTechi, specializing in the design, development, and production of custom printed circuit boards (PCBs) for makers, startups, educators, and businesses aiming to bring smart products to life.
-          </p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <h2>About RoboTechi</h2>
-
-    <!-- Logo / Image Display -->
-    <div style="
-      margin: 25px auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    ">
-      <div style="
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.06);
-        padding: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 0 25px rgba(34, 211, 238, 0.25);
-      ">
-        <img 
-          src="rtlogo.png" 
-          alt="RoboTechi Logo" 
-          style="width: 100%; height: 100%; object-fit: contain;"
-        >
-      </div>
-    </div>
-
-    <!-- Description -->
-    <p class="section-description">
-      RoboTechi is an education-driven technology company dedicated to making electrical knowledge accessible to everyone. We provide free learning resources focused on low-voltage systems, structured cabling, and core electrician fundamentals, designed for beginners, career-changers, and aspiring tradespeople. RoboTechi bridges hands-on trade skills with modern tech education, empowering individuals to learn safely, build confidently, and grow real-world electrical expertise.
-    </p>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <h2>Start Your Project</h2>
-    <p class="section-description">
-      Tell us what you want to build, and we’ll help bring it to reality.
-    </p>
-
-    <!-- Add your Google Apps Script URL in the action attribute when ready -->
-    <form>
-      <label>Name</label>
-      <input type="text" name="name" placeholder="Your name">
-
-      <label>Email</label>
-      <input type="email" name="email" placeholder="you@example.com">
-
-      <label>Project Type</label>
-      <input type="text" name="projectType" placeholder="Website, IoT, RT-ONE board, etc">
-
-      <label>Message</label>
-      <textarea name="message" placeholder="Tell us about your idea..."></textarea>
-
-      <button class="btn btn-primary" style="width: 100%;">Send</button>
-    </form>
-  </section>
-
-  <footer>
-    © <span id="year"></span> RoboTechi – All Rights Reserved
-  </footer>
-
-  <script>
-    function scrollToSection(id) {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-
+  </div>
 </body>
 </html>
+
