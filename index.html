@@ -1,222 +1,279 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>AlmightyOdot | Home </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Almighty Odot</title>
+  <meta name="description" content="Almighty Odot — sci-fi mobile OS experience. About, Blog, Store, Contact."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Splash -->
+  <div id="splash" class="splash" aria-label="Splash screen">
+    <div class="splash-inner">
+      <!-- Replace src with your real logo file -->
+      <img class="logo" src="logo.png" alt="Almighty Odot Logo" />
+      <div class="splash-glow" aria-hidden="true"></div>
+    </div>
+  </div>
 
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background: #0a0a0a;
-        color: #f5f5f5;
-        line-height: 1.6;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-
-      /* NAVBAR (same style as about page) */
-      .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(0, 0, 0, 0.9);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid #333333;
-      }
-
-      .nav-inner {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0.9rem 1.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-      }
-
-      .brand-logo {
-        height: 34px;
-        width: auto;
-        display: block;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 1.5rem;
-        font-size: 0.95rem;
-      }
-
-      .nav-links a {
-        opacity: 0.75;
-        position: relative;
-      }
-
-      .nav-links a:hover {
-        opacity: 1;
-      }
-
-      .nav-links a::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -4px;
-        width: 0;
-        height: 2px;
-        background: #ffffff;
-        transition: width 0.25s ease;
-      }
-
-      .nav-links a:hover::after {
-        width: 100%;
-      }
-
-      /* NAV TOGGLE (MOBILE) */
-      .nav-toggle {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 0.25rem;
-      }
-
-      .nav-toggle-bar {
-        display: block;
-        width: 20px;
-        height: 2px;
-        background: #ffffff;
-        margin: 4px 0;
-      }
-
-      /* CENTERED LOGO AREA */
-      .center-container {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 2rem;
-      }
-
-
-      .logo-placeholder img {
-        max-width: 250px;
-        height: auto;
-        margin-bottom: 1rem;
-      }
-
-      /* FOOTER */
-      footer {
-        text-align: center;
-        padding: 1.4rem 0;
-        color: #aaaaaa;
-        font-size: 0.85rem;
-        border-top: 1px solid #333333;
-      }
-
-      /* MOBILE */
-      @media (max-width: 800px) {
-        .nav-toggle {
-          display: block;
-        }
-
-        .nav-links {
-          display: none;
-          position: absolute;
-          top: 100%;
-          left: 0;
-          right: 0;
-          background: #000000;
-          padding: 0.75rem 1.2rem 1rem;
-          flex-direction: column;
-          gap: 0.75rem;
-          border-bottom: 1px solid #333333;
-        }
-
-        .nav-links.open {
-          display: flex;
-        }
-
-        .logo-placeholder {
-          padding: 3rem 2rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- NAVIGATION -->
-    <header class="navbar">
-      <div class="nav-inner">
-        <a href="index.html" class="brand">
-          <!-- Same logo used here -->
-          <img src="logo.png" alt="AlmightyOdot Logo" class="brand-logo animate__animated animate__rubberband" width=80 height='auto' />
-        </a>
-
-        <button class="nav-toggle" aria-label="Toggle navigation">
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-        </button>
-
-        <nav class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="https://medium.com/@almightyodot">Blog</a>
-          <!-- Updated the blog link -->
-          
-          <a href="robotechi.html">RoboTechi</a>
-        </nav>
+  <!-- Main OS UI -->
+  <main id="app" class="app hidden">
+    <!-- Top status bar -->
+    <header class="statusbar">
+      <div class="status-left">
+        <span class="sig-dot"></span>
+        <span class="sig-dot"></span>
+        <span class="sig-dot dim"></span>
+        <span class="sig-dot dim"></span>
+        <span class="status-text">ODOT // OS</span>
+      </div>
+      <div class="status-right">
+        <span id="clock" class="status-text">--:--</span>
+        <span id="date" class="status-text dimmer">---</span>
+        <span class="battery">
+          <span class="battery-fill"></span>
+        </span>
       </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <div class="center-container">
-      <div class="logo-placeholder">
-        <!-- Replace this img src with your real logo if you want it shown here -->
-        <img src="logo.png" alt="Almighty Odot" />
-       
-      </div>
+    <!-- Background FX -->
+    <div class="bg">
+      <div class="grid"></div>
+      <div class="scanlines"></div>
+      <div class="gold-glow"></div>
     </div>
 
-    <!-- FOOTER -->
-    <footer>
-      &copy; 2025 AlmightyOdot | All Rights Are Reserved|
-    </footer>
+    <!-- Content shell -->
+    <section class="shell">
+      <!-- Mini header card -->
+      <div class="hero-card">
+        <div class="hero-top">
+          <div class="chip">ALMIGHTY ODOT</div>
+          <button id="themePulse" class="icon-btn" title="Pulse">
+            <span class="pulse-dot"></span>
+          </button>
+        </div>
 
-    <!-- NAV TOGGLE SCRIPT -->
-    <script>
-      const navToggle = document.querySelector(".nav-toggle");
-      const navLinks = document.querySelector(".nav-links");
+        <div class="hero-mid">
+          <div class="hero-title">Mobile OS Experience</div>
+          <div class="hero-sub">
+            Gunmetal // Black // Gold — a sci-fi dashboard for your brand.
+          </div>
 
-      if (navToggle && navLinks) {
-        navToggle.addEventListener("click", () => {
-          navLinks.classList.toggle("open");
-        });
+          <!-- World map + time/date widget -->
+          <div class="hud-row">
+            <div class="hud-map" aria-label="World map widget">
+              <svg viewBox="0 0 1000 450" role="img" aria-label="World map">
+                <path class="land"
+                  d="M94,240 l40,-40 90,10 40,60 -40,50 -80,10 -50,-30 z
+                     M300,170 l120,-60 120,30 20,80 -60,80 -140,20 -70,-80 z
+                     M610,130 l130,-40 120,40 30,90 -90,90 -140,-20 -80,-90 z
+                     M780,300 l60,-20 70,40 -40,60 -70,10 -40,-40 z"
+                />
+                <circle class="loc" cx="310" cy="205" r="7"/>
+                <circle class="loc-ring" cx="310" cy="205" r="14"/>
+              </svg>
 
-        navLinks.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", () => {
-            navLinks.classList.remove("open");
-          });
-        });
-      }
-    </script>
-  </body>
+              <div class="hud-caption">
+                <span class="hud-label">GLOBAL GRID</span>
+                <span class="hud-value">SYNCED</span>
+              </div>
+            </div>
+
+            <div class="hud-clock" aria-label="Date and time widget">
+              <div class="hud-label">SYSTEM TIME</div>
+              <div class="hud-big" id="hudTime">--:--</div>
+              <div class="hud-sub" id="hudDate">---</div>
+              <div class="hud-sub2">TZ: America/New_York</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-bottom">
+          <div class="stat">
+            <div class="stat-label">MODE</div>
+            <div class="stat-value">ONLINE</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">SIGNAL</div>
+            <div class="stat-value">STABLE</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">VERSION</div>
+            <div class="stat-value">v1.0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panels -->
+      <div class="panel-stack">
+        <!-- ABOUT -->
+        <article class="panel active" data-page="about" aria-label="About page">
+          <div class="panel-header">
+            <div class="panel-title">About</div>
+            <div class="panel-tag">IDENTITY FILE</div>
+          </div>
+
+          <div class="panel-body">
+            <!-- About Image -->
+            <div class="about-image">
+              <img src="./assets/about.jpg" alt="Almighty Odot portrait" />
+              <div class="about-image-frame"></div>
+            </div>
+
+            <p>
+              Almighty Odot is a creator and builder blending technology, design, and hands-on craft.
+              This space is a living OS — a home for projects, stories, products, and contact.
+            </p>
+
+            <div class="divider"></div>
+
+            <div class="cards">
+              <div class="mini-card">
+                <div class="mini-title">Focus</div>
+                <div class="mini-text">Tech • Education • Creative Systems</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-title">Vibe</div>
+                <div class="mini-text">Sci-fi • Minimal • Gold Accents</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-title">Mission</div>
+                <div class="mini-text">Build, teach, and ship real things.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- BLOG -->
+        <article class="panel" data-page="blog" aria-label="Blog page">
+          <div class="panel-header">
+            <div class="panel-title">Blog</div>
+            <div class="panel-tag">LOGS</div>
+          </div>
+
+          <div class="panel-body">
+            <div class="list">
+              <a class="list-item" href="#" onclick="return false;">
+                <div class="li-title">Boot Sequence: Why I Built This OS</div>
+                <div class="li-meta">Jan 03, 2026 • 3 min read</div>
+              </a>
+              <a class="list-item" href="#" onclick="return false;">
+                <div class="li-title">Low Voltage & Maker Mindset</div>
+                <div class="li-meta">Jan 02, 2026 • 6 min read</div>
+              </a>
+              <a class="list-item" href="#" onclick="return false;">
+                <div class="li-title">Building Brands Like Hardware</div>
+                <div class="li-meta">Dec 30, 2025 • 5 min read</div>
+              </a>
+            </div>
+
+            <div class="hint">
+              Tip: Replace these with real posts (Markdown → HTML later, or connect a CMS).
+            </div>
+          </div>
+        </article>
+
+        <!-- STORE -->
+        <article class="panel" data-page="store" aria-label="Store page">
+          <div class="panel-header">
+            <div class="panel-title">Store</div>
+            <div class="panel-tag">INVENTORY</div>
+          </div>
+
+          <div class="panel-body">
+            <div class="product-grid">
+              <div class="product">
+                <div class="product-img">IMG</div>
+                <div class="product-name">Signature Tee</div>
+                <div class="product-meta">$35 • Limited</div>
+                <button class="btn">View</button>
+              </div>
+
+              <div class="product">
+                <div class="product-img">IMG</div>
+                <div class="product-name">Sticker Pack</div>
+                <div class="product-meta">$12 • Drops</div>
+                <button class="btn">View</button>
+              </div>
+
+              <div class="product">
+                <div class="product-img">IMG</div>
+                <div class="product-name">Digital Kit</div>
+                <div class="product-meta">$19 • Download</div>
+                <button class="btn">View</button>
+              </div>
+            </div>
+
+            <div class="hint">
+              Hook this to Shopify / Stripe later — the layout is ready.
+            </div>
+          </div>
+        </article>
+
+        <!-- CONTACT -->
+        <article class="panel" data-page="contact" aria-label="Contact page">
+          <div class="panel-header">
+            <div class="panel-title">Contact</div>
+            <div class="panel-tag">COMMS</div>
+          </div>
+
+          <div class="panel-body">
+            <form class="form" onsubmit="return false;">
+              <label class="field">
+                <span>Name</span>
+                <input type="text" placeholder="Your name" />
+              </label>
+
+              <label class="field">
+                <span>Email</span>
+                <input type="email" placeholder="you@email.com" />
+              </label>
+
+              <label class="field">
+                <span>Message</span>
+                <textarea rows="4" placeholder="Type your message..."></textarea>
+              </label>
+
+              <button class="btn wide" type="submit">Transmit</button>
+
+              <div class="hint">
+                Want this form to actually send? Use Formspree, Formsubmit, or a tiny serverless function.
+              </div>
+            </form>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Stock ticker (above dock) -->
+    <section class="ticker" aria-label="Stock market ticker">
+      <div class="ticker-track" id="tickerTrack"></div>
+    </section>
+
+    <!-- Bottom Dock -->
+    <nav class="dock" aria-label="Primary navigation">
+      <button class="dock-btn active" data-nav="about" aria-label="About">
+        <span class="dock-ic">◈</span><span class="dock-txt">About</span>
+      </button>
+      <button class="dock-btn" data-nav="blog" aria-label="Blog">
+        <span class="dock-ic">⌁</span><span class="dock-txt">Blog</span>
+      </button>
+      <button class="dock-btn" data-nav="store" aria-label="Store">
+        <span class="dock-ic">⟡</span><span class="dock-txt">Store</span>
+      </button>
+      <button class="dock-btn" data-nav="contact" aria-label="Contact">
+        <span class="dock-ic">⟐</span><span class="dock-txt">Contact</span>
+      </button>
+    </nav>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
 </html>
+
 
