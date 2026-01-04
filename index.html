@@ -1,275 +1,269 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ODOT/OS v1</title>
-  <meta name="description" content="Almighty Odot — sci-fi mobile OS experience. About, Blog, Store, Contact."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almighty Odot — Dashboard</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <!-- Splash -->
-  <div id="splash" class="splash" aria-label="Splash screen">
+  <div class="splash" id="splash" aria-label="Splash screen">
     <div class="splash-inner">
-      <!-- Replace src with your real logo file -->
-      <img class="logo" src="logo.png" alt="Almighty Odot Logo" />
       <div class="splash-glow" aria-hidden="true"></div>
+      <img class="logo" src="logo.png" alt="Almighty Odot Logo" />
+      <div class="boot" aria-hidden="true">BOOTING SYSTEM…</div>
     </div>
   </div>
 
-  <!-- Main OS UI -->
-  <main id="app" class="app hidden">
-    <!-- Top status bar -->
-    <header class="statusbar">
-      <div class="status-left">
-        <span class="sig-dot"></span>
-        <span class="sig-dot"></span>
-        <span class="sig-dot dim"></span>
-        <span class="sig-dot dim"></span>
-        <span class="status-text">ODOT // OS</span>
-      </div>
-      <div class="status-right">
-        <span id="clock" class="status-text">--:--</span>
-        <span id="date" class="status-text dimmer">---</span>
-        <span class="battery">
-          <span class="battery-fill"></span>
-        </span>
-      </div>
-    </header>
-
+  <div class="app hidden" id="app">
     <!-- Background FX -->
-    <div class="bg">
+    <div class="bg" aria-hidden="true">
+      <div class="aura"></div>
       <div class="grid"></div>
       <div class="scanlines"></div>
-      <div class="gold-glow"></div>
+      <div class="noise"></div>
     </div>
 
-    <!-- Content shell -->
-    <section class="shell">
-      <!-- Mini header card -->
-      <div class="hero-card">
-        <div class="hero-top">
-          <div class="chip">ALMIGHTY ODOT</div>
-          <button id="themePulse" class="icon-btn" title="Pulse">
-            <span class="pulse-dot"></span>
+    <!-- Header / Brand -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span class="brand-txt">ALMIGHTY ODOT</span>
+      </div>
+
+      <button class="pulse-btn" id="pulseBtn" type="button" aria-label="Pulse UI">
+        <span class="pulse-core"></span>
+      </button>
+    </header>
+
+    <!-- Stock ticker -->
+    <div class="ticker" aria-label="Market ticker">
+      <div class="ticker-track" id="tickerTrack"></div>
+    </div>
+
+    <!-- Crypto ticker -->
+    <div class="ticker ticker-crypto" aria-label="Crypto ticker">
+      <div class="ticker-track" id="cryptoTrack"></div>
+    </div>
+
+    <!-- Main -->
+    <main class="shell">
+      <!-- Dashboard -->
+      <section class="panel active" data-page="home" aria-label="Dashboard">
+        <div class="panel-head">
+          <div class="panel-title">DASHBOARD</div>
+          <div class="panel-chip">ODOT OS v1</div>
+        </div>
+
+        <!-- ✅ World Clock moved ABOVE the map -->
+        <div class="clock-card">
+          <div class="clock-head">
+            <div class="clock-title">WORLD CLOCK</div>
+
+            <select id="tzSelect" class="tz" aria-label="Timezone">
+              <option value="America/New_York">NYC</option>
+              <option value="UTC">UTC</option>
+              <option value="Europe/London">LON</option>
+              <option value="Europe/Paris">PAR</option>
+              <option value="Asia/Tokyo">TOK</option>
+              <option value="Asia/Shanghai">SHA</option>
+              <option value="Australia/Sydney">SYD</option>
+              <option value="America/Los_Angeles">LA</option>
+            </select>
+          </div>
+
+          <div class="clock-time" id="wcTime">--:--</div>
+          <div class="clock-date" id="wcDate">---</div>
+
+          <div class="clock-meta">
+            <div class="mm">
+              <div class="mm-l">ACTIVE NODE</div>
+              <div class="mm-v" id="nodeLabel">NYC-01</div>
+            </div>
+            <div class="mm">
+              <div class="mm-l">PING</div>
+              <div class="mm-v" id="nodePing">12ms</div>
+            </div>
+            <div class="mm">
+              <div class="mm-l">ROUTE</div>
+              <div class="mm-v">GLOBAL</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- World Map module -->
+        <div class="map-card">
+          <div class="map-head">
+            <div class="map-title">Welcome To ODOT OS v1</div>
+            <div class="map-sub">NODE NETWORK • LIVE</div>
+          </div>
+
+          <div class="map-wrap" aria-label="World map">
+            <svg viewBox="0 0 900 420" class="map-svg" aria-hidden="true">
+              <path class="map-land" d="M105 210l60-60 85 20 60-30 60 45 70-15 60 20 40 80-60 70-120 12-82-44-80 8-55-40z"/>
+              <path class="map-land" d="M390 135l85-35 70 40 80-20 55 45 35 90-55 65-100 22-92-34-52-55z"/>
+              <path class="map-land" d="M640 125l100 30 130-10 110 60 38 85-60 65-140 32-150-40-80-70 42-92z"/>
+
+              <g class="node n1" transform="translate(455 235)">
+                <circle class="node-core" r="6"></circle>
+                <circle class="node-ring" r="18"></circle>
+              </g>
+              <g class="node n2" transform="translate(250 210)">
+                <circle class="node-core" r="5"></circle>
+                <circle class="node-ring" r="16"></circle>
+              </g>
+              <g class="node n3" transform="translate(735 215)">
+                <circle class="node-core" r="5"></circle>
+                <circle class="node-ring" r="16"></circle>
+              </g>
+
+              <line class="map-line" x1="250" y1="210" x2="455" y2="235"></line>
+              <line class="map-line" x1="455" y1="235" x2="735" y2="215"></line>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Dashboard tiles -->
+        <div class="dash">
+          <button class="tile" data-go="about" type="button">
+            <div class="tile-ic">◈</div>
+            <div class="tile-txt">About</div>
+            <div class="tile-sub">Profile & mission</div>
+          </button>
+
+          <button class="tile" data-go="gallery" type="button">
+            <div class="tile-ic">⬡</div>
+            <div class="tile-txt">Gallery</div>
+            <div class="tile-sub">Photos & visuals</div>
+          </button>
+
+          <button class="tile" data-go="blog" type="button">
+            <div class="tile-ic">⌁</div>
+            <div class="tile-txt">Blog</div>
+            <div class="tile-sub">Logs & updates</div>
+          </button>
+
+          <button class="tile" data-go="contact" type="button">
+            <div class="tile-ic">⟐</div>
+            <div class="tile-txt">Contact</div>
+            <div class="tile-sub">Get in touch</div>
           </button>
         </div>
+      </section>
 
-        <div class="hero-mid">
-          <div class="hero-title">ODOT OS</div>
-          <div class="hero-sub">
-            
+      <!-- About -->
+      <section class="panel" data-page="about" aria-label="About">
+        <div class="panel-head">
+          <div class="panel-title">ABOUT</div>
+          <button class="back-btn" type="button" data-go="home">← Dashboard</button>
+        </div>
+
+        <div class="card">
+          <div class="about-image">
+            <img src="assets/about.jpg" alt="About image" />
+            <div class="frame" aria-hidden="true"></div>
           </div>
 
-          <!-- World map + time/date widget -->
-          <div class="hud-row">
-            <div class="hud-map" aria-label="World map widget">
-              <svg viewBox="0 0 1000 450" role="img" aria-label="World map">
-                <path class="land"
-                  d="M94,240 l40,-40 90,10 40,60 -40,50 -80,10 -50,-30 z
-                     M300,170 l120,-60 120,30 20,80 -60,80 -140,20 -70,-80 z
-                     M610,130 l130,-40 120,40 30,90 -90,90 -140,-20 -80,-90 z
-                     M780,300 l60,-20 70,40 -40,60 -70,10 -40,-40 z"
-                />
-                <circle class="loc" cx="310" cy="205" r="7"/>
-                <circle class="loc-ring" cx="310" cy="205" r="14"/>
-              </svg>
+          <p class="p">
+            Almighty Odot is a creator + builder blending technology, design, and real-world skills into a clean,
+            futuristic dashboard experience.
+          </p>
 
-              <div class="hud-caption">
-                <span class="hud-label">GLOBAL GRID</span>
-                <span class="hud-value">SYNCED</span>
-              </div>
+          <div class="split">
+            <div class="tag">
+              <div class="tag-h">MISSION</div>
+              <div class="tag-b">Build systems and brands that empower the next generation.</div>
             </div>
-
-            <div class="hud-clock" aria-label="Date and time widget">
-              <div class="hud-label">SYSTEM TIME</div>
-              <div class="hud-big" id="hudTime">--:--</div>
-              <div class="hud-sub" id="hudDate">---</div>
-              <div class="hud-sub2">TZ: America/New_York</div>
+            <div class="tag">
+              <div class="tag-h">FOCUS</div>
+              <div class="tag-b">Electronics • Low Voltage • Creative Tech • Community.</div>
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="hero-bottom">
-          <div class="stat">
-            <div class="stat-label">MODE</div>
-            <div class="stat-value">ONLINE</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">SIGNAL</div>
-            <div class="stat-value">STABLE</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">VERSION</div>
-            <div class="stat-value">v1.0</div>
-          </div>
+      <!-- Gallery -->
+      <section class="panel" data-page="gallery" aria-label="Gallery">
+        <div class="panel-head">
+          <div class="panel-title">GALLERY</div>
+          <button class="back-btn" type="button" data-go="home">← Dashboard</button>
         </div>
-      </div>
 
-      <!-- Panels -->
-      <div class="panel-stack">
-        <!-- ABOUT -->
-        <article class="panel active" data-page="about" aria-label="About page">
-          <div class="panel-header">
-            <div class="panel-title">About</div>
-            <div class="panel-tag">IDENTITY FILE</div>
+        <div class="card">
+          <div class="gallery">
+            <div class="g-item">IMG</div><div class="g-item">IMG</div><div class="g-item">IMG</div>
+            <div class="g-item">IMG</div><div class="g-item">IMG</div><div class="g-item">IMG</div>
           </div>
+          
+        </div>
+      </section>
 
-          <div class="panel-body">
-            <!-- About Image -->
-            <div class="about-image">
-              <img src="./assets/about.jpg" alt="Almighty Odot portrait" />
-              <div class="about-image-frame"></div>
-            </div>
+      <!-- Blog -->
+      <section class="panel" data-page="blog" aria-label="Blog">
+        <div class="panel-head">
+          <div class="panel-title">BLOG</div>
+          <button class="back-btn" type="button" data-go="home">← Dashboard</button>
+        </div>
 
-            <p>
-              Almighty Odot is a creator and builder blending technology, design, and hands-on craft.
-              This space is a living OS — a home for projects, stories, products, and contact.
-            </p>
+        <div class="card">
+          <a class="post" href="#"><div class="post-t">System Log: Dashboard Build</div><div class="post-m">Logs • 4 min</div></a>
+          <a class="post" href="#"><div class="post-t">Low Voltage Journey: Tools + Mindset</div><div class="post-m">Training • 6 min</div></a>
+          <a class="post" href="#"><div class="post-t">Brand Systems: From Idea → Identity</div><div class="post-m">Design • 5 min</div></a>
+        </div>
+      </section>
 
-            <div class="divider"></div>
+      <!-- Contact -->
+      <section class="panel" data-page="contact" aria-label="Contact">
+        <div class="panel-head">
+          <div class="panel-title">CONTACT</div>
+          <button class="back-btn" type="button" data-go="home">← Dashboard</button>
+        </div>
 
-            <div class="cards">
-              <div class="mini-card">
-                <div class="mini-title">Focus</div>
-                <div class="mini-text">Tech • Art</div>
-              </div>
-              <div class="mini-card">
-                <div class="mini-title">Vibe</div>
-                <div class="mini-text">Sci-fi </div>
-              </div>
-              <div class="mini-card">
-                <div class="mini-title">Mission</div>
-                <div class="mini-text">Keeping Innovation Alive.</div>
-              </div>
-            </div>
-          </div>
-        </article>
+        <div class="card">
+          <form class="form" onsubmit="event.preventDefault(); alert('Message queued (demo).');">
+            <label class="field">
+              <span>Name</span>
+              <input type="text" placeholder="Your name" required />
+            </label>
 
-        <!-- BLOG -->
-        <article class="panel" data-page="blog" aria-label="Blog page">
-          <div class="panel-header">
-            <div class="panel-title">Blog</div>
-            <div class="panel-tag">LOGS</div>
-          </div>
+            <label class="field">
+              <span>Email</span>
+              <input type="email" placeholder="you@example.com" required />
+            </label>
 
-          <div class="panel-body">
-            <div class="list">
-              <a class="list-item" href="#" onclick="return false;">
-                <div class="li-title">Loading....</div>
-                <div class="li-meta">Jan 03, 2026 • 3 min read</div>
-              </a>
-              <a class="list-item" href="#" onclick="return false;">
-                <div class="li-title">Loading...</div>
-                <div class="li-meta">Jan 02, 2026 • 6 min read</div>
-              </a>
-              <a class="list-item" href="#" onclick="return false;">
-                <div class="li-title">Loading....</div>
-                <div class="li-meta">Dec 30, 2025 • 5 min read</div>
-              </a>
-            </div>
-          </div>
-        </article>
+            <label class="field">
+              <span>Message</span>
+              <textarea rows="4" placeholder="Type your message..." required></textarea>
+            </label>
 
-        <!-- STORE -->
-        <article class="panel" data-page="store" aria-label="Store page">
-          <div class="panel-header">
-            <div class="panel-title">Store</div>
-            <div class="panel-tag">INVENTORY</div>
-          </div>
+            <button class="btn" type="submit">SEND</button>
+          </form>
 
-          <div class="panel-body">
-            <div class="product-grid">
-              <div class="product">
-                <div class="product-img">IMG</div>
-                <div class="product-name">Signature Tee</div>
-                <div class="product-meta">$35 • Limited</div>
-                <button class="btn">View</button>
-              </div>
+          <div class="hint">Hook to Formspree / FormSubmit / backend later.</div>
+        </div>
+      </section>
+    </main>
 
-              <div class="product">
-                <div class="product-img">IMG</div>
-                <div class="product-name">Sticker Pack</div>
-                <div class="product-meta">$12 • Drops</div>
-                <button class="btn">View</button>
-              </div>
-
-              <div class="product">
-                <div class="product-img">IMG</div>
-                <div class="product-name">Digital Kit</div>
-                <div class="product-meta">$19 • Download</div>
-                <button class="btn">View</button>
-              </div>
-            </div>
-
-            <div class="hint">
-              Hook this to Shopify / Stripe later — the layout is ready.
-            </div>
-          </div>
-        </article>
-
-        <!-- CONTACT -->
-        <article class="panel" data-page="contact" aria-label="Contact page">
-          <div class="panel-header">
-            <div class="panel-title">Contact</div>
-            <div class="panel-tag">COMMS</div>
-          </div>
-
-          <div class="panel-body">
-            <form class="form" onsubmit="return false;">
-              <label class="field">
-                <span>Name</span>
-                <input type="text" placeholder="Your name" />
-              </label>
-
-              <label class="field">
-                <span>Email</span>
-                <input type="email" placeholder="you@email.com" />
-              </label>
-
-              <label class="field">
-                <span>Message</span>
-                <textarea rows="4" placeholder="Type your message..."></textarea>
-              </label>
-
-              <button class="btn wide" type="submit">Transmit</button>
-
-              <div class="hint">
-                Want this form to actually send? Use Formspree, Formsubmit, or a tiny serverless function.
-              </div>
-            </form>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Stock ticker (above dock) -->
-    <section class="ticker" aria-label="Stock market ticker">
-      <div class="ticker-track" id="tickerTrack"></div>
-    </section>
-
-    <!-- Bottom Dock -->
-    <nav class="dock" aria-label="Primary navigation">
-      <button class="dock-btn active" data-nav="about" aria-label="About">
-        <span class="dock-ic">◈</span><span class="dock-txt">About</span>
-      </button>
-      <button class="dock-btn" data-nav="blog" aria-label="Blog">
-        <span class="dock-ic">⌁</span><span class="dock-txt">Blog</span>
-      </button>
-      <button class="dock-btn" data-nav="store" aria-label="Store">
-        <span class="dock-ic">⟡</span><span class="dock-txt">Store</span>
-      </button>
-      <button class="dock-btn" data-nav="contact" aria-label="Contact">
-        <span class="dock-ic">⟐</span><span class="dock-txt">Contact</span>
-      </button>
+    <!-- Bottom OS Bar -->
+    <nav class="bottombar" aria-label="Quick navigation">
+      <button class="bb active" data-nav="home" type="button">Home</button>
+      <button class="bb" data-nav="about" type="button">About</button>
+      <button class="bb" data-nav="gallery" type="button">Gallery</button>
+      <button class="bb" data-nav="blog" type="button">Blog</button>
+      <button class="bb" data-nav="contact" type="button">Contact</button>
     </nav>
-  </main>
+  </div>
 
-  <script src="./app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
+
 
 
