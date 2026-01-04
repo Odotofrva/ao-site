@@ -546,6 +546,7 @@ input:focus, textarea:focus{
 .tick .chg.down{ color: rgba(233,237,242,.60); }
 
 /* ✅ BOTTOM NAV DOCK (centered, buttons) */
+/* ✅ BOTTOM NAV DOCK (centered, fixed-size buttons like desktop) */
 .dock{
   position: fixed;
   left: 50%;
@@ -555,9 +556,12 @@ input:focus, textarea:focus{
   width: min(calc(100% - (var(--outer-pad) * 2)), var(--shell-max));
   height: var(--dock-h);
 
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* was grid -> now flex so buttons don't stretch */
+  display:flex;
+  align-items:center;
+  justify-content:center;
   gap: 10px;
+
   padding: 10px;
 
   border-radius: 20px;
@@ -568,11 +572,15 @@ input:focus, textarea:focus{
   z-index:10;
 }
 
+/* fixed-size buttons (not full-width columns) */
 .dock-btn{
+  width: 72px;              /* desktop-like */
+  height: calc(var(--dock-h) - 20px); /* fits inside dock padding */
+  border-radius: 16px;
+
   border: 1px solid rgba(214,178,94,.12);
   background: rgba(0,0,0,.18);
   color: rgba(233,237,242,.78);
-  border-radius: 16px;
 
   display:flex;
   flex-direction: column;
@@ -583,6 +591,7 @@ input:focus, textarea:focus{
   cursor:pointer;
   transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
+
 .dock-btn:hover{ transform: translateY(-2px); }
 .dock-btn:active{ transform: translateY(-1px) scale(.99); }
 
@@ -591,33 +600,22 @@ input:focus, textarea:focus{
   color: rgba(255,223,138,.95);
   box-shadow: 0 0 0 3px rgba(214,178,94,.10);
 }
+
 .dock-ic{
   font-size: 16px;
   color: rgba(214,178,94,.95);
 }
+
 .dock-txt{
   font-family: Orbitron, Inter, sans-serif;
   font-size: 10px;
   letter-spacing: .12em;
   text-align:center;
+  line-height: 1.1;
 }
 
-/* Responsive tweaks */
-@media (max-width: 380px){
-  .hud-row{ grid-template-columns: 1fr; }
-  .dock{ height: 62px; }
+/* ✅ very small phones: slightly smaller buttons */
+@media (max-width: 360px){
+  .dock-btn{ width: 66px; }
   .dock-txt{ font-size: 9px; }
 }
-
-/* Desktop enhancements */
-@media (min-width: 900px){
-  :root{
-    --shell-max: 720px;
-    --hud-max: 900px;
-  }
-  .cards{ grid-template-columns: repeat(3, 1fr); }
-  .product-grid{ grid-template-columns: repeat(3, 1fr); }
-}
-
-
-
