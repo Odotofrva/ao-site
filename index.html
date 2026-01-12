@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
   <head>
@@ -91,7 +94,6 @@
         const status = document.getElementById("gltfStatus");
         if (!wrap || !host) return;
 
-        // prevent double init
         if (host.dataset.inited === "true") return;
         host.dataset.inited = "true";
 
@@ -118,12 +120,11 @@
         controls.enableDamping = true;
         controls.dampingFactor = 0.06;
         controls.enablePan = false;
-        controls.enableZoom = false; // set true if you want pinch zoom
+        controls.enableZoom = false;
         controls.rotateSpeed = 0.7;
         renderer.domElement.style.touchAction = "none";
 
         const MODEL_URL = "tech.glb";
-
         const loader = new GLTFLoader();
         let modelRoot = null;
 
@@ -133,7 +134,6 @@
             modelRoot = gltf.scene;
             scene.add(modelRoot);
 
-            // Fit camera to model (robust)
             const box = new THREE.Box3().setFromObject(modelRoot);
             const size = new THREE.Vector3();
             const center = new THREE.Vector3();
@@ -255,11 +255,9 @@
               </span>
 
               <div class="relative w-full overflow-hidden">
-                <!-- Fade edges -->
                 <div class="pointer-events-none absolute left-0 top-0 h-full w-10 bg-gradient-to-r from-zinc-950/90 to-transparent"></div>
                 <div class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-zinc-950/90 to-transparent"></div>
 
-                <!-- Marquee content (duplicated for seamless scroll) -->
                 <div id="tickerMarquee" class="marquee gap-8 text-[12px] text-white/80">
                   <div class="flex items-center gap-8" id="tickerRowA">
                     <span class="opacity-70">Loading prices…</span>
@@ -307,11 +305,12 @@
         <!-- Menu Panel -->
         <nav id="menuPanel" class="mx-auto hidden w-full max-w-6xl px-5 pb-4 sm:px-8">
           <div class="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur">
-            <ul class="grid gap-2 sm:grid-cols-5">
+            <ul class="grid gap-2 sm:grid-cols-6">
               <li><a data-section="about" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#about">About</a></li>
               <li><a data-section="projects" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#projects">Projects</a></li>
               <li><a data-section="lookbook" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#lookbook">Lookbook</a></li>
-              <li><a data-section="robotechi" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#robotechi">RoboTechi</a></li>
+              <li><a data-section="video" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#video">Video</a></li>
+              <li><a data-section="blog" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#blog">Blog</a></li>
               <li><a data-section="contact" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#contact">Contact</a></li>
             </ul>
           </div>
@@ -327,13 +326,11 @@
                 <p class="text-sm font-medium tracking-wide text-white/60">About</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Who is Odot!?</h2>
                 <p class="mt-3 max-w-3xl text-white/70">
-                  Odot is a multidisciplinary creative driven by the fusion of art, technology, and design. With an entrepreneurial spirit at his core, he transforms ideas into experiences—blending visual storytelling, digital innovation, and forward-thinking aesthetics into work that feels both grounded and futuristic.</p>
+                  Orion, also known as Almighty Odot, is a self-taught developer and low-voltage technologist whose journey is rooted in resilience, hands-on learning, and a deep commitment to ownership through skill.
+                </p>
                 <br>
-                <p>Thriving in the relentless energy of New York City, Odot draws inspiration from the streets, the people, and the pace of a city that never stops creating. His approach is hands-on and experimental, moving fluidly between creative disciplines while building concepts that challenge norms and spark curiosity. </p>
-                    <br>
-                <p>More than a creator, Odot is a builder of ideas and platforms—constantly innovating, collaborating, and pushing boundaries. Through his work, he aims to inspire others to see creativity as a tool for growth, impact, and transformation, proving that when art, tech, and design intersect, the possibilities are limitless.</p>
-                    <br>
-                
+                <p class="text-white/70">
+                  Orion began his career in the field as an electrical field technician... (your text continues)
                 </p>
               </div>
 
@@ -353,38 +350,25 @@
             <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img
-                    src="logo.png"
-                    alt="Project 1"
-                    class="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-              </div>
-                <h3 class="mt-4 font-semibold"> Art </h3>
+                  <img src="logo.png" alt="Project 1" class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <h3 class="mt-4 font-semibold">Low Voltage w/ Pi4.</h3>
                 <p class="mt-1 text-sm text-white/70">Short description of the project.</p>
               </article>
+
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img
-                    src="logo.png"
-                    alt="Project 1"
-                    class="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-              </div>
-                <h3 class="mt-4 font-semibold">Technology</h3>
+                  <img src="logo.png" alt="Project 2" class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <h3 class="mt-4 font-semibold">RT-ONE DevBoard</h3>
                 <p class="mt-1 text-sm text-white/70">Short description of the project.</p>
               </article>
+
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img
-                    src="logo.png"
-                    alt="Project 1"
-                    class="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-              </div>
-                <h3 class="mt-4 font-semibold"> Design </h3>
+                  <img src="logo.png" alt="Project 3" class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <h3 class="mt-4 font-semibold">MP9K v1</h3>
                 <p class="mt-1 text-sm text-white/70">Short description of the project.</p>
               </article>
             </div>
@@ -398,67 +382,105 @@
               <div>
                 <p class="text-sm font-medium tracking-wide text-white/60">Lookbook</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Realm Of Almighty Odot</h2>
-                <p class="mt-2 max-w-2xl text-white/70">
-                  Take a view of the entrepreneur...
-                </p>
+                <p class="mt-2 max-w-2xl text-white/70">Take a view of the entrepreneur...</p>
               </div>
 
               <div class="flex gap-2">
-                <button
-                  id="lookPrev"
-                  class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 transition hover:bg-white/10"
-                  type="button"
-                >
-                  ←
-                </button>
-                <button
-                  id="lookNext"
-                  class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 transition hover:bg-white/10"
-                  type="button"
-                >
-                  →
-                </button>
+                <button id="lookPrev" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 transition hover:bg-white/10" type="button">←</button>
+                <button id="lookNext" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 transition hover:bg-white/10" type="button">→</button>
               </div>
             </div>
 
-            <!-- Carousel -->
             <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
-              <div
-                id="lookTrack"
-                class="flex transition-transform duration-300 ease-out"
-                style="transform: translateX(0%)"
-              >
-                <!-- Slide 1 -->
+              <div id="lookTrack" class="flex transition-transform duration-300 ease-out" style="transform: translateX(0%)">
                 <div class="w-full shrink-0">
                   <div class="relative h-[240px] sm:h-[340px] lg:h-[420px]">
                     <img src="robotard.png" alt="Lookbook 1" class="absolute inset-0 h-full w-full object-cover" />
                     <div class="absolute inset-0 bg-black/25"></div>
-                    <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
-                      Look 01
-                    </div>
+                    <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">Look 01</div>
                   </div>
                 </div>
-                <!-- Slide 2 -->
                 <div class="w-full shrink-0">
                   <div class="relative h-[240px] sm:h-[340px] lg:h-[420px]">
                     <img src="hotboston.png" alt="Lookbook 2" class="absolute inset-0 h-full w-full object-cover" />
                     <div class="absolute inset-0 bg-black/25"></div>
-                    <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
-                      Look 02
-                    </div>
+                    <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">Look 02</div>
                   </div>
                 </div>
-                <!-- Slide 3 -->
                 <div class="w-full shrink-0">
                   <div class="relative h-[240px] sm:h-[340px] lg:h-[420px]">
                     <img src="RT-Uno-Shield-Front.jpg" alt="Lookbook 3" class="absolute inset-0 h-full w-full object-cover" />
                     <div class="absolute inset-0 bg-black/25"></div>
-                    <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
-                      Look 03
-                    </div>
+                    <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">Look 03</div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ✅ VIDEO (YouTube Embed) -->
+        <section id="video" class="mt-14 scroll-mt-40">
+          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
+            <p class="text-sm font-medium tracking-wide text-white/60">Video</p>
+            <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Watch</h2>
+            <p class="mt-2 max-w-2xl text-white/70">
+              Latest video drop. Swap the YouTube ID in the script to change what plays here.
+            </p>
+
+            <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
+              <!-- Responsive 16:9 iframe -->
+              <div class="relative w-full pb-[56.25%]">
+                <iframe
+                  id="ytFrame"
+                  class="absolute inset-0 h-full w-full"
+                  src=""
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+
+            <div class="mt-4 text-xs text-white/50">
+              Tip: use a playlist by setting <span class="text-white/70">YOUTUBE_PLAYLIST_ID</span> in the script.
+            </div>
+          </div>
+        </section>
+
+        <!-- ✅ BLOG (Medium Posts) -->
+        <section id="blog" class="mt-14 scroll-mt-40">
+          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p class="text-sm font-medium tracking-wide text-white/60">Blog</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Medium Posts</h2>
+                <p class="mt-2 max-w-2xl text-white/70">
+                  Pulled from Medium via RSS. Click a post to open on Medium.
+                </p>
+              </div>
+
+              <a
+                id="mediumProfileBtn"
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 transition hover:bg-white/10"
+              >
+                View on Medium →
+              </a>
+            </div>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="mediumGrid">
+              <!-- populated by JS -->
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">
+                Loading Medium posts…
+              </div>
+            </div>
+
+            <div class="mt-4 text-xs text-white/50">
+              If posts don’t load, check the console. Some hosts block RSS→JSON calls on certain networks; fallback will still show.
             </div>
           </div>
         </section>
@@ -468,28 +490,19 @@
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <div class="grid items-center gap-8 lg:grid-cols-2">
               <div>
-                
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">RoboTechi Co.</h2>
-                 <p class="mt-3 max-w-2xl text-white/70">
-                  RoboTechi Co. is an education-driven technology company dedicated to making electrical knowledge accessible to everyone. We provide free learning resources focused on low-voltage systems, structured cabling, and core electrician fundamentals, designed for beginners, career-changers, and aspiring tradespeople. RoboTechi bridges hands-on trade skills with modern tech education, empowering individuals to learn safely, build confidently, and grow real-world electrical expertise.
+                <p class="mt-3 max-w-2xl text-white/70">
+                  RoboTechi Co. is an education-driven technology company dedicated to making electrical knowledge accessible to everyone...
                 </p>
 
                 <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-                  <a
-                    href="#projects"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-                  >
+                  <a href="#projects" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
                     See Work
                   </a>
-                  <a
-                    href="#contact"
-                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
-                  >
+                  <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
                     Work With Me
                   </a>
                 </div>
-
-              
               </div>
 
               <div class="relative">
@@ -502,7 +515,11 @@
 
                   <div class="pointer-events-none absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
                     <span class="h-2 w-2 rounded-full bg-white/70"></span>
-                    keyboard.glb
+                    tech.glb
+                  </div>
+
+                  <div id="gltfStatus" class="pointer-events-none absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
+                    Loading 3D model…
                   </div>
                 </div>
               </div>
@@ -510,13 +527,13 @@
           </div>
         </section>
 
-        <!-- CONTACT (no image) -->
+        <!-- CONTACT -->
         <section id="contact" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <p class="text-sm font-medium tracking-wide text-white/60">Contact</p>
             <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Send a message</h2>
             <p class="mt-3 max-w-2xl text-white/70">
-             Interested in connecting with me? No worries. Fill the form completely and I will connect with you soon. Thanks for visiting. 
+              Interested in connecting with me? Fill the form completely and I will connect with you soon.
             </p>
 
             <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST">
@@ -557,6 +574,26 @@
     </section>
 
     <script>
+      // =========================================================
+      // CONFIG (change these)
+      // =========================================================
+
+      // ✅ Medium RSS URL:
+      // - Profile RSS often looks like: https://medium.com/feed/@yourusername
+      // - Publication RSS: https://medium.com/feed/publication-name
+      const MEDIUM_RSS_URL = "https://medium.com/feed/@YOUR_USERNAME";
+
+      // A profile link button target (optional, but recommended)
+      const MEDIUM_PROFILE_URL = "https://medium.com/@YOUR_USERNAME";
+
+      // ✅ YouTube:
+      // Option A: Single video
+      const YOUTUBE_VIDEO_ID = "dQw4w9WgXcQ"; // replace
+      // Option B: Playlist (set to "" if not using)
+      const YOUTUBE_PLAYLIST_ID = ""; // e.g. "PLxxxxxxxxxxxx"
+
+      // =========================================================
+
       // Landing -> Home
       const enterBtn = document.getElementById("enterBtn");
       const landing = document.getElementById("landing");
@@ -578,6 +615,8 @@
         initActiveMenu();
         initLookbookCarousel();
         initCryptoTicker();
+        initYouTube();
+        initMediumBlog();
 
         // Init GLB viewer
         if (window.__initRoboTechiGLTF) window.__initRoboTechiGLTF();
@@ -625,10 +664,8 @@
           });
         };
 
-        const sections = ["about", "projects", "lookbook", "robotechi", "contact"]
-          .map((id) => document.getElementById(id))
-          .filter(Boolean);
-
+        const ids = ["about", "projects", "lookbook", "video", "blog", "robotechi", "contact"];
+        const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
 
         const io = new IntersectionObserver(
@@ -641,7 +678,6 @@
           },
           {
             root: null,
-            // compensate for sticky header + ticker
             rootMargin: "-35% 0px -55% 0px",
             threshold: [0.15, 0.25, 0.35, 0.5, 0.75],
           }
@@ -695,10 +731,132 @@
         // Optional autoplay
         let timer = setInterval(() => go(idx + 1), 6000);
 
-        // pause on hover (desktop)
         const carouselBox = track.parentElement;
         carouselBox?.addEventListener("mouseenter", () => clearInterval(timer));
         carouselBox?.addEventListener("mouseleave", () => (timer = setInterval(() => go(idx + 1), 6000)));
+      }
+
+      // --------------------------
+      // YouTube Embed (responsive)
+      // --------------------------
+      function initYouTube() {
+        const frame = document.getElementById("ytFrame");
+        if (!frame) return;
+
+        if (YOUTUBE_PLAYLIST_ID && YOUTUBE_PLAYLIST_ID.trim()) {
+          // Playlist embed
+          frame.src =
+            `https://www.youtube.com/embed/videoseries?list=${encodeURIComponent(YOUTUBE_PLAYLIST_ID)}&rel=0&modestbranding=1`;
+          return;
+        }
+
+        // Single video embed
+        frame.src =
+          `https://www.youtube.com/embed/${encodeURIComponent(YOUTUBE_VIDEO_ID)}?rel=0&modestbranding=1`;
+      }
+
+      // --------------------------
+      // Medium Blog (RSS -> JSON)
+      // --------------------------
+      function stripHtml(html) {
+        const div = document.createElement("div");
+        div.innerHTML = html || "";
+        return (div.textContent || div.innerText || "").trim();
+      }
+
+      function fmtDate(d) {
+        try {
+          return new Date(d).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+        } catch {
+          return "";
+        }
+      }
+
+      async function fetchMediumRSS() {
+        // Uses rss2json (public). If it fails, we fall back.
+        const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(MEDIUM_RSS_URL)}`;
+        const res = await fetch(api, { cache: "no-store" });
+        if (!res.ok) throw new Error(`Medium RSS fetch failed: ${res.status}`);
+        const data = await res.json();
+        if (!data || data.status !== "ok") throw new Error("Medium RSS parse failed");
+        return data;
+      }
+
+      function renderMediumPosts(items) {
+        const grid = document.getElementById("mediumGrid");
+        if (!grid) return;
+
+        if (!items?.length) {
+          grid.innerHTML = `
+            <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">
+              No posts found. Update your Medium RSS URL in the script.
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = items.slice(0, 6).map((it) => {
+          const title = it.title || "Untitled";
+          const link = it.link || "#";
+          const date = fmtDate(it.pubDate);
+          const desc = stripHtml(it.description).slice(0, 140);
+
+          // Some feeds include thumbnail
+          const thumb = it.thumbnail || "";
+          const thumbHtml = thumb
+            ? `<img src="${thumb}" alt="" class="h-full w-full object-cover" loading="lazy" />`
+            : `<div class="grid h-full w-full place-items-center text-xs text-white/40">MEDIUM</div>`;
+
+          return `
+            <a href="${link}" target="_blank" rel="noreferrer"
+              class="glow-card block rounded-2xl border border-white/10 bg-black/20 p-5 transition hover:bg-black/30">
+              <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                ${thumbHtml}
+              </div>
+              <div class="mt-4">
+                <div class="text-xs text-white/50">${date}</div>
+                <div class="mt-1 font-semibold text-white/90">${title}</div>
+                <div class="mt-2 text-sm text-white/70">${desc}${desc.length >= 140 ? "…" : ""}</div>
+                <div class="mt-3 text-xs text-white/50">Read on Medium →</div>
+              </div>
+            </a>
+          `;
+        }).join("");
+      }
+
+      function initMediumBlog() {
+        const btn = document.getElementById("mediumProfileBtn");
+        if (btn) btn.href = MEDIUM_PROFILE_URL;
+
+        const grid = document.getElementById("mediumGrid");
+        if (!grid) return;
+
+        const fallback = [
+          {
+            title: "Add your Medium RSS URL to load posts",
+            link: MEDIUM_PROFILE_URL || "https://medium.com",
+            pubDate: new Date().toISOString(),
+            description: "Update MEDIUM_RSS_URL and MEDIUM_PROFILE_URL inside the script. Then reload the page.",
+            thumbnail: ""
+          },
+          {
+            title: "Example post card (replace with real posts)",
+            link: MEDIUM_PROFILE_URL || "https://medium.com",
+            pubDate: new Date().toISOString(),
+            description: "Once RSS loads, this area will automatically display your latest Medium posts.",
+            thumbnail: ""
+          }
+        ];
+
+        (async () => {
+          try {
+            const data = await fetchMediumRSS();
+            renderMediumPosts(data.items || []);
+          } catch (e) {
+            console.error(e);
+            renderMediumPosts(fallback);
+          }
+        })();
       }
 
       // --------------------------
@@ -710,7 +868,6 @@
       }
 
       async function fetchCrypto() {
-        // CoinGecko: no API key required for basic endpoints
         const ids = "bitcoin,ethereum,solana,cardano,dogecoin,polkadot";
         const url =
           `https://api.coingecko.com/api/v3/simple/price?ids=${encodeURIComponent(ids)}&vs_currencies=usd&include_24hr_change=true`;
@@ -761,7 +918,7 @@
           .join("");
 
         rowA.innerHTML = html;
-        rowB.innerHTML = html; // duplicate for seamless marquee
+        rowB.innerHTML = html;
       }
 
       function initCryptoTicker() {
@@ -782,13 +939,15 @@
         };
 
         btn?.addEventListener("click", load);
-
         load();
-        // refresh every 60s
         setInterval(load, 60000);
       }
+
+      const MEDIUM_RSS_URL = "https://medium.com/feed/@YOUR_USERNAME";
+      const MEDIUM_PROFILE_URL = "https://medium.com/@YOUR_USERNAME";
+
+      const YOUTUBE_VIDEO_ID = "YOUR_VIDEO_ID";
+      const YOUTUBE_PLAYLIST_ID = ""; // optional
     </script>
   </body>
 </html>
-
-
