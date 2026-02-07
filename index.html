@@ -55,161 +55,7 @@
         animation: marquee 22s linear infinite;
       }
       .marquee:hover { animation-play-state: paused; }
-
-      /* GLTF viewer host */
-      #robotechi-gltf-wrap {
-        position: relative;
-        overflow: hidden;
-        border-radius: 1.5rem;
-      }
-      #robotechi-gltf {
-        position: absolute;
-        inset: 0;
-      }
-      #robotechi-gltf canvas {
-        width: 100%;
-        height: 100%;
-        display: block;
-      }
-      .gltf-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to bottom right, rgba(0,0,0,0.12), rgba(0,0,0,0.35));
-        pointer-events: none;
-      }
     </style>
-
-    <!-- Three.js (module) -->
-    <script type="module">
-      import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-      import { GLTFLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
-      import { OrbitControls } from "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js";
-
-      window.__initRoboTechiGLTF = function initRoboTechiGLTF() {
-        const wrap = document.getElementById("robotechi-gltf-wrap");
-        const host = document.getElementById("robotechi-gltf");
-        const status = document.getElementById("gltfStatus");
-        if (!wrap || !host) return;
-
-        if (host.dataset.inited === "true") return;
-        host.dataset.inited = "true";
-
-        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-        const scene = new THREE.Scene();
-
-        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 200);
-        camera.position.set(0, 1.2, 3.2);
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.outputColorSpace = THREE.SRGBColorSpace;
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.1;
-        host.appendChild(renderer.domElement);
-
-        scene.add(new THREE.HemisphereLight(0xffffff, 0x222222, 1.0));
-        const dir = new THREE.DirectionalLight(0xffffff, 1.1);
-        dir.position.set(3, 5, 2);
-        scene.add(dir);
-
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.06;
-        controls.enablePan = false;
-        controls.enableZoom = false;
-        controls.rotateSpeed = 0.7;
-        renderer.domElement.style.touchAction = "none";
-
-        const MODEL_URL = "tech.glb";
-        const loader = new GLTFLoader();
-        let modelRoot = null;
-
-        loader.load(
-          MODEL_URL,
-          (gltf) => {
-            modelRoot = gltf.scene;
-            scene.add(modelRoot);
-
-            const box = new THREE.Box3().setFromObject(modelRoot);
-            const size = new THREE.Vector3();
-            const center = new THREE.Vector3();
-            box.getSize(size);
-            box.getCenter(center);
-
-            modelRoot.position.sub(center);
-
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const fov = camera.fov * (Math.PI / 180);
-            let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
-            cameraZ *= 1.6;
-
-            camera.position.set(0, maxDim * 0.4, cameraZ);
-            camera.lookAt(0, 0, 0);
-
-            controls.target.set(0, 0, 0);
-            controls.update();
-
-            if (status) status.textContent = "Loaded ✓ Drag to rotate";
-            if (!prefersReduced) modelRoot.userData.idleSpin = true;
-          },
-          (xhr) => {
-            if (status && xhr.total) {
-              const pct = Math.round((xhr.loaded / xhr.total) * 100);
-              status.textContent = `Loading 3D model… ${pct}%`;
-            }
-          },
-          (err) => {
-            if (status) status.textContent = "Failed to load model (check path/console)";
-            console.error("GLB load error:", err);
-          }
-        );
-
-        const resize = () => {
-          const rect = wrap.getBoundingClientRect();
-          const w = Math.max(1, rect.width);
-          const h = Math.max(1, rect.height);
-          camera.aspect = w / h;
-          camera.updateProjectionMatrix();
-          renderer.setSize(w, h, false);
-        };
-
-        const ro = new ResizeObserver(resize);
-        ro.observe(wrap);
-        resize();
-
-        let rafId = 0;
-        const clock = new THREE.Clock();
-
-        const animate = () => {
-          rafId = requestAnimationFrame(animate);
-          const dt = clock.getDelta();
-
-          if (modelRoot && modelRoot.userData.idleSpin && !prefersReduced) {
-            modelRoot.rotation.y += dt * 0.25;
-          }
-
-          controls.update();
-          renderer.render(scene, camera);
-        };
-        animate();
-
-        const io = new IntersectionObserver(
-          (entries) => {
-            const isVisible = entries.some((e) => e.isIntersecting);
-            if (!isVisible && rafId) {
-              cancelAnimationFrame(rafId);
-              rafId = 0;
-            } else if (isVisible && !rafId) {
-              clock.getDelta();
-              animate();
-            }
-          },
-          { threshold: 0.1 }
-        );
-        io.observe(wrap);
-      };
-    </script>
   </head>
 
   <body class="w-screen bg-black text-white">
@@ -365,7 +211,7 @@
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
                   <img src="logo.png" alt="Project 2" class="h-full w-full object-cover" loading="lazy" />
                 </div>
-                <h3 class="mt-4 font-semibold"></h3>Loading Soon!</h3>
+                <h3 class="mt-4 font-semibold">Loading Soon!</h3>
                 <p class="mt-1 text-sm text-white/70">Project Details</p>
               </article>
 
@@ -458,7 +304,6 @@
               <div>
                 <p class="text-sm font-medium tracking-wide text-white/60">Blog</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Read Odot's Tech Blog!</h2>
-                
               </div>
 
               <a
@@ -477,12 +322,10 @@
                 Loading Medium posts…
               </div>
             </div>
-
- 
           </div>
         </section>
 
-        <!-- ROBOTECHI -->
+        <!-- ROBOTECHI (UPDATED: VIDEO + BUTTON) -->
         <section id="robotechi" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <div class="grid items-center gap-8 lg:grid-cols-2">
@@ -502,24 +345,44 @@
                 </div>
               </div>
 
+              <!-- Right: Video hero with CTA -->
               <div class="relative">
-                <div
-                  id="robotechi-gltf-wrap"
-                  class="glow-card h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-black/30 sm:h-[320px] lg:h-[380px]"
-                >
-                  <div id="robotechi-gltf" class="absolute inset-0"></div>
-                  <div class="gltf-overlay"></div>
+                <div class="glow-card relative h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-black/20 sm:h-[320px] lg:h-[380px]">
+                  <!-- Video -->
+                  <video
+                    class="absolute inset-0 h-full w-full"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    poster="robotechi-poster.jpg"
+                  >
+                    <source src="robotechi.mp4" type="video/mp4" />
+                    <source src="robotechi.webm" type="video/webm" />
+                  </video>
 
+                  <!-- Overlay -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/30 to-black/60"></div>
+
+                  <!-- Badge -->
                   <div class="pointer-events-none absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
                     <span class="h-2 w-2 rounded-full bg-white/70"></span>
-                    Technology of RoboTechi...
+                    RoboTechi in motion
                   </div>
 
-                  <div id="gltfStatus" class="pointer-events-none absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
-                    Loading 3D model…
+                  <!-- CTA -->
+                  <div class="absolute bottom-4 right-4 z-10">
+                    <a
+                      href="robotechi.html"
+                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                    >
+                      Enter RoboTechi →
+                    </a>
                   </div>
                 </div>
               </div>
+              <!-- /Right -->
             </div>
           </div>
         </section>
@@ -626,8 +489,6 @@
           initCryptoTicker();
           initYouTube();
           initMediumBlog();
-
-          if (window.__initRoboTechiGLTF) window.__initRoboTechiGLTF();
 
           setActiveNav("about");
         }
