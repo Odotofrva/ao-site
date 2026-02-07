@@ -152,20 +152,30 @@
         <!-- Menu Panel -->
         <nav id="menuPanel" class="mx-auto hidden w-full max-w-6xl px-5 pb-4 sm:px-8">
           <div class="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur">
-            <ul class="grid gap-2 sm:grid-cols-6">
+            <ul class="grid gap-2 sm:grid-cols-8">
+              <!-- UPDATED ORDER: About at top, Contact bottom, reLEAF near bottom -->
               <li><a data-section="about" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#about">About</a></li>
+              <li><a data-section="robotechi" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#robotechi">RoboTechi</a></li>
               <li><a data-section="projects" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#projects">Projects</a></li>
+              <li><a data-section="creative" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#creative">Creative</a></li>
               <li><a data-section="lookbook" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#lookbook">Lookbook</a></li>
               <li><a data-section="video" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#video">Video</a></li>
               <li><a data-section="blog" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#blog">Blog</a></li>
-              <li><a data-section="contact" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#contact">Contact</a></li>
+
+              <li class="sm:col-span-8">
+                <a data-section="releaf" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#releaf">reLEAF (21+)</a>
+              </li>
+              <li class="sm:col-span-8">
+                <a data-section="contact" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#contact">Contact</a>
+              </li>
             </ul>
           </div>
         </nav>
       </header>
 
       <main class="mx-auto w-full max-w-6xl px-5 pb-12 pt-6 sm:px-8">
-        <!-- ABOUT -->
+
+        <!-- ABOUT (MOVED TO TOP) -->
         <section id="about" class="mt-8 scroll-mt-28">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <div class="grid items-center gap-8 lg:grid-cols-2">
@@ -187,6 +197,63 @@
 
               <div class="rounded-3xl border border-white/10 bg-black/20 p-4">
                 <img src="handodot.png" alt="Odot" class="w-full rounded-2xl object-cover" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ROBOTECHI -->
+        <section id="robotechi" class="mt-14 scroll-mt-40">
+          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
+            <div class="grid items-center gap-8 lg:grid-cols-2">
+              <div>
+                <p class="text-sm font-medium tracking-wide text-white/60">Featured</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">RoboTechi Co.</h2>
+                <p class="mt-3 max-w-2xl text-white/70">
+                  RoboTechi is a technology-driven company focused on designing and building solutions around embedded systems and modern electronics. Inspired by platforms like Adafruit, Arduino, and Raspberry Pi, RoboTechi creates tools, resources, and projects that empower makers, students, and innovators to learn, prototype, and bring ideas to life through hands-on hardware and open technology.
+                </p>
+
+                <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+                  <a href="#projects" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
+                    See Work
+                  </a>
+                  <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
+                    Work With Me
+                  </a>
+                </div>
+              </div>
+
+              <div class="relative">
+                <div class="glow-card relative h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-black/20 sm:h-[320px] lg:h-[380px]">
+                  <video
+                    class="absolute inset-0 h-full w-full"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    poster="robotechi-poster.jpg"
+                  >
+                    <source src="robotechi.mp4" type="video/mp4" />
+                    <source src="robotechi.webm" type="video/webm" />
+                  </video>
+
+                  <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/30 to-black/60"></div>
+
+                  <div class="pointer-events-none absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
+                    <span class="h-2 w-2 rounded-full bg-white/70"></span>
+                    RoboTechi in motion
+                  </div>
+
+                  <div class="absolute bottom-4 right-4 z-10">
+                    <a
+                      href="robotechi.html"
+                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                    >
+                      Enter RoboTechi →
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -221,6 +288,55 @@
                 </div>
                 <h3 class="mt-4 font-semibold">Loading Soon!</h3>
                 <p class="mt-1 text-sm text-white/70">Project Details</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- CREATIVE -->
+        <section id="creative" class="mt-14 scroll-mt-40">
+          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p class="text-sm font-medium tracking-wide text-white/60">ODOT / Creative</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Products + Artifacts by Odot</h2>
+                <p class="mt-2 max-w-2xl text-white/70">
+                  A living gallery of creative products—branding, packaging, visuals, web experiences, and engineered art—built across multiple worlds.
+                </p>
+              </div>
+              <div class="flex flex-col gap-2 sm:flex-row">
+                <a href="#lookbook" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
+                  See Visuals →
+                </a>
+                <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
+                  Commission a Build
+                </a>
+              </div>
+            </div>
+
+            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
+                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                  <img src="creative-01.jpg" alt="Brand Systems" class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <h3 class="mt-4 font-semibold">Brand Systems</h3>
+                <p class="mt-1 text-sm text-white/70">Logos, visual identity, and style kits built for real products.</p>
+              </article>
+
+              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
+                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                  <img src="creative-02.jpg" alt="Packaging + Labels" class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <h3 class="mt-4 font-semibold">Packaging + Labels</h3>
+                <p class="mt-1 text-sm text-white/70">Boxes, jars, pouches, and retail-ready product presentation.</p>
+              </article>
+
+              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
+                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                  <img src="creative-03.jpg" alt="Merch + Apparel" class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <h3 class="mt-4 font-semibold">Merch + Apparel</h3>
+                <p class="mt-1 text-sm text-white/70">Streetwear concepts, graphics, mockups, and drops.</p>
               </article>
             </div>
           </div>
@@ -277,9 +393,7 @@
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <p class="text-sm font-medium tracking-wide text-white/60">Video</p>
             <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Watch</h2>
-            <p class="mt-2 max-w-2xl text-white/70">
-              Coming Soon.... Street Syntax : (A Short Film)
-            </p>
+            <p class="mt-2 max-w-2xl text-white/70">Coming Soon.... Street Syntax : (A Short Film)</p>
 
             <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
               <div class="relative w-full pb-[56.25%]">
@@ -325,69 +439,61 @@
           </div>
         </section>
 
-        <!-- ROBOTECHI (UPDATED: VIDEO + BUTTON) -->
-        <section id="robotechi" class="mt-14 scroll-mt-40">
+        <!-- reLEAF -->
+        <section id="releaf" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <div class="grid items-center gap-8 lg:grid-cols-2">
               <div>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">RoboTechi Co.</h2>
+                <p class="text-sm font-medium tracking-wide text-white/60">Partner Brand</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">reLEAF</h2>
                 <p class="mt-3 max-w-2xl text-white/70">
-                  RoboTechi is a technology-driven company focused on designing and building solutions around embedded systems and modern electronics. Inspired by platforms like Adafruit, Arduino, and Raspberry Pi, RoboTechi creates tools, resources, and projects that empower makers, students, and innovators to learn, prototype, and bring ideas to life through hands-on hardware and open technology.
+                  reLEAF is a community-minded brand focused on quality cannabis and related products with accessibility in mind.
+                  Explore the experience on the reLEAF site.
                 </p>
 
-                <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-                  <a href="#projects" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
-                    See Work
-                  </a>
-                  <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
-                    Work With Me
-                  </a>
-                </div>
-              </div>
-
-              <!-- Right: Video hero with CTA -->
-              <div class="relative">
-                <div class="glow-card relative h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-black/20 sm:h-[320px] lg:h-[380px]">
-                  <!-- Video -->
-                  <video
-                    class="absolute inset-0 h-full w-full"
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    preload="metadata"
-                    poster="robotechi-poster.jpg"
+                <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <button
+                    id="releafEnterBtn"
+                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                    type="button"
                   >
-                    <source src="robotechi.mp4" type="video/mp4" />
-                    <source src="robotechi.webm" type="video/webm" />
-                  </video>
+                    Enter reLEAF (21+) →
+                  </button>
 
-                  <!-- Overlay -->
-                  <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/30 to-black/60"></div>
+                  <a
+                    href="#contact"
+                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                  >
+                    Partner / Contact
+                  </a>
+                </div>
 
-                  <!-- Badge -->
-                  <div class="pointer-events-none absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
-                    <span class="h-2 w-2 rounded-full bg-white/70"></span>
-                    RoboTechi in motion
-                  </div>
+                <p class="mt-4 text-xs text-white/50">
+                  You must confirm you are 21+ before leaving this site.
+                </p>
+              </div>
 
-                  <!-- CTA -->
-                  <div class="absolute bottom-4 right-4 z-10">
-                    <a
-                      href="robotechi.html"
-                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-                    >
-                      Enter RoboTechi →
-                    </a>
+              <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20 p-6">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-white/5 to-black/40"></div>
+                <div class="relative">
+                  <div class="text-sm font-medium tracking-wide text-white/70">reLEAF preview</div>
+                  <h3 class="mt-2 text-xl font-semibold">Minimal. Clean. Community-first.</h3>
+                  <p class="mt-2 text-sm text-white/70">
+                    Add your reLEAF images here (product shots, packaging, storefront, etc.).
+                  </p>
+
+                  <div class="mt-5 grid grid-cols-3 gap-3">
+                    <div class="aspect-square rounded-2xl border border-white/10 bg-white/5"></div>
+                    <div class="aspect-square rounded-2xl border border-white/10 bg-white/5"></div>
+                    <div class="aspect-square rounded-2xl border border-white/10 bg-white/5"></div>
                   </div>
                 </div>
               </div>
-              <!-- /Right -->
             </div>
           </div>
         </section>
 
-        <!-- CONTACT -->
+        <!-- CONTACT (MOVED TO BOTTOM) -->
         <section id="contact" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <p class="text-sm font-medium tracking-wide text-white/60">Contact</p>
@@ -433,6 +539,56 @@
       </main>
     </section>
 
+    <!-- 21+ MODAL (reLEAF Gate) -->
+    <div id="ageModal" class="fixed inset-0 z-50 hidden">
+      <div class="absolute inset-0 bg-black/70"></div>
+
+      <div class="relative mx-auto mt-24 w-[92%] max-w-md">
+        <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-medium tracking-wide text-white/60">Age Verification</p>
+              <h3 class="mt-1 text-xl font-semibold">Are you 21 or older?</h3>
+              <p class="mt-2 text-sm text-white/70">
+                You must confirm you are 21+ to enter the reLEAF website.
+              </p>
+            </div>
+
+            <button
+              id="ageClose"
+              type="button"
+              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            <button
+              id="ageYes"
+              type="button"
+              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+            >
+              Yes, I’m 21+
+            </button>
+
+            <button
+              id="ageNo"
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+            >
+              No, take me back
+            </button>
+          </div>
+
+          <p class="mt-4 text-[11px] text-white/45">
+            By clicking “Yes”, you confirm you meet the legal age requirement in your location.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <script>
       // =========================================================
       // CONFIG (CHANGE THESE)
@@ -445,6 +601,9 @@
       // YouTube: use ONE of these
       const YOUTUBE_VIDEO_ID = "kUHVe7HVs5U"; // replace
       const YOUTUBE_PLAYLIST_ID = ""; // optional e.g. "PLxxxx"
+
+      // reLEAF destination (change to your real URL)
+      const RELEAF_URL = "https://example.com";
       // =========================================================
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -464,7 +623,6 @@
           if (!vid) return;
           try {
             vid.pause();
-            // fully stop network activity
             vid.removeAttribute("src");
             const src = vid.querySelector("source");
             if (src) src.removeAttribute("src");
@@ -489,21 +647,19 @@
           initCryptoTicker();
           initYouTube();
           initMediumBlog();
+          initReleafGate();
 
           setActiveNav("about");
         }
 
-        // Button click
         if (enterBtn) {
           enterBtn.addEventListener("click", goHome, { passive: true });
         } else {
           console.warn("Enter button (#enterBtn) not found.");
         }
 
-        // Auto-enter after 3s
         setTimeout(goHome, AUTO_ENTER_MS);
 
-        // Menu toggle
         const menuBtn = document.getElementById("menuBtn");
         const menuPanel = document.getElementById("menuPanel");
 
@@ -522,10 +678,48 @@
           });
         }
 
-        // Footer year
         const yearEl = document.getElementById("year");
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
+
+      // --------------------------
+      // reLEAF 21+ Gate
+      // --------------------------
+      function initReleafGate() {
+        const openBtn = document.getElementById("releafEnterBtn");
+        const modal = document.getElementById("ageModal");
+        const yes = document.getElementById("ageYes");
+        const no = document.getElementById("ageNo");
+        const close = document.getElementById("ageClose");
+
+        if (!openBtn || !modal || !yes || !no || !close) return;
+
+        const open = () => {
+          modal.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+          yes.focus?.();
+        };
+
+        const hide = () => {
+          modal.classList.add("hidden");
+          document.body.style.overflow = "";
+          openBtn.focus?.();
+        };
+
+        openBtn.addEventListener("click", open);
+
+        yes.addEventListener("click", () => {
+          try { localStorage.setItem("releaf_age_ok", "1"); } catch {}
+          window.location.href = RELEAF_URL;
+        });
+
+        no.addEventListener("click", hide);
+        close.addEventListener("click", hide);
+
+        document.addEventListener("keydown", (e) => {
+          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
+        });
+      }
 
       // --------------------------
       // Active Menu Highlighting
@@ -545,7 +739,8 @@
           });
         };
 
-        const ids = ["about", "projects", "lookbook", "video", "blog", "robotechi", "contact"];
+        // UPDATED ORDER: about first, contact last
+        const ids = ["about", "robotechi", "projects", "creative", "lookbook", "video", "blog", "releaf", "contact"];
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
 
