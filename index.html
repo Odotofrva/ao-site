@@ -445,7 +445,7 @@
     >
       <div class="glow-card flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur transition hover:bg-white/10">
         <span class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-black/30 text-white/90">
-          <!-- simple "play" icon -->
+          <!-- play icon -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
             <path d="M7.5 5.5v13l11-6.5-11-6.5z" />
           </svg>
@@ -457,29 +457,26 @@
       </div>
     </a>
 
-    <!-- ✅ FLOATING: VR Odot -->
-<a
-  id="vrOdot"
-  href="https://odotofrva.github.io/odotnycvrworld/"
-  class="fixed bottom-[84px] right-5 z-50 group"
-  aria-label="Open VR Odot"
->
-  <div class="glow-card flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur transition hover:bg-white/10">
-    <span class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-black/30 text-white/90">
-      <!-- VR / headset icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-        <path d="M5 7a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h2a3 3 0 0 0 2.83-2h4.34A3 3 0 0 0 17 17h2a3 3 0 0 0 3-3v-4a3 3 0 0 0-3-3H5zm2 8H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1zm12 0h-2a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z"/>
-      </svg>
-    </span>
-    <div class="leading-tight">
-      <div class="text-sm font-semibold text-white/90">VR World Odot</div>
-      <div class="text-[11px] text-white/60 group-hover:text-white/70">
-        Enter VR experience →
+    <!-- ✅ FLOATING: VR ODOT -->
+    <a
+      id="vrOdot"
+      href="https://designiso.github.io/Small-MetaVision/"
+      class="fixed bottom-[84px] right-5 z-50 group"
+      aria-label="Open VR ODOT"
+    >
+      <div class="glow-card flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur transition hover:bg-white/10">
+        <span class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-black/30 text-white/90">
+          <!-- headset icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+            <path d="M5 7a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h2a3 3 0 0 0 2.83-2h4.34A3 3 0 0 0 17 17h2a3 3 0 0 0 3-3v-4a3 3 0 0 0-3-3H5zm2 8H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1zm12 0h-2a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z"/>
+          </svg>
+        </span>
+        <div class="leading-tight">
+          <div class="text-sm font-semibold text-white/90">VR ODOT</div>
+          <div class="text-[11px] text-white/60 group-hover:text-white/70">Enter VR experience →</div>
+        </div>
       </div>
-    </div>
-  </div>
-</a>
-
+    </a>
 
     <!-- 21+ MODAL (reLEAF Gate) -->
     <div id="ageModal" class="fixed inset-0 z-50 hidden">
@@ -509,7 +506,7 @@
       </div>
     </div>
 
-    <!-- ✅ NEW: 10% OFF POPUP (hover products section) -->
+    <!-- ✅ 10% OFF POPUP (hover products section) -->
     <div id="discountModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/75"></div>
 
@@ -575,6 +572,55 @@
               Continue →
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ NEW: Instagram Popup (shows when Contact section is reached) -->
+    <div id="igModal" class="fixed inset-0 z-50 hidden">
+      <div class="absolute inset-0 bg-black/75"></div>
+
+      <div class="relative mx-auto mt-24 w-[92%] max-w-md">
+        <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur animate-popIn">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-medium tracking-wide text-white/60">Social</p>
+              <h3 class="mt-1 text-xl font-semibold">Follow me on Instagram</h3>
+              <p class="mt-2 text-sm text-white/70">@almightyodot</p>
+            </div>
+
+            <button
+              id="igClose"
+              type="button"
+              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            <a
+              href="https://instagram.com/almightyodot"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+            >
+              Open Instagram →
+            </a>
+
+            <button
+              id="igNoThanks"
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+            >
+              Not now
+            </button>
+          </div>
+
+          <p class="mt-4 text-[11px] text-white/45">
+            This will only pop up when someone reaches the contact section.
+          </p>
         </div>
       </div>
     </div>
@@ -647,6 +693,7 @@
           initMediumBlog();
           initReleafGate();
           initDiscountPopup();
+          initInstagramPopupOnContact(); // ✅ NEW
 
           setActiveNav("about");
         }
@@ -674,6 +721,60 @@
         const yearEl = document.getElementById("year");
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
+
+      // --------------------------
+      // ✅ NEW: Instagram popup when Contact is reached
+      // --------------------------
+      function initInstagramPopupOnContact() {
+        const contactSection = document.getElementById("contact");
+        const modal = document.getElementById("igModal");
+        const close = document.getElementById("igClose");
+        const noThanks = document.getElementById("igNoThanks");
+
+        if (!contactSection || !modal || !close || !noThanks) return;
+
+        const STORAGE_KEY = "ig_popup_seen_v1"; // change to force it again
+        const SHOW_ONCE_PER_BROWSER = true;
+
+        if (SHOW_ONCE_PER_BROWSER) {
+          try {
+            if (localStorage.getItem(STORAGE_KEY) === "1") return;
+          } catch {}
+        }
+
+        const open = () => {
+          modal.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+          if (SHOW_ONCE_PER_BROWSER) {
+            try { localStorage.setItem(STORAGE_KEY, "1"); } catch {}
+          }
+        };
+
+        const hide = () => {
+          modal.classList.add("hidden");
+          document.body.style.overflow = "";
+        };
+
+        close.addEventListener("click", hide);
+        noThanks.addEventListener("click", hide);
+
+        document.addEventListener("keydown", (e) => {
+          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
+        });
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            const hit = entries.some((e) => e.isIntersecting);
+            if (hit) {
+              io.disconnect();
+              open();
+            }
+          },
+          { root: null, threshold: 0.35 }
+        );
+
+        io.observe(contactSection);
+      }
 
       // --------------------------
       // Discount popup on hover over products grid
