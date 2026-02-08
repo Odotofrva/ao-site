@@ -257,7 +257,6 @@
               </div>
             </div>
 
-            <!-- ✅ Add id for hover trigger -->
             <div id="odotProductsGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
@@ -269,7 +268,7 @@
 
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotnycpatch.png" alt="AR Gallery" class="h-full w-full object-cover" loading="lazy" />
+                  <img src="odotnycpatch.png" alt="Patch" class="h-full w-full object-cover" loading="lazy" />
                 </div>
                 <h3 class="mt-4 font-semibold">- OdotNYC Patch- </h3>
                 <p class="mt-1 text-sm text-white/70">Add the "OdotNYC" patch to your wardrobe bringing style everywhere!</p>
@@ -277,7 +276,7 @@
 
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotnycmetssticker.png" alt="MENOCLONE" class="h-full w-full object-cover" loading="lazy" />
+                  <img src="odotnycmetssticker.png" alt="Sticker" class="h-full w-full object-cover" loading="lazy" />
                 </div>
                 <h3 class="mt-4 font-semibold">- OdotNYC Limited Edition - </h3>
                 <p class="mt-1 text-sm text-white/70">Limited Edition "ODOTNYC x METS" Sticker</p>
@@ -293,7 +292,6 @@
               <div>
                 <p class="text-sm font-medium tracking-wide text-white/60">OdotNYC Lookbook</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">OdotNYC 2026 Lookbook</h2>
-           
               </div>
 
               <div class="flex gap-2">
@@ -309,7 +307,6 @@
                     <img src="odotnycvc.png" alt="Lookbook 1" class="absolute inset-0 h-full w-full object-cover" />
                     <div class="absolute inset-0 bg-black/25"></div>
                     <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">Vision Card (Queens)</div>
-                   
                   </div>
                 </div>
               </div>
@@ -439,6 +436,27 @@
       </main>
     </section>
 
+    <!-- ✅ FLOATING: Pocket Odot -->
+    <a
+      id="pocketOdot"
+      href="https://odotofrva.github.io/REALMONE-MNC/player.html"
+      class="fixed bottom-5 right-5 z-50 group"
+      aria-label="Open Pocket Odot"
+    >
+      <div class="glow-card flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur transition hover:bg-white/10">
+        <span class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-black/30 text-white/90">
+          <!-- simple "play" icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+            <path d="M7.5 5.5v13l11-6.5-11-6.5z" />
+          </svg>
+        </span>
+        <div class="leading-tight">
+          <div class="text-sm font-semibold text-white/90">Pocket Odot</div>
+          <div class="text-[11px] text-white/60 group-hover:text-white/70">Tap to enter →</div>
+        </div>
+      </div>
+    </a>
+
     <!-- 21+ MODAL (reLEAF Gate) -->
     <div id="ageModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/70"></div>
@@ -477,9 +495,7 @@
             <div>
               <p class="text-xs font-medium tracking-wide text-white/60">OdotNYC Merch</p>
               <h3 class="mt-1 text-xl font-semibold">Save 10% on your order?</h3>
-              <p class="mt-2 text-sm text-white/70">
-                Drop your email and we’ll send you a 10% discount code.
-              </p>
+              <p class="mt-2 text-sm text-white/70">Drop your email and we’ll send you a 10% discount code.</p>
             </div>
 
             <button
@@ -521,9 +537,7 @@
               </button>
             </div>
 
-            <p class="text-[11px] text-white/45">
-              We’ll only use this to send the discount code. No spam.
-            </p>
+            <p class="text-[11px] text-white/45">We’ll only use this to send the discount code. No spam.</p>
           </form>
 
           <div id="discountSuccess" class="mt-5 hidden rounded-2xl border border-white/10 bg-black/30 p-4">
@@ -563,10 +577,7 @@
       const DISCOUNT_STORAGE_KEY = "odot_discount_seen_v1";
 
       // ✅ Where to POST the email (replace with your own endpoint)
-      // Option A: Use FormSubmit (quickest)
       const DISCOUNT_EMAIL_POST_URL = "https://formsubmit.co/ajax/YOUR_EMAIL@domain.com";
-      // Option B: Your own API endpoint (recommended)
-      // const DISCOUNT_EMAIL_POST_URL = "https://your-api.com/discount";
       // =========================================================
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -611,7 +622,7 @@
           initYouTube();
           initMediumBlog();
           initReleafGate();
-          initDiscountPopup(); // ✅ NEW
+          initDiscountPopup();
 
           setActiveNav("about");
         }
@@ -641,7 +652,7 @@
       });
 
       // --------------------------
-      // ✅ NEW: Discount popup on hover over products grid
+      // Discount popup on hover over products grid
       // --------------------------
       function initDiscountPopup() {
         const trigger = document.getElementById("odotProductsGrid");
@@ -655,11 +666,8 @@
 
         if (!trigger || !modal || !close || !noThanks || !form || !emailInput || !success || !cont) return;
 
-        // Respect "once" behavior
         if (SHOW_DISCOUNT_ONCE) {
-          try {
-            if (localStorage.getItem(DISCOUNT_STORAGE_KEY) === "1") return;
-          } catch {}
+          try { if (localStorage.getItem(DISCOUNT_STORAGE_KEY) === "1") return; } catch {}
         }
 
         let opened = false;
@@ -670,7 +678,6 @@
           opened = true;
           modal.classList.remove("hidden");
           document.body.style.overflow = "hidden";
-          // reset state
           success.classList.add("hidden");
           form.classList.remove("hidden");
           form.reset?.();
@@ -686,7 +693,6 @@
           document.body.style.overflow = "";
         };
 
-        // Use pointerenter for mouse + pen; won't fire on mobile tap (fine)
         trigger.addEventListener("pointerenter", () => {
           hoverTimer = setTimeout(open, DISCOUNT_HOVER_DELAY_MS);
         });
@@ -704,13 +710,11 @@
           if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
         });
 
-        // Submit email (to FormSubmit AJAX by default)
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
           const email = (emailInput.value || "").trim();
           if (!email) return;
 
-          // OPTIONAL: include your own discount code logic here
           const payload = {
             email,
             _subject: "OdotNYC Merch - 10% Discount Request",
@@ -723,10 +727,7 @@
               headers: { "Content-Type": "application/json", "Accept": "application/json" },
               body: JSON.stringify(payload),
             });
-
-            // FormSubmit returns 200 JSON if configured correctly; treat non-OK as failure
             if (!res.ok) throw new Error(`Email submit failed: ${res.status}`);
-
             form.classList.add("hidden");
             success.classList.remove("hidden");
           } catch (err) {
@@ -805,11 +806,7 @@
 
             if (visible?.target?.id) setActiveNav(visible.target.id);
           },
-          {
-            root: null,
-            rootMargin: "-35% 0px -55% 0px",
-            threshold: [0.15, 0.25, 0.35, 0.5, 0.75],
-          }
+          { root: null, rootMargin: "-35% 0px -55% 0px", threshold: [0.15, 0.25, 0.35, 0.5, 0.75] }
         );
 
         sections.forEach((s) => io.observe(s));
@@ -868,9 +865,7 @@
       function fmtDate(d) {
         try {
           return new Date(d).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-        } catch {
-          return "";
-        }
+        } catch { return ""; }
       }
 
       async function fetchMediumRSS() {
@@ -946,9 +941,7 @@
 
       async function fetchCrypto() {
         const ids = "bitcoin,ethereum,solana,cardano,dogecoin,polkadot";
-        const url =
-          `https://api.coingecko.com/api/v3/simple/price?ids=${encodeURIComponent(ids)}&vs_currencies=usd&include_24hr_change=true`;
-
+        const url = `https://api.coingecko.com/api/v3/simple/price?ids=${encodeURIComponent(ids)}&vs_currencies=usd&include_24hr_change=true`;
         const res = await fetch(url, { cache: "no-store" });
         if (!res.ok) throw new Error(`Ticker fetch failed: ${res.status}`);
         return res.json();
@@ -978,19 +971,17 @@
         const rowB = document.getElementById("tickerRowB");
         if (!rowA || !rowB) return;
 
-        const html = items
-          .map((it) => {
-            const up = typeof it.ch === "number" && it.ch >= 0;
-            const chClass = up ? "text-emerald-300/90" : "text-rose-300/90";
-            return `
-              <span class="inline-flex items-center gap-2">
-                <span class="font-semibold text-white/90">${it.sym}</span>
-                <span class="text-white/80">${it.priceTxt}</span>
-                <span class="${chClass}">${it.chTxt}</span>
-              </span>
-            `;
-          })
-          .join("");
+        const html = items.map((it) => {
+          const up = typeof it.ch === "number" && it.ch >= 0;
+          const chClass = up ? "text-emerald-300/90" : "text-rose-300/90";
+          return `
+            <span class="inline-flex items-center gap-2">
+              <span class="font-semibold text-white/90">${it.sym}</span>
+              <span class="text-white/80">${it.priceTxt}</span>
+              <span class="${chClass}">${it.chTxt}</span>
+            </span>
+          `;
+        }).join("");
 
         rowA.innerHTML = html;
         rowB.innerHTML = html;
@@ -1002,8 +993,7 @@
         const load = async () => {
           try {
             const data = await fetchCrypto();
-            const items = buildTickerItems(data);
-            renderTicker(items);
+            renderTicker(buildTickerItems(data));
           } catch (e) {
             console.error(e);
             const rowA = document.getElementById("tickerRowA");
