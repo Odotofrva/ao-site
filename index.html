@@ -55,6 +55,13 @@
         animation: marquee 22s linear infinite;
       }
       .marquee:hover { animation-play-state: paused; }
+
+      /* Popup animation */
+      @keyframes popIn {
+        from { opacity: 0; transform: translateY(10px) scale(0.98); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-popIn { animation: popIn 220ms ease-out both; }
     </style>
   </head>
 
@@ -153,7 +160,6 @@
         <nav id="menuPanel" class="mx-auto hidden w-full max-w-6xl px-5 pb-4 sm:px-8">
           <div class="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur">
             <ul class="grid gap-2 sm:grid-cols-8">
-              <!-- UPDATED ORDER: About at top, Contact bottom, reLEAF near bottom -->
               <li><a data-section="about" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#about">About</a></li>
               <li><a data-section="robotechi" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#robotechi">RoboTechi</a></li>
               <li><a data-section="projects" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#projects">Projects</a></li>
@@ -161,7 +167,6 @@
               <li><a data-section="lookbook" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#lookbook">Lookbook</a></li>
               <li><a data-section="video" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#video">Video</a></li>
               <li><a data-section="blog" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#blog">Blog</a></li>
-
               <li class="sm:col-span-8">
                 <a data-section="releaf" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#releaf">reLEAF (21+)</a>
               </li>
@@ -175,7 +180,7 @@
 
       <main class="mx-auto w-full max-w-6xl px-5 pb-12 pt-6 sm:px-8">
 
-        <!-- ABOUT (MOVED TO TOP) -->
+        <!-- ABOUT -->
         <section id="about" class="mt-8 scroll-mt-28">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <div class="grid items-center gap-8 lg:grid-cols-2">
@@ -184,22 +189,6 @@
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Who is Odot!?</h2>
                 <p class="mt-3 max-w-3xl text-white/70">
                   Odot is a devoted father whose journey through art and technology is forged not just by curiosity, but by survival, reinvention, and purpose. A multidisciplinary creative and self-taught technologist, he designs and builds at the intersection of visual expression and engineering—where imagination becomes structure, and ideas become systems.
-                </p>
-                <br />
-                <p class="text-white/70">
-                  His path has not been linear. Odot has overcome homelessness, mental illness, and deep personal trauma—experiences that could have broken him, but instead became the raw material for transformation. He learned to redirect pain into precision, chaos into craft. Much like Inception—his favorite film starring Leonardo DiCaprio—Odot believes ideas are the most powerful force we can plant. His life’s work is proof of what happens when you choose to architect your own reality from the inside out.
-                </p>
-                 <br />
-                <p class="text-white/70">
-                  Driven by a desire to be present for his children, Odot moved from South Carolina to New York City—not just to change his environment, but to change his trajectory and be closer to what matters most. In the city that never sleeps, he rebuilt himself through discipline and learning, investing relentlessly in his growth by earning certifications in data networking, IoT solutions, and embedded systems to give technical depth to his creative vision.
-                </p>
-                 <br />
-                <p class="text-white/70">
-                  He is the founder of RoboTechi, a company focused on teaching practical, accessible knowledge in electronics, IoT, and emerging technologies, while also serving as a launchpad for broader entrepreneurial experimentation. Balancing fatherhood, creativity, and rigorous technical development, Odot represents a new generation of builders—those who turn adversity into architecture, who don’t escape their past, but redesign its meaning.
-                  <br>
-                  <br>
-He is not just dreaming of the future.
-He is engineering it—intentionally, relentlessly, and on his own terms.
                 </p>
               </div>
 
@@ -218,46 +207,19 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
                 <p class="text-sm font-medium tracking-wide text-white/60">Featured</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">RoboTechi Co.</h2>
                 <p class="mt-3 max-w-2xl text-white/70">
-                  RoboTechi is a technology-driven company focused on designing and building solutions around embedded systems and modern electronics. Inspired by platforms like Adafruit, Arduino, and Raspberry Pi, RoboTechi creates tools, resources, and projects that empower makers, students, and innovators to learn, prototype, and bring ideas to life through hands-on hardware and open technology.
+                  RoboTechi is a technology-driven company focused on designing and building solutions around embedded systems and modern electronics.
                 </p>
-
-                <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-                  <a href="#projects" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
-                    See Work
-                  </a>
-                  <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
-                    Work With Me
-                  </a>
-                </div>
               </div>
 
               <div class="relative">
                 <div class="glow-card relative h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-black/20 sm:h-[320px] lg:h-[380px]">
-                  <video
-                    class="absolute inset-0 h-full w-full"
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    preload="metadata"
-                    poster="robotechi-poster.jpg"
-                  >
+                  <video class="absolute inset-0 h-full w-full" autoplay muted loop playsinline preload="metadata" poster="robotechi-poster.jpg">
                     <source src="robotechi.mp4" type="video/mp4" />
                     <source src="robotechi.webm" type="video/webm" />
                   </video>
-
                   <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/30 to-black/60"></div>
-
-                  <div class="pointer-events-none absolute left-4 top-4 z-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
-                    <span class="h-2 w-2 rounded-full bg-white/70"></span>
-                    RoboTechi in motion
-                  </div>
-
                   <div class="absolute bottom-4 right-4 z-10">
-                    <a
-                      href="robotechi.html"
-                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-                    >
+                    <a href="robotechi.html" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
                       Enter RoboTechi →
                     </a>
                   </div>
@@ -272,27 +234,10 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <p class="text-sm font-medium tracking-wide text-white/60">Works / Projects</p>
             <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">View The Projects of Odot!</h2>
-
             <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
                   <img src="odotNYC.png" alt="Project 1" class="h-full w-full object-cover" loading="lazy" />
-                </div>
-                <h3 class="mt-4 font-semibold">Loading Soon!</h3>
-                <p class="mt-1 text-sm text-white/70">Project Details</p>
-              </article>
-
-              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotNYC.png" alt="Project 2" class="h-full w-full object-cover" loading="lazy" />
-                </div>
-                <h3 class="mt-4 font-semibold">Loading Soon!</h3>
-                <p class="mt-1 text-sm text-white/70">Project Details</p>
-              </article>
-
-              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotNYC.png" alt="Project 3" class="h-full w-full object-cover" loading="lazy" />
                 </div>
                 <h3 class="mt-4 font-semibold">Loading Soon!</h3>
                 <p class="mt-1 text-sm text-white/70">Project Details</p>
@@ -308,18 +253,15 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
               <div>
                 <p class="text-sm font-medium tracking-wide text-white/60">ODOT / Creative</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Products by Odot</h2>
-                <p class="mt-2 max-w-2xl text-white/70">
-                  Sneak Peek into ODOTNYC
-                </p>
-              </div>
-              <div class="flex flex-col gap-2 sm:flex-row">
+                <p class="mt-2 max-w-2xl text-white/70">Innovation lives where imagination exist.</p>
               </div>
             </div>
 
-            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- ✅ Add id for hover trigger -->
+            <div id="odotProductsGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotnyc4odc.png " alt="OdotNYC" class="h-full w-full object-cover" loading="lazy" />
+                  <img src="odotnyc4odc.png" alt="OdotNYC" class="h-full w-full object-cover" loading="lazy" />
                 </div>
                 <h3 class="mt-4 font-semibold">- OdotNYC Merch  -</h3>
                 <p class="mt-1 text-sm text-white/70">Official Almighty Odot Merch built in New York City.</p>
@@ -327,7 +269,7 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
 
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="artgalrobot.png" alt="Toys, Anime, Comics" class="h-full w-full object-cover" loading="lazy" />
+                  <img src="artgal.png" alt="AR Gallery" class="h-full w-full object-cover" loading="lazy" />
                 </div>
                 <h3 class="mt-4 font-semibold">- AR ART GALLERY - </h3>
                 <p class="mt-1 text-sm text-white/70">Immerse yourself within OdotNYC Art Gallery (AR/VR)</p>
@@ -335,10 +277,10 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
 
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="mnclogo.png" alt="Merch + Apparel" class="h-full w-full object-cover" loading="lazy" />
+                  <img src="mnclogo.png" alt="MENOCLONE" class="h-full w-full object-cover" loading="lazy" />
                 </div>
                 <h3 class="mt-4 font-semibold">- MENOCLONE - </h3>
-                <p class="mt-1 text-sm text-white/70">Amazing culture that captures HipHop, Neo-Soul  and House music.</p>
+                <p class="mt-1 text-sm text-white/70">Amazing culture that captures HipHop, Neo-Soul and House music.</p>
               </article>
             </div>
           </div>
@@ -350,8 +292,8 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
             <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p class="text-sm font-medium tracking-wide text-white/60">Lookbook</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Innovation Lab of Odot!</h2>
-                <p class="mt-2 max-w-2xl text-white/70">Dream x Plan x Create</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Realm Of Almighty Odot</h2>
+                <p class="mt-2 max-w-2xl text-white/70">Day in the life of Odot!</p>
               </div>
 
               <div class="flex gap-2">
@@ -364,25 +306,9 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
               <div id="lookTrack" class="flex transition-transform duration-300 ease-out" style="transform: translateX(0%)">
                 <div class="w-full shrink-0">
                   <div class="relative h-[240px] sm:h-[340px] lg:h-[420px]">
-                    <img src="hotboston.png" alt="Lookbook 1" class="absolute inset-0 h-full w-full object-cover" />
+                    <img src="robotard.png" alt="Lookbook 1" class="absolute inset-0 h-full w-full object-cover" />
                     <div class="absolute inset-0 bg-black/25"></div>
                     <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">Look 01</div>
-                  </div>
-                </div>
-
-                <div class="w-full shrink-0">
-                  <div class="relative h-[240px] sm:h-[340px] lg:h-[420px]">
-                    <img src="odotnyc4odc.png" alt="Lookbook 2" class="absolute inset-0 h-full w-full object-cover" />
-                    <div class="absolute inset-0 bg-black/25"></div>
-                    <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">Look 02</div>
-                  </div>
-                </div>
-
-                <div class="w-full shrink-0">
-                  <div class="relative h-[240px] sm:h-[340px] lg:h-[420px]">
-                    <img src="stickerway.png" alt="Lookbook 3" class="absolute inset-0 h-full w-full object-cover" />
-                    <div class="absolute inset-0 bg-black/25"></div>
-                    <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">Look 03</div>
                   </div>
                 </div>
               </div>
@@ -396,7 +322,6 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
             <p class="text-sm font-medium tracking-wide text-white/60">Video</p>
             <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Watch</h2>
             <p class="mt-2 max-w-2xl text-white/70">Coming Soon.... Street Syntax : (A Short Film)</p>
-
             <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
               <div class="relative w-full pb-[56.25%]">
                 <iframe
@@ -421,7 +346,6 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
                 <p class="text-sm font-medium tracking-wide text-white/60">Blog</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Read Odot's Tech Blog!</h2>
               </div>
-
               <a
                 id="mediumProfileBtn"
                 href="#"
@@ -432,11 +356,8 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
                 View on Medium →
               </a>
             </div>
-
             <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="mediumGrid">
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">
-                Loading Medium posts…
-              </div>
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">Loading Medium posts…</div>
             </div>
           </div>
         </section>
@@ -454,25 +375,14 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
                 </p>
 
                 <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <button
-                    id="releafEnterBtn"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-                    type="button"
-                  >
+                  <button id="releafEnterBtn" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl" type="button">
                     Enter reLEAF (21+) →
                   </button>
-
-                  <a
-                    href="#contact"
-                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
-                  >
+                  <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
                     Partner / Contact
                   </a>
                 </div>
-
-                <p class="mt-4 text-xs text-white/50">
-                  You must confirm you are 21+ before leaving this site.
-                </p>
+                <p class="mt-4 text-xs text-white/50">You must confirm you are 21+ before leaving this site.</p>
               </div>
 
               <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20 p-6">
@@ -480,23 +390,19 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
                 <div class="relative">
                   <div class="text-sm font-medium tracking-wide text-white/70">reLEAF preview</div>
                   <h3 class="mt-2 text-xl font-semibold">The Underground Hustle always exist in America.</h3>
-                  <p class="mt-2 text-sm text-white/70">
-                   This is a WARNING.... 21+ is Here!
-                  </p>
+                  <p class="mt-2 text-sm text-white/70">This is a WARNING.... 21+ is Here!</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- CONTACT (MOVED TO BOTTOM) -->
+        <!-- CONTACT -->
         <section id="contact" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <p class="text-sm font-medium tracking-wide text-white/60">Contact</p>
             <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Send a message</h2>
-            <p class="mt-3 max-w-2xl text-white/70">
-              Interested in connecting with me? Fill the form completely and I will connect with you soon.
-            </p>
+            <p class="mt-3 max-w-2xl text-white/70">Interested in connecting with me? Fill the form completely and I will connect with you soon.</p>
 
             <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST">
               <input type="hidden" name="_subject" value="New Website Contact Submission" />
@@ -520,11 +426,9 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
                 <textarea name="message" rows="5" required class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="Tell me what you're trying to build..."></textarea>
               </label>
 
-              <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <button class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl" type="submit">
-                  Send Message
-                </button>
-              </div>
+              <button class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl" type="submit">
+                Send Message
+              </button>
             </form>
           </div>
         </section>
@@ -538,49 +442,101 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
     <!-- 21+ MODAL (reLEAF Gate) -->
     <div id="ageModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/70"></div>
-
       <div class="relative mx-auto mt-24 w-[92%] max-w-md">
         <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur">
           <div class="flex items-start justify-between gap-4">
             <div>
               <p class="text-xs font-medium tracking-wide text-white/60">Age Verification</p>
               <h3 class="mt-1 text-xl font-semibold">Are you 21 or older?</h3>
+              <p class="mt-2 text-sm text-white/70">You must confirm you are 21+ to enter the reLEAF website.</p>
+            </div>
+            <button id="ageClose" type="button" class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10" aria-label="Close">✕</button>
+          </div>
+
+          <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            <button id="ageYes" type="button" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
+              Yes, I’m 21+
+            </button>
+            <button id="ageNo" type="button" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
+              No, take me back
+            </button>
+          </div>
+
+          <p class="mt-4 text-[11px] text-white/45">By clicking “Yes”, you confirm you meet the legal age requirement in your location.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ NEW: 10% OFF POPUP (hover products section) -->
+    <div id="discountModal" class="fixed inset-0 z-50 hidden">
+      <div class="absolute inset-0 bg-black/75"></div>
+
+      <div class="relative mx-auto mt-24 w-[92%] max-w-md">
+        <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur animate-popIn">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs font-medium tracking-wide text-white/60">OdotNYC Merch</p>
+              <h3 class="mt-1 text-xl font-semibold">Save 10% on your order?</h3>
               <p class="mt-2 text-sm text-white/70">
-                You must confirm you are 21+ to enter the reLEAF website.
+                Drop your email and we’ll send you a 10% discount code.
               </p>
             </div>
 
             <button
-              id="ageClose"
+              id="discountClose"
               type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10" href="https://odotofrva.github.io/releafco/#products"
+              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10"
               aria-label="Close"
             >
               ✕
             </button>
           </div>
 
-          <div class="mt-6 grid gap-3 sm:grid-cols-2">
-            <button
-              id="ageYes"
-              type="button"
-              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-            >
-              Yes, I’m 21+
-            </button>
+          <form id="discountForm" class="mt-5 grid gap-3">
+            <label class="grid gap-2">
+              <span class="text-sm text-white/70">Email address</span>
+              <input
+                id="discountEmail"
+                type="email"
+                required
+                class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30"
+                placeholder="you@example.com"
+              />
+            </label>
 
+            <div class="grid gap-3 sm:grid-cols-2">
+              <button
+                type="submit"
+                class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+              >
+                Send My Code →
+              </button>
+
+              <button
+                id="discountNoThanks"
+                type="button"
+                class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+              >
+                No thanks
+              </button>
+            </div>
+
+            <p class="text-[11px] text-white/45">
+              We’ll only use this to send the discount code. No spam.
+            </p>
+          </form>
+
+          <div id="discountSuccess" class="mt-5 hidden rounded-2xl border border-white/10 bg-black/30 p-4">
+            <div class="text-sm font-semibold text-white/90">You’re in.</div>
+            <div class="mt-1 text-sm text-white/70">Check your inbox for your 10% code.</div>
             <button
-              id="ageNo"
+              id="discountContinue"
               type="button"
-              class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+              class="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
             >
-              No, take me back
+              Continue →
             </button>
           </div>
-
-          <p class="mt-4 text-[11px] text-white/45">
-            By clicking “Yes”, you confirm you meet the legal age requirement in your location.
-          </p>
         </div>
       </div>
     </div>
@@ -594,12 +550,23 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
       const MEDIUM_RSS_URL = "https://medium.com/feed/@almightyodot";
       const MEDIUM_PROFILE_URL = "https://medium.com/@almightyodot";
 
-      // YouTube: use ONE of these
-      const YOUTUBE_VIDEO_ID = "kUHVe7HVs5U"; // replace
-      const YOUTUBE_PLAYLIST_ID = ""; // optional e.g. "PLxxxx"
+      // YouTube
+      const YOUTUBE_VIDEO_ID = "kUHVe7HVs5U";
+      const YOUTUBE_PLAYLIST_ID = "";
 
-      // reLEAF destination (change to your real URL)
+      // reLEAF destination
       const RELEAF_URL = "https://odotofrva.github.io/releafco/#products";
+
+      // ✅ Discount popup behavior
+      const SHOW_DISCOUNT_ONCE = true;          // only once per browser
+      const DISCOUNT_HOVER_DELAY_MS = 300;      // prevent instant flicker
+      const DISCOUNT_STORAGE_KEY = "odot_discount_seen_v1";
+
+      // ✅ Where to POST the email (replace with your own endpoint)
+      // Option A: Use FormSubmit (quickest)
+      const DISCOUNT_EMAIL_POST_URL = "https://formsubmit.co/ajax/YOUR_EMAIL@domain.com";
+      // Option B: Your own API endpoint (recommended)
+      // const DISCOUNT_EMAIL_POST_URL = "https://your-api.com/discount";
       // =========================================================
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -644,21 +611,16 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
           initYouTube();
           initMediumBlog();
           initReleafGate();
+          initDiscountPopup(); // ✅ NEW
 
           setActiveNav("about");
         }
 
-        if (enterBtn) {
-          enterBtn.addEventListener("click", goHome, { passive: true });
-        } else {
-          console.warn("Enter button (#enterBtn) not found.");
-        }
-
+        enterBtn?.addEventListener("click", goHome, { passive: true });
         setTimeout(goHome, AUTO_ENTER_MS);
 
         const menuBtn = document.getElementById("menuBtn");
         const menuPanel = document.getElementById("menuPanel");
-
         if (menuBtn && menuPanel) {
           menuBtn.addEventListener("click", () => {
             const isOpen = !menuPanel.classList.contains("hidden");
@@ -677,6 +639,102 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
         const yearEl = document.getElementById("year");
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
+
+      // --------------------------
+      // ✅ NEW: Discount popup on hover over products grid
+      // --------------------------
+      function initDiscountPopup() {
+        const trigger = document.getElementById("odotProductsGrid");
+        const modal = document.getElementById("discountModal");
+        const close = document.getElementById("discountClose");
+        const noThanks = document.getElementById("discountNoThanks");
+        const form = document.getElementById("discountForm");
+        const emailInput = document.getElementById("discountEmail");
+        const success = document.getElementById("discountSuccess");
+        const cont = document.getElementById("discountContinue");
+
+        if (!trigger || !modal || !close || !noThanks || !form || !emailInput || !success || !cont) return;
+
+        // Respect "once" behavior
+        if (SHOW_DISCOUNT_ONCE) {
+          try {
+            if (localStorage.getItem(DISCOUNT_STORAGE_KEY) === "1") return;
+          } catch {}
+        }
+
+        let opened = false;
+        let hoverTimer = null;
+
+        const open = () => {
+          if (opened) return;
+          opened = true;
+          modal.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+          // reset state
+          success.classList.add("hidden");
+          form.classList.remove("hidden");
+          form.reset?.();
+          setTimeout(() => emailInput.focus?.(), 0);
+
+          if (SHOW_DISCOUNT_ONCE) {
+            try { localStorage.setItem(DISCOUNT_STORAGE_KEY, "1"); } catch {}
+          }
+        };
+
+        const hide = () => {
+          modal.classList.add("hidden");
+          document.body.style.overflow = "";
+        };
+
+        // Use pointerenter for mouse + pen; won't fire on mobile tap (fine)
+        trigger.addEventListener("pointerenter", () => {
+          hoverTimer = setTimeout(open, DISCOUNT_HOVER_DELAY_MS);
+        });
+
+        trigger.addEventListener("pointerleave", () => {
+          if (hoverTimer) clearTimeout(hoverTimer);
+          hoverTimer = null;
+        });
+
+        close.addEventListener("click", hide);
+        noThanks.addEventListener("click", hide);
+        cont.addEventListener("click", hide);
+
+        document.addEventListener("keydown", (e) => {
+          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
+        });
+
+        // Submit email (to FormSubmit AJAX by default)
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const email = (emailInput.value || "").trim();
+          if (!email) return;
+
+          // OPTIONAL: include your own discount code logic here
+          const payload = {
+            email,
+            _subject: "OdotNYC Merch - 10% Discount Request",
+            message: `New discount signup: ${email}`
+          };
+
+          try {
+            const res = await fetch(DISCOUNT_EMAIL_POST_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Accept": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            // FormSubmit returns 200 JSON if configured correctly; treat non-OK as failure
+            if (!res.ok) throw new Error(`Email submit failed: ${res.status}`);
+
+            form.classList.add("hidden");
+            success.classList.remove("hidden");
+          } catch (err) {
+            console.error(err);
+            alert("Could not save your email right now. Please try again later.");
+          }
+        });
+      }
 
       // --------------------------
       // reLEAF 21+ Gate
@@ -735,7 +793,6 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
           });
         };
 
-        // UPDATED ORDER: about first, contact last
         const ids = ["about", "robotechi", "projects", "creative", "lookbook", "video", "blog", "releaf", "contact"];
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
@@ -778,26 +835,6 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
 
         prev.addEventListener("click", () => go(idx - 1));
         next.addEventListener("click", () => go(idx + 1));
-
-        let startX = 0;
-        let active = false;
-
-        track.addEventListener("pointerdown", (e) => {
-          active = true;
-          startX = e.clientX;
-          track.setPointerCapture?.(e.pointerId);
-        });
-
-        track.addEventListener("pointerup", (e) => {
-          if (!active) return;
-          active = false;
-          const dx = e.clientX - startX;
-          const threshold = 40;
-          if (dx > threshold) go(idx - 1);
-          else if (dx < -threshold) go(idx + 1);
-        });
-
-        track.addEventListener("pointercancel", () => (active = false));
 
         let timer = setInterval(() => go(idx + 1), 6000);
         const carouselBox = track.parentElement;
@@ -863,7 +900,6 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
           const link = it.link || "#";
           const date = fmtDate(it.pubDate);
           const desc = stripHtml(it.description).slice(0, 140);
-
           const thumb = it.thumbnail || "";
           const thumbHtml = thumb
             ? `<img src="${thumb}" alt="" class="h-full w-full object-cover" loading="lazy" />`
@@ -890,30 +926,12 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
         const btn = document.getElementById("mediumProfileBtn");
         if (btn) btn.href = MEDIUM_PROFILE_URL;
 
-        const fallback = [
-          {
-            title: "Update your Medium username in the script",
-            link: MEDIUM_PROFILE_URL || "https://medium.com",
-            pubDate: new Date().toISOString(),
-            description: "Set MEDIUM_RSS_URL to https://medium.com/feed/@yourusername and reload.",
-            thumbnail: ""
-          },
-          {
-            title: "Example post card (will be replaced by real posts)",
-            link: MEDIUM_PROFILE_URL || "https://medium.com",
-            pubDate: new Date().toISOString(),
-            description: "Once RSS loads successfully, your latest posts will show here automatically.",
-            thumbnail: ""
-          }
-        ];
-
         (async () => {
           try {
             const data = await fetchMediumRSS();
             renderMediumPosts(data.items || []);
           } catch (e) {
             console.error(e);
-            renderMediumPosts(fallback);
           }
         })();
       }
@@ -949,10 +967,8 @@ He is engineering it—intentionally, relentlessly, and on his own terms.
         return map.map(({ id, sym }) => {
           const price = data?.[id]?.usd ?? null;
           const ch = data?.[id]?.usd_24h_change ?? null;
-
           const sign = typeof ch === "number" ? (ch >= 0 ? "+" : "") : "";
           const chTxt = typeof ch === "number" ? `${sign}${ch.toFixed(2)}%` : "—";
-
           return { sym, priceTxt: fmtUSD(price), ch, chTxt };
         });
       }
