@@ -607,7 +607,7 @@
                 <p class="text-sm font-medium tracking-wide text-white/60">Sound</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">OdotNYC Style Tape</h2>
                 <p class="mt-2 max-w-2xl text-white/70">
-                  The Official "OdotNYC Style Tape" Vol. 1. Enjoy!
+                  Press play — this is the soundtrack for OdotNYC.
                 </p>
               </div>
 
@@ -1041,29 +1041,30 @@
         }
 
         function goHome() {
-          if (entered) return;
-          entered = true;
+        if (entered) return;
+        entered = true;
 
-          landing.classList.add("hidden");
-          home.classList.remove("hidden");
-          home.classList.add("animate-fadeIn");
+        landing.classList.add("hidden");
+        home.classList.remove("hidden");
+        home.classList.add("animate-fadeIn");
 
-          stopLandingVideo();
+        stopLandingVideo();
 
-          initActiveMenu();
-          initLookbookCarousel();
-          initCryptoTicker();
-          initYouTube();
-          initMediumBlog();
-          initReleafGate();
-          initDiscountPopup();
-          initCowomoButton();
-          initInstagramPopup();
-          initProductModal();
-          initSpotify();
+        initActiveMenu();
+        initLookbookCarousel();
+        initCryptoTicker();
+        initYouTube();
+        initSpotify();      // 👈 HERE
+        initMediumBlog();
+        initReleafGate();
+        initDiscountPopup();
+        initCowomoButton();
+        initInstagramPopup();
+        initProductModal();
 
-          setActiveNav("about");
-        }
+        setActiveNav("about");
+      }
+
 
         function initSpotify() {
         const frame = document.getElementById("spotifyFrame");
