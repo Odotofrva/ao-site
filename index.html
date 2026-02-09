@@ -165,7 +165,7 @@
               <li><a data-section="projects" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#projects">Projects</a></li>
               <li><a data-section="creative" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#creative">Creative</a></li>
               <li><a data-section="lookbook" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#lookbook">Lookbook</a></li>
-              <li><a data-section="poster" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#poster">Poster</a></li>
+            
               <li><a data-section="cowomo" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#cowomo">COWOMO</a></li>
               <li><a data-section="video" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#video">Video</a></li>
               <li><a data-section="spotify" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#spotify">Spotify</a></li>
@@ -625,16 +625,7 @@
             <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
               <div class="relative w-full">
                 <!-- Spotify embed -->
-                <iframe
-                  id="spotifyFrame"
-                  title="OdotNYC Style Tape Playlist"
-                  class="h-[480px] w-full"
-                  style="border-radius: 24px;"
-                  src="https://open.spotify.com/embed/playlist/PASTE_YOUR_PLAYLIST_ID_HERE?utm_source=generator"
-                  frameborder="0"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                ></iframe>
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1KhqiAiyWbnyIaveAIcgqD?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
               </div>
             </div>
 
@@ -1375,7 +1366,7 @@
           });
         };
 
-        const ids = ["about","robotechi","projects","creative","lookbook","poster","cowomo","video","spotify","blog","releaf","contact"];
+        const ids = ["about","robotechi","projects","creative","retro-game","lookbook","poster","cowomo","video","spotify","blog","releaf","contact"];
 
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
