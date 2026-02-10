@@ -302,11 +302,29 @@
 
               <div class="relative">
                 <div class="glow-card relative h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-black/20 sm:h-[320px] lg:h-[380px]">
-                  <video class="absolute inset-0 h-full w-full" autoplay muted loop playsinline preload="metadata" poster="robotechi-poster.jpg">
-                    <source src="robotechi.mp4" type="video/mp4" />
-                    <source src="robotechi.webm" type="video/webm" />
-                  </video>
-                  <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/30 to-black/60"></div>
+
+                <!-- Image Placeholder -->
+                <img
+                  src="rtlogo.png"
+                  alt="RoboTechi – Embedded Systems & Electronics"
+                  class="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+            
+              <!-- Overlay -->
+              <div class="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/60"></div>
+            
+              <!-- CTA -->
+              <div class="absolute bottom-4 right-4 z-10">
+                <a
+                  href="robotechi.html"
+                  class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                >
+                  Enter RoboTechi →
+                </a>
+  </div>
+
+</div>
                   <div class="absolute bottom-4 right-4 z-10">
                     <a href="robotechi.html" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
                       Enter RoboTechi →
