@@ -1333,6 +1333,7 @@
         initCryptoTicker();
         initYouTube();
         initSpotify();      // 👈 HERE
+        initAboutImageModal();
         initGamingStation();
         initMediumBlog();
         initReleafGate();
@@ -1340,6 +1341,7 @@
         initCowomoButton();
         initInstagramPopup();
         initProductModal();
+          
 
         setActiveNav("about");
       }
@@ -1375,6 +1377,41 @@
         const yearEl = document.getElementById("year");
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
+
+      function initAboutImageModal() {
+  const modal = document.getElementById("aboutImageModal");
+  const imgFull = document.getElementById("aboutImageFull");
+  const closeBtn = document.getElementById("aboutImageClose");
+
+  if (!modal || !imgFull || !closeBtn) return;
+
+  const open = (src) => {
+    imgFull.src = src;
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  };
+
+  const close = () => {
+    modal.classList.add("hidden");
+    document.body.style.overflow = "";
+    imgFull.src = "";
+  };
+
+  document.querySelectorAll(".about-thumb, .about-img").forEach((img) => {
+    img.addEventListener("click", () => {
+      const src = img.dataset.full || img.src;
+      open(src);
+    });
+  });
+
+  closeBtn.addEventListener("click", close);
+  modal.querySelector(".absolute").addEventListener("click", close);
+
+  document.addEventListener("keydown", (e) => {
+    if (!modal.classList.contains("hidden") && e.key === "Escape") close();
+  });
+}
+
 
       // --------------------------
       // ✅ Product click -> modal
