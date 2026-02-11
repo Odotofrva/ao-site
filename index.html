@@ -199,42 +199,26 @@
               </div>
 
               <div class="rounded-3xl border border-white/10 bg-black/20 p-4">
-  <!-- Main Image -->
-  <img
-    src="odotnyctv.png"
-    alt="Odot"
-    class="w-full rounded-2xl object-cover cursor-pointer about-img"
-    data-full="odotnyctv.png"
-  />
 
-  <!-- Thumbnails -->
-  <div class="mt-4 grid grid-cols-3 gap-3">
-    <img
-      src="about_thumb1.png"
-      data-full="about_full1.png"
-      alt="Odot thumbnail 1"
-      class="about-thumb h-20 w-full rounded-xl object-cover cursor-pointer border border-white/10 hover:border-white/30 transition"
-    />
-    <img
-      src="about_thumb2.png"
-      data-full="about_full2.png"
-      alt="Odot thumbnail 2"
-      class="about-thumb h-20 w-full rounded-xl object-cover cursor-pointer border border-white/10 hover:border-white/30 transition"
-    />
-    <img
-      src="about_thumb3.png"
-      data-full="about_full3.png"
-      alt="Odot thumbnail 3"
-      class="about-thumb h-20 w-full rounded-xl object-cover cursor-pointer border border-white/10 hover:border-white/30 transition"
-    />
-  </div>
-</div>
 
+              <!-- ABOUT -->
+        <section id="about" class="mt-8 scroll-mt-28">
+          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
+            <div class="grid items-center gap-8 lg:grid-cols-2">
+              <div>
+                <p class="text-sm font-medium tracking-wide text-white/60">About</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Who is OdotNYC!?</h2>
+                <p class="mt-3 max-w-3xl text-white/70">
+                  OdotNYC is a devoted father, creative and self taught techie whose journey through art and technology is forged not just by curiosity, but by survival, reinvention, and purpose. A multidisciplinary creative and self-taught technologist, he designs and builds at the intersection of visual expression and engineering—where imagination becomes structure, and ideas become systems.
+                </p>
+              </div>
+
+              <div class="rounded-3xl border border-white/10 bg-black/20 p-4">
+                <img src="odotnyctv.jpg" alt="Odot" class="w-full rounded-2xl object-cover" />
+              </div>
             </div>
           </div>
         </section>
-
-        <!-- SERVICES -->
 
 
         <!-- WHAT IS ODOTNYC -->
@@ -1333,7 +1317,7 @@
         initCryptoTicker();
         initYouTube();
         initSpotify();      // 👈 HERE
-        initAboutImageModal();
+
         initGamingStation();
         initMediumBlog();
         initReleafGate();
@@ -1378,10 +1362,6 @@
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
 
-      function initAboutImageModal() {
-  const modal = document.getElementById("aboutImageModal");
-  const imgFull = document.getElementById("aboutImageFull");
-  const closeBtn = document.getElementById("aboutImageClose");
 
   if (!modal || !imgFull || !closeBtn) return;
 
