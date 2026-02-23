@@ -9,6 +9,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
+      /* =========================
+         Micro interactions + base
+         ========================= */
+
       /* Fade + slight rise */
       @keyframes fadeUp {
         from { opacity: 0; transform: translateY(14px); }
@@ -21,6 +25,13 @@
       /* Simple page transition */
       @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
       .animate-fadeIn { animation: fadeIn 350ms ease-out both; }
+
+      /* Popup animation */
+      @keyframes popIn {
+        from { opacity: 0; transform: translateY(10px) scale(0.98); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-popIn { animation: popIn 220ms ease-out both; }
 
       video { object-fit: cover; }
 
@@ -56,12 +67,15 @@
       }
       .marquee:hover { animation-play-state: paused; }
 
-      /* Popup animation */
-      @keyframes popIn {
-        from { opacity: 0; transform: translateY(10px) scale(0.98); }
-        to   { opacity: 1; transform: translateY(0) scale(1); }
+      /* Reduced motion support */
+      @media (prefers-reduced-motion: reduce) {
+        .animate-fadeUp, .animate-fadeIn, .animate-popIn { animation: none !important; }
+        .marquee { animation: none !important; }
+        .glow-card, .glow-card:hover { transition: none !important; transform: none !important; }
       }
-      .animate-popIn { animation: popIn 220ms ease-out both; }
+
+      /* Subtle focus ring for keyboard users */
+      :focus-visible { outline: 2px solid rgba(255,255,255,0.35); outline-offset: 3px; }
     </style>
   </head>
 
@@ -77,7 +91,7 @@
         <div class="flex flex-col items-center text-center">
           <img
             src="odotnyc3final.png"
-            alt="Logo"
+            alt="OdotNYC Logo"
             class="animate-fadeUp w-[60%] max-w-[500px] sm:max-w-[550px]"
           />
 
@@ -89,7 +103,7 @@
             Enter Now
           </button>
 
-          <p class="mt-4 text-xs text-white/60">
+          <p class="mt-4 text-xs text-white/60" id="autoEnterText">
             Auto-enter in 3 seconds…
           </p>
         </div>
@@ -112,7 +126,7 @@
                 <div class="pointer-events-none absolute left-0 top-0 h-full w-10 bg-gradient-to-r from-zinc-950/90 to-transparent"></div>
                 <div class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-zinc-950/90 to-transparent"></div>
 
-                <div id="tickerMarquee" class="marquee gap-8 text-[12px] text-white/80">
+                <div id="tickerMarquee" class="marquee gap-8 text-[12px] text-white/80" aria-label="Crypto ticker">
                   <div class="flex items-center gap-8" id="tickerRowA">
                     <span class="opacity-70">Loading prices…</span>
                   </div>
@@ -124,7 +138,7 @@
 
               <button
                 id="tickerRefresh"
-                class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/70 transition hover:bg-white/10"
+                class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/70 transition hover:bg-white/10 active:scale-[0.98]"
                 type="button"
               >
                 Refresh
@@ -138,12 +152,12 @@
           <div class="w-12"></div>
 
           <div class="flex items-center justify-center">
-            <img src="odotnyc3final.png" alt="Logo" class="h-30 w-auto sm:h-40" />
+            <img src="odotnyc3final.png" alt="OdotNYC" class="h-30 w-auto sm:h-40" />
           </div>
 
           <button
             id="menuBtn"
-            class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40"
+            class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-white/40"
             type="button"
             aria-label="Open menu"
             aria-expanded="false"
@@ -161,21 +175,36 @@
           <div class="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur">
             <ul class="grid gap-2 sm:grid-cols-8">
               <li><a data-section="about" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#about">About</a></li>
+              <li><a data-section="odotnyc" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#odotnyc">OdotNYC</a></li>
               <li><a data-section="robotechi" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#robotechi">RoboTechi</a></li>
-              <li><a data-section="projects" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="https://odotofrva.github.io/mnc-dt/">MENOCLONE</a></li>
+
+              <li>
+                <a
+                  data-section="projects"
+                  class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10"
+                  href="https://odotofrva.github.io/mnc-dt/"
+                  target="_blank"
+                  rel="noreferrer"
+                >MENOCLONE</a>
+              </li>
+
               <li><a data-section="creative" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#creative">Creative</a></li>
-              <li><a data-section="cowomo" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="https://odotofrva.github.io/TOS/">TOB GAMING</a></li>
-            
-            
-              <li><a data-section="cowomo" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="https://odotofrva.github.io/CoWoMoSite/">COWOMO</a></li>
+
+              <li>
+                <a
+                  data-section="cowomo"
+                  class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10"
+                  href="https://odotofrva.github.io/CoWoMoSite/"
+                  target="_blank"
+                  rel="noreferrer"
+                >COWOMO</a>
+              </li>
+
               <li><a data-section="video" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#video">Video</a></li>
               <li><a data-section="spotify" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#spotify">Spotify</a></li>
 
               <li><a data-section="blog" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#blog">Blog</a></li>
 
-              <li class="sm:col-span-8">
-                <a data-section="releaf" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#releaf">reLEAF (21+)</a>
-              </li>
               <li class="sm:col-span-8">
                 <a data-section="contact" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#contact">Contact</a>
               </li>
@@ -204,20 +233,13 @@
           </div>
         </section>
 
-        <!-- SERVICES -->
-
-
-        <!-- WHAT IS ODOTNYC -->
-        
+        <!-- ODOTNYC -->
         <section id="odotnyc" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-
-            <p class="text-sm font-medium tracking-wide text-white/60">Brand Awareness - OdotNYC</p>
+            <p class="text-sm font-medium tracking-wide text-white/60">Brand Awareness</p>
             <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">The Brand: OdotNYC</h2>
 
-            <!-- ROW 1 -->
             <div class="mt-8 grid items-center gap-6 lg:grid-cols-2">
-              <!-- Text -->
               <div>
                 <p class="max-w-xl text-white/70">
                   OdotNYC was born the moment I arrived in New York and realized the truth:
@@ -227,7 +249,6 @@
                 </p>
               </div>
 
-              <!-- Image 1 -->
               <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
                 <img
                   src="odotnyc3final.png"
@@ -238,9 +259,7 @@
               </div>
             </div>
 
-            <!-- ROW 2 -->
             <div class="mt-10 grid items-center gap-6 lg:grid-cols-2">
-              <!-- Image 2 -->
               <div class="order-2 overflow-hidden rounded-2xl border border-white/10 bg-black/20 lg:order-1">
                 <img
                   src="odotnycstate.png"
@@ -250,10 +269,9 @@
                 />
               </div>
 
-              <!-- Text -->
               <div class="order-1 lg:order-2">
                 <p class="max-w-xl text-white/70">
-                  The 3 stars represent the constellation "Orion's Belt" as well as OdotNYC. Being my first name actually being "Orion", the logo was simple. Tackle the entire NYC with ones innovative output. I decided to build a brand that represents that rebuild.
+                  The 3 stars represent the constellation "Orion's Belt" as well as OdotNYC. Being my first name actually being "Orion", the logo was simple.
                   OdotNYC lives at the intersection of
                   <span class="text-white/90 font-semibold">technology</span>,
                   <span class="text-white/90 font-semibold">fashion</span>, and
@@ -265,14 +283,14 @@
                 <div class="mt-6 flex flex-col gap-3 sm:flex-row">
                   <a
                     href="#creative"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
                   >
                     Explore the Brand →
                   </a>
 
                   <a
                     href="#contact"
-                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
                   >
                     Collaborate
                   </a>
@@ -280,15 +298,11 @@
               </div>
             </div>
 
-            <!-- FOOT NOTE -->
             <p class="mt-8 text-xs text-white/50">
               "Keep Your Vision Further Than Your Eyesight!" - OdotNYC
             </p>
-
           </div>
         </section>
-
-
 
         <!-- ROBOTECHI -->
         <section id="robotechi" class="mt-14 scroll-mt-40">
@@ -304,31 +318,21 @@
 
               <div class="relative">
                 <div class="glow-card relative h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-black/20 sm:h-[320px] lg:h-[380px]">
+                  <img
+                    src="rtlogo.png"
+                    alt="RoboTechi – Embedded Systems & Electronics"
+                    class="absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/60"></div>
 
-                <!-- Image Placeholder -->
-                <img
-                  src="rtlogo.png"
-                  alt="RoboTechi – Embedded Systems & Electronics"
-                  class="absolute inset-0 h-full w-full object-cover"
-                  loading="lazy"
-                />
-            
-              <!-- Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/60"></div>
-            
-              <!-- CTA -->
-              <div class="absolute bottom-4 right-4 z-10">
-                <a
-                  href="https://odotofrva.github.io/rt-site-odotnyc/"
-                  class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-                >
-                  Enter RoboTechi →
-                </a>
-  </div>
-
-</div>
                   <div class="absolute bottom-4 right-4 z-10">
-                    <a href="https://odotofrva.github.io/rt-site-odotnyc/" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
+                    <a
+                      href="https://odotofrva.github.io/rt-site-odotnyc/"
+                      target="_blank"
+                      rel="noreferrer"
+                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
+                    >
                       Enter RoboTechi →
                     </a>
                   </div>
@@ -338,183 +342,160 @@
           </div>
         </section>
 
+        <!-- SERVICES -->
         <section id="services" class="mt-14 scroll-mt-40">
-  <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-    
-    <p class="text-sm font-medium tracking-wide text-white/60">RoboTechi Services</p>
-    <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">
-      RoboTechi provides the following services: 
-    </h2>
-
-    <div class="mt-8 grid gap-8 lg:grid-cols-2">
-
-        <!-- SERVICE LIST -->
-        <div class="grid gap-4">
-          <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
-            <h3 class="text-lg font-semibold text-white/90">
-              Resume Writing
-            </h3>
-            <p class="mt-1 text-sm text-white/70">
-              Let RoboTechi build your resume you can move gain a job to fund your entreprenurial spirit.
-            </p>
-          </div>
-          
-          <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
-            <h3 class="text-lg font-semibold text-white/90">
-              Web Development / App Development
-            </h3>
-            <p class="mt-1 text-sm text-white/70">
-              Create amazing websites and appplications for your business needs.
-            </p>
-          </div>
-
-          <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
-            <h3 class="text-lg font-semibold text-white/90">
-              Computer Repair
-            </h3>
-            <p class="mt-1 text-sm text-white/70">
-              Virus Scans, Malware Scans, Operating System Install, Troubleshooting
-            </p>
-          </div>
-
-          <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
-            <h3 class="text-lg font-semibold text-white/90">
-              Small Office Home Office (SOHO) Setup
-            </h3>
-            <p class="mt-1 text-sm text-white/70">
-              Install and Configure your home network for personal, business and even gaming needs.
-            </p>
-          </div>
-
-          <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
-            <h3 class="text-lg font-semibold text-white/90">
-              IoT, CCtv, Security Systems
-            </h3>
-            <p class="mt-1 text-sm text-white/70">
-              Need security setup for your residental or commercial business? Let me assist today!
-            </p>
-          </div>
-
-        </div>
-
-        <!-- IMAGE PLACEHOLDER -->
-        <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20">
-          <img
-            src="rtlogo.png"
-            alt="Services visual placeholder"
-            class="h-full w-full object-cover"
-            loading="lazy"
-          />
-
-          <!-- optional overlay -->
-          <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/10 to-black/60"></div>
-
-          <!-- optional label -->
-          <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
-            Services Overview
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-        <!-- ODOTNYC x EWING ATHLETICS (COLLAB PITCH) -->
-<section id="ewing-collab" class="mt-14 scroll-mt-40">
-  <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-    <div class="grid items-center gap-8 lg:grid-cols-2">
-      <!-- Copy -->
-      <div>
-        <p class="text-sm font-medium tracking-wide text-white/60">Collaboration Project</p>
-        <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">
-          OdotNYC × Ewing Athletics
-        </h2>
-
-        <p class="mt-3 max-w-2xl text-white/70">
-          This collab is about legacy + culture. As a kid from the Carolinas watching the New York Knicks,
-          Patrick Ewing represented grit, pride, and purpose — the same energy I carry while rebuilding in NYC.
-          OdotNYC is a world where tech, fashion, and art collide… and Ewing Athletics is the perfect signature
-          to complete that story.
-        </p>
-
-        <p class="mt-4 max-w-2xl text-white/70">
-          I’m proposing a limited concept release: a premium sneaker design, collector packaging (box + tissue),
-          and an OdotNYC “UFO Basketball” identity — built to move on the streets and in the culture.
-          The goal: create a product that feels authentic to NYC while honoring the Ewing legacy.
-        </p>
-
-        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-          <a
-            id="ewingBtn"
-            href="https://odotofrva.github.io/odotNYCxEA/"
-            target="_blank"
-            rel="noreferrer"
-            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-          >
-            View the Full Collab Pitch →
-          </a>
-
-          <a
-            href="#contact"
-            class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
-          >
-            Contact Me
-          </a>
-        </div>
-
-        <p class="mt-4 text-xs text-white/50">
-          Includes: sneaker concept, packaging mockups, and campaign story.
-        </p>
-      </div>
-
-      <!-- Image placeholder -->
-      <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20">
-        <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-black/50"></div>
-
-        <div class="relative p-5 sm:p-6">
-          <div class="overflow-hidden rounded-2xl border border-dashed border-white/20 bg-black/30">
-            <div class="grid aspect-[4/3] place-items-center p-6 text-center">
-              <div>
-                <div class="text-sm font-semibold text-white/85"><img src="Ewingodot.png" alt="OdotNYC x Ewing Athletics" class="w-full h-full object-cover" /></div>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-4 grid gap-3 sm:grid-cols-2">
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <div class="text-xs text-white/50">Angle</div>
-              <div class="mt-1 text-sm font-semibold text-white/85">Sneaker Concept</div>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <div class="text-xs text-white/50">Details</div>
-              <div class="mt-1 text-sm font-semibold text-white/85">Box + Tissue</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-        <!-- ODOTNYC RETRO GAME -->
-        <section id="video" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <p class="text-sm font-medium tracking-wide text-white/60">Digital Thrifiting</p>
-            <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">MENOCLONE</h2>
-            <p class="mt-2 max-w-2xl text-white/70">
-              The MENOCLONE THRIFT SHOP is a culture-driven, thrifting experience with a digital twist. Are you a clone or one a who starts fashion trends? Visit MENOCLONE for more info.
-            </p>
-            <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
-              <div class="relative w-full pb-[56.25%]">
-                <iframe src="https://www.youtube.com/embed/8YEf2XJaI3U?si=ic7hgj5HOoZMFDfI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <p class="text-sm font-medium tracking-wide text-white/60">RoboTechi Services</p>
+            <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">
+              RoboTechi provides the following services:
+            </h2>
+
+            <div class="mt-8 grid gap-8 lg:grid-cols-2">
+              <div class="grid gap-4">
+                <div class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
+                  <h3 class="text-lg font-semibold text-white/90">Resume Writing</h3>
+                  <p class="mt-1 text-sm text-white/70">
+                    Let RoboTechi build your resume you can move gain a job to fund your entreprenurial spirit.
+                  </p>
+                </div>
+
+                <div class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
+                  <h3 class="text-lg font-semibold text-white/90">Web Development / App Development</h3>
+                  <p class="mt-1 text-sm text-white/70">Create amazing websites and appplications for your business needs.</p>
+                </div>
+
+                <div class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
+                  <h3 class="text-lg font-semibold text-white/90">Computer Repair</h3>
+                  <p class="mt-1 text-sm text-white/70">Virus Scans, Malware Scans, Operating System Install, Troubleshooting</p>
+                </div>
+
+                <div class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
+                  <h3 class="text-lg font-semibold text-white/90">Small Office Home Office (SOHO) Setup</h3>
+                  <p class="mt-1 text-sm text-white/70">
+                    Install and configure your home network for personal, business and even gaming needs.
+                  </p>
+                </div>
+
+                <div class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
+                  <h3 class="text-lg font-semibold text-white/90">IoT, CCTV, Security Systems</h3>
+                  <p class="mt-1 text-sm text-white/70">
+                    Need security setup for your residental or commercial business? Let me assist today!
+                  </p>
+                </div>
+              </div>
+
+              <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20">
+                <img
+                  src="rtlogo.png"
+                  alt="Services visual"
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/10 to-black/60"></div>
+                <div class="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs text-white/80">
+                  Services Overview
+                </div>
               </div>
             </div>
           </div>
         </section>
 
+        <!-- ODOTNYC x EWING ATHLETICS -->
+        <section id="ewing-collab" class="mt-14 scroll-mt-40">
+          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
+            <div class="grid items-center gap-8 lg:grid-cols-2">
+              <div>
+                <p class="text-sm font-medium tracking-wide text-white/60">Collaboration Project</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">OdotNYC × Ewing Athletics</h2>
+
+                <p class="mt-3 max-w-2xl text-white/70">
+                  This collab is about legacy + culture. As a kid from the Carolinas watching the New York Knicks,
+                  Patrick Ewing represented grit, pride, and purpose — the same energy I carry while rebuilding in NYC.
+                  OdotNYC is a world where tech, fashion, and art collide… and Ewing Athletics is the perfect signature
+                  to complete that story.
+                </p>
+
+                <p class="mt-4 max-w-2xl text-white/70">
+                  I’m proposing a limited concept release: a premium sneaker design, collector packaging (box + tissue),
+                  and an OdotNYC “UFO Basketball” identity — built to move on the streets and in the culture.
+                  The goal: create a product that feels authentic to NYC while honoring the Ewing legacy.
+                </p>
+
+                <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    id="ewingBtn"
+                    href="https://odotofrva.github.io/odotNYCxEA/"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
+                  >
+                    View the Full Collab Pitch →
+                  </a>
+
+                  <a
+                    href="#contact"
+                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
+                  >
+                    Contact Me
+                  </a>
+                </div>
+
+                <p class="mt-4 text-xs text-white/50">
+                  Includes: sneaker concept, packaging mockups, and campaign story.
+                </p>
+              </div>
+
+              <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20">
+                <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-black/50"></div>
+
+                <div class="relative p-5 sm:p-6">
+                  <div class="overflow-hidden rounded-2xl border border-dashed border-white/20 bg-black/30">
+                    <div class="grid aspect-[4/3] place-items-center p-6 text-center">
+                      <img src="Ewingodot.png" alt="OdotNYC x Ewing Athletics" class="w-full h-full object-cover" />
+                    </div>
+                  </div>
+
+                  <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <div class="text-xs text-white/50">Angle</div>
+                      <div class="mt-1 text-sm font-semibold text-white/85">Sneaker Concept</div>
+                    </div>
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <div class="text-xs text-white/50">Details</div>
+                      <div class="mt-1 text-sm font-semibold text-white/85">Box + Tissue</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIDEO (MENOCLONE) -->
+        <section id="video" class="mt-14 scroll-mt-40">
+          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
+            <p class="text-sm font-medium tracking-wide text-white/60">Digital Thrifting</p>
+            <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">MENOCLONE</h2>
+            <p class="mt-2 max-w-2xl text-white/70">
+              The MENOCLONE THRIFT SHOP is a culture-driven, thrifting experience with a digital twist. Are you a clone or one who starts fashion trends? Visit MENOCLONE for more info.
+            </p>
+
+            <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
+              <div class="relative aspect-video w-full">
+                <iframe
+                  class="absolute inset-0 h-full w-full"
+                  src="https://www.youtube.com/embed/8YEf2XJaI3U?si=ic7hgj5HOoZMFDfI"
+                  title="MENOCLONE video"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <!-- CREATIVE -->
         <section id="creative" class="mt-14 scroll-mt-40">
@@ -529,182 +510,83 @@
             </div>
 
             <div id="odotProductsGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <!-- Product 1 -->
               <article
                 class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
                 tabindex="0"
                 role="button"
                 data-title="OdotNYC Snapback"
-                data-desc="Thge Official merch by OdotNYC, architected in the mighty streets of 'THE BIG APPLE'."
+                data-desc="The official merch by OdotNYC, architected in the mighty streets of THE BIG APPLE."
                 data-price="$84.00"
                 data-img="odotnyc4odc.png"
                 data-buy="#"
               >
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotnyc4odc.png" alt="OdotNYC" class="h-full w-full object-cover" loading="lazy" />
+                  <img src="odotnyc4odc.png" alt="OdotNYC Snapback" class="h-full w-full object-cover" loading="lazy" />
                 </div>
                 <h3 class="mt-4 font-semibold">- OdotNYC Snapback -</h3>
-                <p class="mt-1 text-sm text-white/70">The Official OdotNYC New Era Snapback.</p>
+                <p class="mt-1 text-sm text-white/70">The official OdotNYC New Era snapback.</p>
               </article>
 
-              <!-- Product 2 -->
               <article
                 class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
                 tabindex="0"
                 role="button"
                 data-title="OdotNYC Crewneck"
-                data-desc='Wear the OdotNYC Crewneck while traveling the streets of NYC.'
+                data-desc="Wear the OdotNYC crewneck while traveling the streets of NYC."
                 data-price="$60.00"
                 data-img="odotNYCcrewneckblk.png"
                 data-buy="#"
               >
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotNYCcrewneckblk.png" alt="Patch" class="h-full w-full object-cover" loading="lazy" />
+                  <img src="odotNYCcrewneckblk.png" alt="OdotNYC Crewneck" class="h-full w-full object-cover" loading="lazy" />
                 </div>
-                <h3 class="mt-4 font-semibold">- OdotNYC Crewneck- </h3>
-                <p class="mt-1 text-sm text-white/70">Wear the OdotNYC Crewneck while traveling the streets of NYC. </p>
+                <h3 class="mt-4 font-semibold">- OdotNYC Crewneck -</h3>
+                <p class="mt-1 text-sm text-white/70">Street-ready warmth. Clean silhouette.</p>
               </article>
 
-              <!-- Product 3 -->
               <article
                 class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
                 tabindex="0"
                 role="button"
                 data-title="OdotNYC Sticker"
-                data-desc='OdotNYC Sticker'
+                data-desc="Support OdotNYC with this sticker."
                 data-price="$5.00"
                 data-img="odotNYCSticker.png"
                 data-buy="#"
               >
                 <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotNYC.png" alt="Sticker" class="h-full w-full object-cover" loading="lazy" />
+                  <img src="odotNYC.png" alt="OdotNYC Sticker" class="h-full w-full object-cover" loading="lazy" />
                 </div>
-                <h3 class="mt-4 font-semibold">- OdotNYC Sticker - </h3>
-                <p class="mt-1 text-sm text-white/70">Support OdotNYC with this amazing sticker</p>
+                <h3 class="mt-4 font-semibold">- OdotNYC Sticker -</h3>
+                <p class="mt-1 text-sm text-white/70">Small tag. Big signal.</p>
               </article>
             </div>
           </div>
         </section>
 
-       
-        <!-- EVENT POSTER (Above COWOMO) -->
-      <section id="eventPoster" class="mt-14 scroll-mt-40">
-        <div class="glow-card overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur">
-
-          <div class="relative">
-            <!-- Poster Image -->
-            <img
-              src="stylesyndromeNYC.png"
-              alt="ODOTNYC Event Poster"
-              class="w-full max-h-[720px] object-cover"
-              loading="lazy"
-            />
-
-            <!-- Subtle overlay for readability -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-          </div>
-
-          <!-- Optional caption -->
-          <div class="p-6 sm:p-8">
-            <p class="text-sm font-medium tracking-wide text-white/60">
-              STYLE SYNDROME: EP.1
-            </p>
-            <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">
-             Location / Date: TBA
-            </h2>
-            <p class="mt-2 max-w-2xl text-white/70">
-              Looking for a place here Fashion, Music, Art and Techinology Meets Street Culture? Enjoy good fashion, music, laughs and much networking at OdonNYC's Style Syndrome Ep.1 2026.
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-
-
-    <!-- Content grid -->
-    <div class="mt-8 grid gap-4 lg:grid-cols-3">
-      <!-- Left: Featured / status -->
-      <div class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5 lg:col-span-2">
-        <div class="flex items-center justify-between gap-3">
-          <div>
-            <div class="text-xs text-white/50">Status</div>
-            <div class="mt-1 text-lg font-semibold text-white/90">TOB: Gaming Community</div>
-          </div>
-          <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
-            NYC • Live
-          </span>
-        </div>
-
-        <!-- Featured player card -->
-        <div class="mt-5 grid gap-4 sm:grid-cols-2">
-          <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
-            <div class="flex items-center gap-3">
-              <div class="grid h-12 w-12 place-items-center rounded-xl border border-dashed border-white/20 bg-black/30 text-[10px] text-white/50">
-                PFP
-              </div>
-              <div class="leading-tight">
-                <div class="text-sm font-semibold text-white/90">Featured Player</div>
-                <div class="text-xs text-white/50">@odotNYC • NYC</div>
-              </div>
+        <!-- EVENT POSTER -->
+        <section id="eventPoster" class="mt-14 scroll-mt-40">
+          <div class="glow-card overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur">
+            <div class="relative">
+              <img
+                src="stylesyndromeNYC.png"
+                alt="ODOTNYC Event Poster"
+                class="w-full max-h-[720px] object-cover"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
             </div>
 
-            <div class="mt-4 text-sm text-white/70">
-              “High-level gameplay with real NYC energy — competitive, entertaining, and community-first.”
-            </div>
-
-            <div class="mt-4 flex flex-wrap gap-2 text-xs text-white/60">
-              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">FPS</span>
-              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">RPG</span>
-              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Retro</span>
-              <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Tournaments</span>
+            <div class="p-6 sm:p-8">
+              <p class="text-sm font-medium tracking-wide text-white/60">STYLE SYNDROME: EP.1</p>
+              <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Location / Date: TBA</h2>
+              <p class="mt-2 max-w-2xl text-white/70">
+                Looking for a place where Fashion, Music, Art and Technology meets street culture?
+                Enjoy good fashion, music, laughs and networking at OdotNYC's Style Syndrome Ep.1 2026.
+              </p>
             </div>
           </div>
-
-          <!-- Stream rules / membership -->
-          <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
-            <div class="text-sm font-semibold text-white/90">How it works</div>
-            <ul class="mt-3 space-y-2 text-sm text-white/70">
-              <li class="flex gap-2">
-                <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-white/50"></span>
-                Registered players stream under the TOB banner.
-              </li>
-              <li class="flex gap-2">
-                <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-white/50"></span>
-                Subscribers get access to exclusive lives, clips, and drops.
-              </li>
-              <li class="flex gap-2">
-                <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-white/50"></span>
-                NYC-rooted culture — skill + personality + story.
-              </li>
-              <li class="flex gap-2">
-                <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-white/50"></span>
-                21+ messaging where needed (no sales, no transactions).
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-          <!-- Right: Image / banner placeholder -->
-          <div class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-            <div class="text-xs text-white/50">TRAP OF BITS</div>
-            <div class="mt-3 grid place-items-center rounded-2xl border border-dashed border-white/20 bg-black/30 p-10 text-center">
-              <div class="text-xs text-white/50"><img src="cancon.png"></div>
-              
-            </div>
-    
-            <div class="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4">
-              <div class="text-xs text-white/50"></div>
-              <div class="mt-2 text-sm text-white/70">
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+        </section>
 
         <!-- COWOMO -->
         <section id="cowomo" class="mt-14 scroll-mt-40">
@@ -717,21 +599,23 @@
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">COWOMO - COWORK MORE REVIEWS</h2>
                 <p class="mt-3 text-white/70">
                   COWOMO is a coworking review section built for entrepreneurs in NYC — quick insights on
-                  coffee shops, cafés, and hidden gems where you can actually get work done. 
+                  coffee shops, cafés, and hidden gems where you can actually get work done.
                 </p>
 
                 <div class="mt-6 flex flex-col gap-3 sm:flex-row">
                   <a
                     id="cowomoBtn"
                     href="https://odotofrva.github.io/CoWoMoSite"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
                   >
                     View COWOMO Reviews →
                   </a>
 
                   <a
                     href="#contact"
-                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
                   >
                     Suggest a Spot
                   </a>
@@ -742,7 +626,6 @@
                 </p>
               </div>
 
-              <!--  card -->
               <div class="w-full lg:max-w-md">
                 <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20 p-6">
                   <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-black/40"></div>
@@ -774,11 +657,9 @@
               </div>
             </div>
 
-            <!-- Optional: mini preview cards -->
             <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs text-white/50">Starbucks (452 Knickerbocker Ave)
-</div>
+                <div class="text-xs text-white/50">Starbucks (452 Knickerbocker Ave)</div>
                 <h3 class="mt-2 text-lg font-semibold text-white/90">“Quiet mornings + strong espresso.”</h3>
                 <p class="mt-2 text-sm text-white/70">
                   Great for deep work. Solid Wi-Fi, decent seating, and outlets available near the wall.
@@ -823,17 +704,15 @@
               <div>
                 <p class="text-sm font-medium tracking-wide text-white/60">Soundtrack</p>
                 <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">OdotNYC Style Tape</h2>
-                <p class="mt-2 max-w-2xl text-white/70">
-                  Press play — this is the soundtrack for OdotNYC.
-                </p>
+                <p class="mt-2 max-w-2xl text-white/70">Press play — this is the soundtrack for OdotNYC.</p>
               </div>
 
               <a
                 id="spotifyOpenBtn"
-                href="#"
+                href="https://open.spotify.com/playlist/PASTE_PLAYLIST_LINK_HERE"
                 target="_blank"
                 rel="noreferrer"
-                class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 transition hover:bg-white/10"
+                class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
               >
                 Open in Spotify →
               </a>
@@ -841,8 +720,16 @@
 
             <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
               <div class="relative w-full">
-                <!-- Spotify embed -->
-                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1KhqiAiyWbnyIaveAIcgqD?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe
+                  id="spotifyFrame"
+                  style="border-radius:12px"
+                  src="https://open.spotify.com/embed/playlist/PASTE_YOUR_PLAYLIST_ID_HERE?utm_source=generator&theme=0"
+                  width="100%"
+                  height="352"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                ></iframe>
               </div>
             </div>
 
@@ -851,7 +738,6 @@
             </p>
           </div>
         </section>
-
 
         <!-- BLOG -->
         <section id="blog" class="mt-14 scroll-mt-40">
@@ -863,51 +749,16 @@
               </div>
               <a
                 id="mediumProfileBtn"
-                href="#"
+                href="https://medium.com/@almightyodot"
                 target="_blank"
                 rel="noreferrer"
-                class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 transition hover:bg-white/10"
+                class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
               >
                 View on Medium →
               </a>
             </div>
             <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="mediumGrid">
               <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">Loading Medium posts…</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- reLEAF -->
-        <section id="releaf" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="grid items-center gap-8 lg:grid-cols-2">
-              <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">Partner Brand</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">reLEAF</h2>
-                <p class="mt-3 max-w-2xl text-white/70">
-                  When LIFE hits hard there are two things you can do. Either cry and lay down, or transfer the energy to survive.
-                  This is hub that I created moons ago that will allow me to survive anywhere in America. Must be 21+. For details, I'll explain face to face. Peace!
-                </p>
-
-                <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <button id="releafEnterBtn" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl" type="button">
-                    Enter reLEAF (21+) →
-                  </button>
-                  <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
-                    Partner / Contact
-                  </a>
-                </div>
-                <p class="mt-4 text-xs text-white/50">You must confirm you are 21+ before leaving this site.</p>
-              </div>
-
-              <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20 p-6">
-                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-white/5 to-black/40"></div>
-                <div class="relative">
-                  <div class="text-sm font-medium tracking-wide text-white/70">reLEAF preview</div>
-                  <h3 class="mt-2 text-xl font-semibold">The Underground Hustle always exist in America.</h3>
-                  <p class="mt-2 text-sm text-white/70">This is a WARNING.... 21+ is Here!</p>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -941,7 +792,7 @@
                 <textarea name="message" rows="5" required class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="Tell me what you're trying to build..."></textarea>
               </label>
 
-              <button class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl" type="submit">
+              <button class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]" type="submit">
                 Send Message
               </button>
             </form>
@@ -954,16 +805,16 @@
       </main>
     </section>
 
-    
-
-    <!-- ✅ FLOATING: VR ODOT -->
+    <!-- ✅ FLOATING: MENOCLONE -->
     <a
       id="vrOdot"
       href="https://odotofrva.github.io/mnc-dt"
-      class="fixed bottom-[84px] right-5 z-50 group"
-      aria-label="Open MENCLONE"
+      target="_blank"
+      rel="noreferrer"
+      class="fixed bottom-5 right-5 z-50 group"
+      aria-label="Open MENOCLONE"
     >
-      <div class="glow-card flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur transition hover:bg-white/10">
+      <div class="glow-card flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur transition hover:bg-white/10 active:scale-[0.99]">
         <span class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-black/30 text-white/90">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
             <path d="M5 7a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h2a3 3 0 0 0 2.83-2h4.34A3 3 0 0 0 17 17h2a3 3 0 0 0 3-3v-4a3 3 0 0 0-3-3H5zm2 8H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1zm12 0h-2a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z"/>
@@ -972,37 +823,16 @@
         <div class="leading-tight">
           <div class="text-sm font-semibold text-white/90">MENOCLONE</div>
           <div class="text-[11px] text-white/60 group-hover:text-white/70">Enter MENOCLONE →</div>
-          
-        </div>
-      </div>
-    </a>
-
-    <!-- ✅ FLOATING: TOB Gaming -->
-    <a
-      id="TOB Gaming"
-      href="https://odotofrva.github.io/TOS/"
-      class="fixed bottom-5 right-5 z-50 group"
-      aria-label="Open TOB Gaming"
-    >
-      <div class="glow-card flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur transition hover:bg-white/10">
-        <span class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-black/30 text-white/90">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-            <path d="M7.5 5.5v13l11-6.5-11-6.5z" />
-          </svg>
-        </span>
-        <div class="leading-tight">
-          <div class="text-sm font-semibold text-white/90">TOB Gaming</div>
-          <div class="text-[11px] text-white/60 group-hover:text-white/70">Tap to watch→</div>
         </div>
       </div>
     </a>
 
     <!-- ✅ PRODUCT MODAL -->
-    <div id="productModal" class="fixed inset-0 z-[60] hidden">
+    <div id="productModal" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
       <div id="productModalBackdrop" class="absolute inset-0 bg-black/80"></div>
 
       <div class="relative mx-auto mt-16 w-[94%] max-w-3xl">
-        <div class="glow-card animate-popIn overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/95 backdrop-blur">
+        <div class="glow-card animate-popIn overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/95 backdrop-blur" role="dialog" aria-modal="true">
           <div class="flex items-start justify-between gap-4 border-b border-white/10 p-5 sm:p-6">
             <div>
               <p class="text-xs font-medium tracking-wide text-white/60">Product Details</p>
@@ -1013,7 +843,7 @@
             <button
               id="productModalClose"
               type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10"
+              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
               aria-label="Close"
             >
               ✕
@@ -1032,7 +862,7 @@
                 <a
                   id="pmBuy"
                   href="#"
-                  class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                  class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
                 >
                   Buy Now →
                 </a>
@@ -1040,7 +870,7 @@
                 <button
                   id="pmContinue"
                   type="button"
-                  class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                  class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
                 >
                   Continue Browsing
                 </button>
@@ -1053,36 +883,8 @@
       </div>
     </div>
 
-    <!-- 21+ MODAL (reLEAF Gate) -->
-    <div id="ageModal" class="fixed inset-0 z-50 hidden">
-      <div class="absolute inset-0 bg-black/70"></div>
-      <div class="relative mx-auto mt-24 w-[92%] max-w-md">
-        <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-medium tracking-wide text-white/60">Age Verification</p>
-              <h3 class="mt-1 text-xl font-semibold">Are you 21 or older?</h3>
-              <p class="mt-2 text-sm text-white/70">You must confirm you are 21+ to enter the reLEAF website.</p>
-            </div>
-            <button id="ageClose" type="button" class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10" aria-label="Close">✕</button>
-          </div>
-
-          <div class="mt-6 grid gap-3 sm:grid-cols-2">
-            <button id="ageYes" type="button" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
-              Yes, I’m 21+
-            </button>
-            <button id="ageNo" type="button" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
-              No, take me back
-            </button>
-          </div>
-
-          <p class="mt-4 text-[11px] text-white/45">By clicking “Yes”, you confirm you meet the legal age requirement in your location.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ✅ 10% OFF POPUP (hover products section) -->
-    <div id="discountModal" class="fixed inset-0 z-50 hidden">
+    <!-- ✅ DISCOUNT MODAL -->
+    <div id="discountModal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
       <div class="absolute inset-0 bg-black/75"></div>
 
       <div class="relative mx-auto mt-24 w-[92%] max-w-md">
@@ -1097,7 +899,7 @@
             <button
               id="discountClose"
               type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10"
+              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
               aria-label="Close"
             >
               ✕
@@ -1119,7 +921,7 @@
             <div class="grid gap-3 sm:grid-cols-2">
               <button
                 type="submit"
-                class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
               >
                 Send My Code →
               </button>
@@ -1127,7 +929,7 @@
               <button
                 id="discountNoThanks"
                 type="button"
-                class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
               >
                 No thanks
               </button>
@@ -1142,7 +944,7 @@
             <button
               id="discountContinue"
               type="button"
-              class="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+              class="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
             >
               Continue →
             </button>
@@ -1151,8 +953,8 @@
       </div>
     </div>
 
-    <!-- ✅ Instagram Popup (shows when contact section enters view) -->
-    <div id="igModal" class="fixed inset-0 z-50 hidden">
+    <!-- ✅ Instagram Popup -->
+    <div id="igModal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
       <div class="absolute inset-0 bg-black/70"></div>
 
       <div class="relative mx-auto mt-24 w-[92%] max-w-md">
@@ -1167,7 +969,7 @@
             <button
               id="igClose"
               type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10"
+              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
               aria-label="Close"
             >
               ✕
@@ -1180,7 +982,7 @@
               href="https://instagram.com/odotnyctv"
               target="_blank"
               rel="noreferrer"
-              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
             >
               Open Instagram →
             </a>
@@ -1188,7 +990,7 @@
             <button
               id="igLater"
               type="button"
-              class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+              class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
             >
               Not now
             </button>
@@ -1201,42 +1003,28 @@
 
     <script>
       // =========================================================
-      // CONFIG (CHANGE THESE)
+      // CONFIG
       // =========================================================
       const AUTO_ENTER_MS = 3000;
 
+      // Medium
       const MEDIUM_RSS_URL = "https://medium.com/feed/@almightyodot";
       const MEDIUM_PROFILE_URL = "https://medium.com/@almightyodot";
 
-      // YouTube
-      const YOUTUBE_VIDEO_ID = "IOCSPTP9_xQ";
-      const YOUTUBE_PLAYLIST_ID = "";
-
-      // reLEAF destination
-      const RELEAF_URL = "https://odotofrva.github.io/releafco/#products";
-
-      // Gaming
-
-      const GAMING_STATION_URL = "gaming-station.html";
-
-
-      // COWOMO destination page
-      const COWOMO_URL = "cowomo.html"; // change to your actual page
-
       // ✅ Discount popup behavior
-      const SHOW_DISCOUNT_ONCE = true;          // only once per browser
-      const DISCOUNT_HOVER_DELAY_MS = 300;      // prevent instant flicker
+      const SHOW_DISCOUNT_ONCE = true;
+      const DISCOUNT_HOVER_DELAY_MS = 350;
       const DISCOUNT_STORAGE_KEY = "odot_discount_seen_v1";
       const DISCOUNT_EMAIL_POST_URL = "https://formsubmit.co/ajax/YOUR_EMAIL@domain.com";
 
       // Spotify
       const SPOTIFY_PLAYLIST_URL = "https://open.spotify.com/playlist/PASTE_PLAYLIST_LINK_HERE";
-      const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/PASTE_YOUR_PLAYLIST_ID_HERE?utm_source=generator";
-
+      const SPOTIFY_EMBED_URL = "https://open.spotify.com/embed/playlist/PASTE_YOUR_PLAYLIST_ID_HERE?utm_source=generator&theme=0";
 
       // ✅ Instagram popup behavior (on contact view)
       const SHOW_IG_ONCE = true;
       const IG_STORAGE_KEY = "odot_ig_seen_v1";
+
       // =========================================================
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -1244,10 +1032,7 @@
         const landing = document.getElementById("landing");
         const home = document.getElementById("home");
 
-        if (!landing || !home) {
-          console.error("Missing #landing or #home section in HTML.");
-          return;
-        }
+        if (!landing || !home) return;
 
         let entered = false;
 
@@ -1260,54 +1045,35 @@
             const src = vid.querySelector("source");
             if (src) src.removeAttribute("src");
             vid.load();
-          } catch (e) {
-            console.warn("Video stop warning:", e);
-          }
+          } catch {}
         }
-
-        function initGamingStation() {
-          const btn = document.getElementById("gamingStationBtn");
-          if (btn) btn.href = GAMING_STATION_URL;
-        }
-
 
         function goHome() {
-        if (entered) return;
-        entered = true;
+          if (entered) return;
+          entered = true;
 
-        landing.classList.add("hidden");
-        home.classList.remove("hidden");
-        home.classList.add("animate-fadeIn");
+          landing.classList.add("hidden");
+          home.classList.remove("hidden");
+          home.classList.add("animate-fadeIn");
 
-        stopLandingVideo();
+          stopLandingVideo();
 
-        initActiveMenu();
-        initLookbookCarousel();
-        initCryptoTicker();
-        initYouTube();
-        initSpotify();      // 👈 HERE
-        initGamingStation();
-        initMediumBlog();
-        initReleafGate();
-        initDiscountPopup();
-        initCowomoButton();
-        initInstagramPopup();
-        initProductModal();
+          initActiveMenu();
+          initCryptoTicker();
+          initSpotify();
+          initMediumBlog();
+          initDiscountPopup();
+          initInstagramPopup();
+          initProductModal();
+          initScrollProgress();
 
-        setActiveNav("about");
-      }
-
-
-        function initSpotify() {
-        const frame = document.getElementById("spotifyFrame");
-        const btn = document.getElementById("spotifyOpenBtn");
-        if (frame && typeof SPOTIFY_EMBED_URL === "string") frame.src = SPOTIFY_EMBED_URL;
-        if (btn && typeof SPOTIFY_PLAYLIST_URL === "string") btn.href = SPOTIFY_PLAYLIST_URL;
-      }
+          setActiveNav("about");
+        }
 
         enterBtn?.addEventListener("click", goHome, { passive: true });
         setTimeout(goHome, AUTO_ENTER_MS);
 
+        // Menu toggle
         const menuBtn = document.getElementById("menuBtn");
         const menuPanel = document.getElementById("menuPanel");
         if (menuBtn && menuPanel) {
@@ -1317,7 +1083,7 @@
             menuBtn.setAttribute("aria-expanded", String(!isOpen));
           });
 
-          document.querySelectorAll("#menuPanel a").forEach((a) => {
+          document.querySelectorAll("#menuPanel a[href^='#']").forEach((a) => {
             a.addEventListener("click", () => {
               menuPanel.classList.add("hidden");
               menuBtn.setAttribute("aria-expanded", "false");
@@ -1328,6 +1094,28 @@
         const yearEl = document.getElementById("year");
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
+
+      // --------------------------
+      // ✅ Micro: scroll progress bar
+      // --------------------------
+      function initScrollProgress() {
+        const header = document.querySelector("header");
+        if (!header) return;
+
+        const bar = document.createElement("div");
+        bar.className = "h-[2px] w-0 bg-white/40";
+        header.appendChild(bar);
+
+        const onScroll = () => {
+          const doc = document.documentElement;
+          const max = doc.scrollHeight - doc.clientHeight;
+          const p = max > 0 ? (doc.scrollTop / max) : 0;
+          bar.style.width = `${Math.max(0, Math.min(1, p)) * 100}%`;
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      }
 
       // --------------------------
       // ✅ Product click -> modal
@@ -1346,7 +1134,11 @@
 
         if (!modal || !backdrop || !closeBtn || !contBtn || !titleEl || !priceEl || !descEl || !imgEl || !buyEl) return;
 
+        let lastFocus = null;
+
         const open = ({ title, price, desc, img, buyLink }) => {
+          lastFocus = document.activeElement;
+
           titleEl.textContent = title || "Product";
           priceEl.textContent = price || "";
           descEl.textContent = desc || "";
@@ -1355,13 +1147,16 @@
           buyEl.href = buyLink || "#";
 
           modal.classList.remove("hidden");
+          modal.setAttribute("aria-hidden", "false");
           document.body.style.overflow = "hidden";
           closeBtn.focus?.();
         };
 
         const close = () => {
           modal.classList.add("hidden");
+          modal.setAttribute("aria-hidden", "true");
           document.body.style.overflow = "";
+          lastFocus?.focus?.();
         };
 
         document.querySelectorAll(".product-card").forEach((card) => {
@@ -1395,14 +1190,6 @@
       }
 
       // --------------------------
-      // COWOMO button wiring
-      // --------------------------
-      function initCowomoButton() {
-        const btn = document.getElementById("cowomoBtn");
-        if (btn) btn.href = COWOMO_URL;
-      }
-
-      // --------------------------
       // ✅ Instagram popup (when #contact enters view)
       // --------------------------
       function initInstagramPopup() {
@@ -1423,6 +1210,7 @@
           if (shown) return;
           shown = true;
           modal.classList.remove("hidden");
+          modal.setAttribute("aria-hidden", "false");
           document.body.style.overflow = "hidden";
 
           if (SHOW_IG_ONCE) {
@@ -1432,6 +1220,7 @@
 
         const hide = () => {
           modal.classList.add("hidden");
+          modal.setAttribute("aria-hidden", "true");
           document.body.style.overflow = "";
         };
 
@@ -1482,6 +1271,7 @@
           if (opened) return;
           opened = true;
           modal.classList.remove("hidden");
+          modal.setAttribute("aria-hidden", "false");
           document.body.style.overflow = "hidden";
           success.classList.add("hidden");
           form.classList.remove("hidden");
@@ -1495,14 +1285,28 @@
 
         const hide = () => {
           modal.classList.add("hidden");
+          modal.setAttribute("aria-hidden", "true");
           document.body.style.overflow = "";
         };
 
+        // Hover on desktop
         trigger.addEventListener("pointerenter", () => {
           hoverTimer = setTimeout(open, DISCOUNT_HOVER_DELAY_MS);
         });
 
         trigger.addEventListener("pointerleave", () => {
+          if (hoverTimer) clearTimeout(hoverTimer);
+          hoverTimer = null;
+        });
+
+        // Also allow tap on mobile by long-pressing the grid
+        trigger.addEventListener("pointerdown", (e) => {
+          // only if they press-and-hold on touch
+          if (e.pointerType !== "touch") return;
+          hoverTimer = setTimeout(open, 500);
+        });
+
+        trigger.addEventListener("pointerup", () => {
           if (hoverTimer) clearTimeout(hoverTimer);
           hoverTimer = null;
         });
@@ -1522,7 +1326,7 @@
 
           const payload = {
             email,
-            _subject: "OdotNYC Snapback - 10% Discount Request",
+            _subject: "OdotNYC - 10% Discount Request",
             message: `New discount signup: ${email}`
           };
 
@@ -1543,42 +1347,13 @@
       }
 
       // --------------------------
-      // reLEAF 21+ Gate
+      // Spotify wiring
       // --------------------------
-      function initReleafGate() {
-        const openBtn = document.getElementById("releafEnterBtn");
-        const modal = document.getElementById("ageModal");
-        const yes = document.getElementById("ageYes");
-        const no = document.getElementById("ageNo");
-        const close = document.getElementById("ageClose");
-
-        if (!openBtn || !modal || !yes || !no || !close) return;
-
-        const open = () => {
-          modal.classList.remove("hidden");
-          document.body.style.overflow = "hidden";
-          yes.focus?.();
-        };
-
-        const hide = () => {
-          modal.classList.add("hidden");
-          document.body.style.overflow = "";
-          openBtn.focus?.();
-        };
-
-        openBtn.addEventListener("click", open);
-
-        yes.addEventListener("click", () => {
-          try { localStorage.setItem("releaf_age_ok", "1"); } catch {}
-          window.location.href = RELEAF_URL;
-        });
-
-        no.addEventListener("click", hide);
-        close.addEventListener("click", hide);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
-        });
+      function initSpotify() {
+        const frame = document.getElementById("spotifyFrame");
+        const btn = document.getElementById("spotifyOpenBtn");
+        if (frame && typeof SPOTIFY_EMBED_URL === "string") frame.src = SPOTIFY_EMBED_URL;
+        if (btn && typeof SPOTIFY_PLAYLIST_URL === "string") btn.href = SPOTIFY_PLAYLIST_URL;
       }
 
       // --------------------------
@@ -1599,8 +1374,7 @@
           });
         };
 
-        const ids = ["about","robotechi","projects","creative","retro-game","lookbook","poster","cowomo","video","spotify","blog","releaf","contact"];
-
+        const ids = ["about","odotnyc","robotechi","services","ewing-collab","video","creative","eventPoster","cowomo","spotify","blog","contact"];
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
 
@@ -1616,98 +1390,6 @@
         );
 
         sections.forEach((s) => io.observe(s));
-      }
-
-      // --------------------------
-      // Lookbook Carousel (multiple slides + dots + swipe)
-      // --------------------------
-      function initLookbookCarousel() {
-        const track = document.getElementById("lookTrack");
-        const prev = document.getElementById("lookPrev");
-        const next = document.getElementById("lookNext");
-        const dotsWrap = document.getElementById("lookDots");
-
-        if (!track || !prev || !next) return;
-
-        const slides = Array.from(track.children);
-        const total = slides.length;
-        let idx = 0;
-
-        if (dotsWrap) {
-          dotsWrap.innerHTML = slides.map((_, i) => `
-            <button
-              type="button"
-              class="h-2.5 w-2.5 rounded-full border border-white/20 bg-white/10 transition hover:bg-white/20"
-              aria-label="Go to slide ${i + 1}"
-              data-dot="${i}"
-            ></button>
-          `).join("");
-        }
-
-        const setDots = () => {
-          if (!dotsWrap) return;
-          dotsWrap.querySelectorAll("button[data-dot]").forEach((b) => {
-            const isOn = Number(b.dataset.dot) === idx;
-            b.classList.toggle("bg-white/60", isOn);
-            b.classList.toggle("border-white/40", isOn);
-          });
-        };
-
-        const go = (n) => {
-          idx = (n + total) % total;
-          track.style.transform = `translateX(-${idx * 100}%)`;
-          setDots();
-        };
-
-        prev.addEventListener("click", () => go(idx - 1));
-        next.addEventListener("click", () => go(idx + 1));
-
-        dotsWrap?.addEventListener("click", (e) => {
-          const btn = e.target.closest("button[data-dot]");
-          if (!btn) return;
-          go(Number(btn.dataset.dot));
-        });
-
-        let startX = 0;
-        let active = false;
-
-        track.addEventListener("pointerdown", (e) => {
-          active = true;
-          startX = e.clientX;
-          track.setPointerCapture?.(e.pointerId);
-        });
-
-        track.addEventListener("pointerup", (e) => {
-          if (!active) return;
-          active = false;
-          const dx = e.clientX - startX;
-          const threshold = 40;
-          if (dx > threshold) go(idx - 1);
-          else if (dx < -threshold) go(idx + 1);
-        });
-
-        track.addEventListener("pointercancel", () => (active = false));
-
-        let timer = setInterval(() => go(idx + 1), 6000);
-        const carouselBox = track.parentElement;
-        carouselBox?.addEventListener("mouseenter", () => clearInterval(timer));
-        carouselBox?.addEventListener("mouseleave", () => (timer = setInterval(() => go(idx + 1), 6000)));
-
-        go(0);
-      }
-
-      // --------------------------
-      // YouTube Embed
-      // --------------------------
-      function initYouTube() {
-        const frame = document.getElementById("ytFrame");
-        if (!frame) return;
-
-        if (YOUTUBE_PLAYLIST_ID && YOUTUBE_PLAYLIST_ID.trim()) {
-          frame.src = `https://www.youtube.com/embed/videoseries?list=${encodeURIComponent(YOUTUBE_PLAYLIST_ID)}&rel=0&modestbranding=1`;
-        } else {
-          frame.src = `https://www.youtube.com/embed/${encodeURIComponent(YOUTUBE_VIDEO_ID)}?rel=0&modestbranding=1`;
-        }
       }
 
       // --------------------------
