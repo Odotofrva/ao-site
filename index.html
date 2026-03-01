@@ -1,1591 +1,360 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OdotNYC</title>
-
-    <!-- Tailwind (CDN) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-      /* =========================
-         Micro interactions + base
-         ========================= */
-
-      @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(14px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-      .animate-fadeUp { animation: fadeUp 900ms ease-out both; }
-      .delay-150 { animation-delay: 150ms; }
-      .delay-300 { animation-delay: 300ms; }
-
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      .animate-fadeIn { animation: fadeIn 350ms ease-out both; }
-
-      @keyframes popIn {
-        from { opacity: 0; transform: translateY(10px) scale(0.98); }
-        to   { opacity: 1; transform: translateY(0) scale(1); }
-      }
-      .animate-popIn { animation: popIn 220ms ease-out both; }
-
-      video { object-fit: cover; }
-
-      .navlink-active {
-        background: rgba(255,255,255,0.10);
-        border-color: rgba(255,255,255,0.18);
-        color: rgba(255,255,255,0.95);
-      }
-
-      .glow-card {
-        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
-      }
-      .glow-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(255,255,255,0.22);
-        box-shadow:
-          0 0 0 1px rgba(255,255,255,0.06),
-          0 18px 50px rgba(0,0,0,0.55),
-          0 0 36px rgba(255,255,255,0.08);
-      }
-
-      @keyframes marquee {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50%); }
-      }
-      .marquee {
-        display: flex;
-        width: max-content;
-        animation: marquee 22s linear infinite;
-      }
-      .marquee:hover { animation-play-state: paused; }
-
-      @media (prefers-reduced-motion: reduce) {
-        .animate-fadeUp, .animate-fadeIn, .animate-popIn { animation: none !important; }
-        .marquee { animation: none !important; }
-        .glow-card, .glow-card:hover { transition: none !important; transform: none !important; }
-      }
-
-      :focus-visible { outline: 2px solid rgba(255,255,255,0.35); outline-offset: 3px; }
-    </style>
-  </head>
-
-  <body class="w-screen bg-black text-white">
-    <!-- LANDING -->
-    <section id="landing" class="relative h-screen w-screen">
-      <video id="landingVideo" class="fixed inset-0 -z-20 h-full w-full" autoplay muted loop playsinline>
-        <source src="space.mp4" type="video/mp4" />
-      </video>
-      <div class="fixed inset-0 -z-10 bg-black/50"></div>
-
-      <main class="flex h-screen w-screen items-center justify-center p-6">
-        <div class="flex flex-col items-center text-center">
-          <img
-            src="odotnyc3final.png"
-            alt="OdotNYC Logo"
-            class="animate-fadeUp w-[60%] max-w-[500px] sm:max-w-[550px]"
-          />
-
-          <button
-            id="enterBtn"
-            class="animate-fadeUp delay-300 mt-7 rounded-full bg-white/90 px-10 py-3 text-base font-semibold text-black shadow-lg transition hover:-translate-y-0.5 hover:bg-white hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-white/80 focus:ring-offset-2 focus:ring-offset-black sm:text-lg active:scale-[0.99]"
-            type="button"
-          >
-            Enter Now
-          </button>
-
-          <p class="mt-4 text-xs text-white/60" id="autoEnterText">
-            Auto-enter in 3 seconds…
-          </p>
-        </div>
-      </main>
-    </section>
-
-    <!-- HOME -->
-    <section id="home" class="hidden min-h-screen bg-zinc-950">
-      <!-- Sticky Header + Ticker -->
-      <header class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/70 backdrop-blur">
-        <!-- Crypto ticker bar -->
-        <div class="border-b border-white/10 bg-black/30">
-          <div class="mx-auto w-full max-w-6xl px-5 py-2 sm:px-8">
-            <div class="flex items-center gap-3">
-              <span class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold tracking-wide text-white/80">
-                CRYPTO
-              </span>
-
-              <div class="relative w-full overflow-hidden">
-                <div class="pointer-events-none absolute left-0 top-0 h-full w-10 bg-gradient-to-r from-zinc-950/90 to-transparent"></div>
-                <div class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-zinc-950/90 to-transparent"></div>
-
-                <div id="tickerMarquee" class="marquee gap-8 text-[12px] text-white/80" aria-label="Crypto ticker">
-                  <div class="flex items-center gap-8" id="tickerRowA">
-                    <span class="opacity-70">Loading prices…</span>
-                  </div>
-                  <div class="flex items-center gap-8" id="tickerRowB" aria-hidden="true">
-                    <span class="opacity-70">Loading prices…</span>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                id="tickerRefresh"
-                class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/70 transition hover:bg-white/10 active:scale-[0.98]"
-                type="button"
-              >
-                Refresh
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Top bar -->
-        <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <div class="w-12"></div>
-
-          <div class="flex items-center justify-center">
-            <img src="odotnyc3final.png" alt="OdotNYC" class="h-30 w-auto sm:h-40" />
-          </div>
-
-          <button
-            id="menuBtn"
-            class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-white/40"
-            type="button"
-            aria-label="Open menu"
-            aria-expanded="false"
-          >
-            <span class="relative block h-4 w-5">
-              <span class="absolute left-0 top-0 h-[2px] w-full bg-white/90"></span>
-              <span class="absolute left-0 top-1/2 h-[2px] w-full -translate-y-1/2 bg-white/90"></span>
-              <span class="absolute left-0 bottom-0 h-[2px] w-full bg-white/90"></span>
-            </span>
-          </button>
-        </div>
-
-        <!-- Menu Panel -->
-        <nav id="menuPanel" class="mx-auto hidden w-full max-w-6xl px-5 pb-4 sm:px-8">
-          <div class="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur">
-            <ul class="grid gap-2 sm:grid-cols-8">
-              <li><a data-section="about" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#about">About</a></li>
-              <li><a data-section="gallery" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#gallery">Gallery</a></li>
-              <li><a data-section="odotnyc" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#odotnyc">OdotNYC</a></li>
-              <li><a data-section="robotechi" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#robotechi">RoboTechi</a></li>
-              <li><a data-section="services" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#services">Services</a></li>
-              <li><a data-section="creative" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#creative">Creative</a></li>
-              <li><a data-section="cowomo" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#cowomo">COWOMO</a></li>
-              <li><a data-section="blog" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#blog">Blog</a></li>
-
-              <li class="sm:col-span-8">
-                <a data-section="contact" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#contact">Contact</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
-
-      <main class="mx-auto w-full max-w-6xl px-5 pb-12 pt-6 sm:px-8">
-        <!-- ABOUT -->
-        <section id="about" class="mt-8 scroll-mt-28">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="grid items-center gap-8 lg:grid-cols-2">
-              <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">About</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Who is OdotNYC!?</h2>
-                <p class="mt-3 max-w-3xl text-white/70">
-                  OdotNYC is a devoted father, creative and self taught techie whose journey through art and technology is forged not just by curiosity, but by survival, reinvention, and purpose. A multidisciplinary creative and self-taught technologist, he designs and builds at the intersection of visual expression and engineering—where imagination becomes structure, and ideas become systems.
-                </p>
-              </div>
-
-              <div class="rounded-3xl border border-white/10 bg-black/20 p-4">
-                <img src="nycodot.png" alt="Odot" class="w-full rounded-2xl object-cover" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- GALLERY CAROUSEL -->
-        <section id="gallery" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">Gallery</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">OdotNYC Photo Carousel</h2>
-                <p class="mt-2 max-w-2xl text-white/70">Swipe on mobile, or use arrows on desktop.</p>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <button
-                  id="galPrev"
-                  type="button"
-                  class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-[0.98]"
-                  aria-label="Previous photo"
-                >
-                  ‹
-                </button>
-                <button
-                  id="galNext"
-                  type="button"
-                  class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 active:scale-[0.98]"
-                  aria-label="Next photo"
-                >
-                  ›
-                </button>
-              </div>
-            </div>
-
-            <div class="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/20">
-              <div class="relative">
-                <div id="galTrack" class="flex transition-transform duration-500 ease-out will-change-transform">
-                  <!-- ✅ Replace these with your real OdotNYC photos -->
-                  <figure class="min-w-full">
-                    <img src="odotnyc3final.png" alt="OdotNYC Gallery 1" class="h-[360px] w-full object-cover sm:h-[420px]" loading="lazy" />
-                  </figure>
-                  <figure class="min-w-full">
-                    <img src="redwhiteo.png" alt="OdotNYC Gallery 2" class="h-[360px] w-full object-cover sm:h-[420px]" loading="lazy" />
-                  </figure>
-                  <figure class="min-w-full">
-                    <img src="odotnycstate.png" alt="OdotNYC Gallery 3" class="h-[360px] w-full object-cover sm:h-[420px]" loading="lazy" />
-                  </figure>
-                  <figure class="min-w-full">
-                    <img src="browno.png" alt="OdotNYC Gallery 4" class="h-[360px] w-full object-cover sm:h-[420px]" loading="lazy" />
-                  </figure>
-                  <figure class="min-w-full">
-                    <img src="odotnyc4odc.png" alt="OdotNYC Gallery 5" class="h-[360px] w-full object-cover sm:h-[420px]" loading="lazy" />
-                  </figure>
-                </div>
-
-                <div id="galDots" class="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-2 backdrop-blur">
-                  <!-- injected by JS -->
-                </div>
-              </div>
-            </div>
-
-            <p class="mt-3 text-[11px] text-white/45">Tip: Hover pauses autoplay (desktop).</p>
-          </div>
-        </section>
-
-        <!-- ODOTNYC -->
-        <section id="odotnyc" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <p class="text-sm font-medium tracking-wide text-white/60">Brand Awareness</p>
-            <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">The Brand: OdotNYC</h2>
-
-            <div class="mt-8 grid items-center gap-6 lg:grid-cols-2">
-              <div>
-                <p class="max-w-xl text-white/70">
-                  OdotNYC was born the moment I arrived in New York and realized the truth:
-                  <span class="text-white/90 font-semibold">all bets were placed on me</span>.
-                  Survival meant rebuilding from nothing — mentally, creatively, and financially —
-                  in the loudest city in the world.
-                </p>
-              </div>
-
-              <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
-                <img
-                  src="odotnyc3final.png"
-                  alt="Odot arriving in NYC"
-                  class="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-
-            <div class="mt-10 grid items-center gap-6 lg:grid-cols-2">
-              <div class="order-2 overflow-hidden rounded-2xl border border-white/10 bg-black/20 lg:order-1">
-                <img
-                  src="odotnycstate.png"
-                  alt="OdotNYC brand rebuild"
-                  class="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-
-              <div class="order-1 lg:order-2">
-                <p class="max-w-xl text-white/70">
-                  The 3 stars represent the constellation "Orion's Belt" as well as OdotNYC. Being my first name actually being "Orion", the logo was simple.
-                  OdotNYC lives at the intersection of
-                  <span class="text-white/90 font-semibold">technology</span>,
-                  <span class="text-white/90 font-semibold">fashion</span>, and
-                  <span class="text-white/90 font-semibold">art</span>.
-                  It’s a signal to the world — I’m still standing, still creating,
-                  and still engineering my future.
-                </p>
-
-                <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <a
-                    href="#creative"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
-                  >
-                    Explore the Brand →
-                  </a>
-
-                  <a
-                    href="#contact"
-                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
-                  >
-                    Collaborate
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <p class="mt-8 text-xs text-white/50">
-              "Keep Your Vision Further Than Your Eyesight!" - OdotNYC
-            </p>
-          </div>
-        </section>
-
-        <!-- ROBOTECHI -->
-        <section id="robotechi" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="grid items-center gap-8 lg:grid-cols-2">
-              <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">Featured</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">RoboTechi Co.</h2>
-                <p class="mt-3 max-w-2xl text-white/70">
-                  RoboTechi is a technology-driven company focused on designing and building solutions around embedded systems and modern electronics.
-                </p>
-              </div>
-
-              <div class="relative">
-                <div class="glow-card relative h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-black/20 sm:h-[320px] lg:h-[380px]">
-                  <img
-                    src="rtlogo.png"
-                    alt="RoboTechi – Embedded Systems & Electronics"
-                    class="absolute inset-0 h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/60"></div>
-
-                  <div class="absolute bottom-4 right-4 z-10">
-                    <a
-                      href="https://odotofrva.github.io/rt-site-odotnyc/"
-                      target="_blank"
-                      rel="noreferrer"
-                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
-                    >
-                      Enter RoboTechi →
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        
-
-        <!-- CREATIVE -->
-        <section id="creative" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">ODOT / Creative</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Products by OdotNYC</h2>
-                <p class="mt-2 max-w-2xl text-white/70">Innovation lives where imagination exists.</p>
-                <p class="mt-1 text-xs text-white/45">Tip: click any product to view details.</p>
-              </div>
-            </div>
-
-            <div id="odotProductsGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <article
-                class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                tabindex="0"
-                role="button"
-                data-title="OdotNYC Snapback"
-                data-desc="The official merch by OdotNYC, architected in the streets of THE BIG APPLE."
-                data-price="$84.00"
-                data-img="odotnyc4odc.png"
-                data-buy="#"
-              >
-                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotnyc4odc.png" alt="OdotNYC Snapback" class="h-full w-full object-cover" loading="lazy" />
-                </div>
-                <h3 class="mt-4 font-semibold">- OdotNYC Snapback -</h3>
-                <p class="mt-1 text-sm text-white/70">The official OdotNYC New Era snapback.</p>
-              </article>
-
-              <article
-                class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                tabindex="0"
-                role="button"
-                data-title="OdotNYC Crewneck"
-                data-desc="Wear the OdotNYC crewneck while traveling the streets of NYC."
-                data-price="$60.00"
-                data-img="odotNYCcrewneckblk.png"
-                data-buy="#"
-              >
-                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotNYCcrewneckblk.png" alt="OdotNYC Crewneck" class="h-full w-full object-cover" loading="lazy" />
-                </div>
-                <h3 class="mt-4 font-semibold">- OdotNYC Crewneck -</h3>
-                <p class="mt-1 text-sm text-white/70">Street-ready warmth. Clean silhouette.</p>
-              </article>
-
-              <article
-                class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                tabindex="0"
-                role="button"
-                data-title="OdotNYC Sticker"
-                data-desc="Support OdotNYC with this sticker."
-                data-price="$5.00"
-                data-img="odotNYCSticker.png"
-                data-buy="#"
-              >
-                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotNYC.png" alt="OdotNYC Sticker" class="h-full w-full object-cover" loading="lazy" />
-                </div>
-                <h3 class="mt-4 font-semibold">- OdotNYC Sticker -</h3>
-                <p class="mt-1 text-sm text-white/70">Small tag. Big signal.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <!-- COWOMO -->
-        <section id="cowomo" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <img src="cowomo.png" alt="COWOMO Logo" class="mx-auto h-24 w-auto object-contain" loading="lazy" />
-
-            <div class="mt-6 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div class="max-w-2xl">
-                <p class="text-sm font-medium tracking-wide text-white/60">NYC Work Spots</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">COWOMO - COWORK MORE REVIEWS</h2>
-                <p class="mt-3 text-white/70">
-                  COWOMO is a coworking review section built for entrepreneurs in NYC — quick insights on
-                  coffee shops, cafés, and hidden gems where you can actually get work done.
-                </p>
-
-                <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <a
-                    id="cowomoBtn"
-                    href="https://odotofrva.github.io/CoWoMoSite"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
-                  >
-                    View COWOMO Reviews →
-                  </a>
-
-                  <!-- ✅ NEW: Space of the Week button -->
-                  <button
-                    id="cowomoSpotlightBtn"
-                    type="button"
-                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
-                  >
-                    Space of the Week ⭐ →
-                  </button>
-                </div>
-
-                <p class="mt-4 text-xs text-white/50">
-                  Includes: Wi-Fi quality, outlet availability, noise level, seating comfort, and vibe.
-                </p>
-              </div>
-
-              <div class="w-full lg:max-w-md">
-                <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20 p-6">
-                  <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-black/40"></div>
-
-                  <div class="relative">
-                    <div class="mt-4 grid place-items-center rounded-2xl border border-dashed border-white/20 bg-black/30 p-10">
-                      <div class="text-center">
-                        <img src="cowomo.png" alt="COWOMO Logo" class="mx-auto mb-4 h-24 w-auto object-contain" />
-                        <div class="text-xs text-white/55">Cowork smarter in NYC.</div>
-                      </div>
-                    </div>
-
-                    <div class="mt-5 grid gap-3 sm:grid-cols-3">
-                      <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <div class="text-xs text-white/50">Wi-Fi</div>
-                        <div class="mt-1 text-sm font-semibold text-white/85">Fast / Stable</div>
-                      </div>
-                      <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <div class="text-xs text-white/50">Outlets</div>
-                        <div class="mt-1 text-sm font-semibold text-white/85">Plenty</div>
-                      </div>
-                      <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <div class="text-xs text-white/50">Vibe</div>
-                        <div class="mt-1 text-sm font-semibold text-white/85">Work-Friendly</div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            <!-- Mini preview cards (optional content) -->
-            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs text-white/50">Starbucks (452 Knickerbocker Ave)</div>
-                <h3 class="mt-2 text-lg font-semibold text-white/90">“Quiet mornings + strong espresso.”</h3>
-                <p class="mt-2 text-sm text-white/70">
-                  Great for deep work. Solid Wi-Fi, decent seating, and outlets available near the wall.
-                </p>
-                <div class="mt-4 flex items-center gap-2 text-xs text-white/55">
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Brooklyn</span>
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Networking</span>
-                </div>
-              </article>
-
-              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs text-white/50">Bon Tree</div>
-                <h3 class="mt-2 text-lg font-semibold text-white/90">“Crowded but creative energy.”</h3>
-                <p class="mt-2 text-sm text-white/70">
-                  Better for quick sessions. Noise is higher, but the vibe is motivating and social.
-                </p>
-                <div class="mt-4 flex items-center gap-2 text-xs text-white/55">
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Brooklyn</span>
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Headphones</span>
-                </div>
-              </article>
-
-              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs text-white/50">Starbucks (157-41 Cross Bay Blvd)</div>
-                <h3 class="mt-2 text-lg font-semibold text-white/90">“Outlet heaven + big tables.”</h3>
-                <p class="mt-2 text-sm text-white/70">
-                  Laptop-friendly setup. Great seating, strong Wi-Fi, and easy to camp for a few hours.
-                </p>
-                <div class="mt-4 flex items-center gap-2 text-xs text-white/55">
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Queens</span>
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">2–4 hrs</span>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <!-- BLOG -->
-        <section id="blog" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">Blog</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Read Odot's Tech Blog!</h2>
-              </div>
-              <a
-                id="mediumProfileBtn"
-                href="https://medium.com/@almightyodot"
-                target="_blank"
-                rel="noreferrer"
-                class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
-              >
-                View on Medium →
-              </a>
-            </div>
-            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="mediumGrid">
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">Loading Medium posts…</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <p class="text-sm font-medium tracking-wide text-white/60">Contact</p>
-            <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Send a message</h2>
-            <p class="mt-3 max-w-2xl text-white/70">Interested in connecting with me? Fill the form completely and I will connect with you soon.</p>
-
-            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST">
-              <input type="hidden" name="_subject" value="New Website Contact Submission" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-
-              <div class="grid gap-4 sm:grid-cols-2">
-                <label class="grid gap-2">
-                  <span class="text-sm text-white/70">Name</span>
-                  <input name="name" required class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="Your name" />
-                </label>
-
-                <label class="grid gap-2">
-                  <span class="text-sm text-white/70">Email</span>
-                  <input type="email" name="email" required class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="you@example.com" />
-                </label>
-              </div>
-
-              <label class="grid gap-2">
-                <span class="text-sm text-white/70">Message</span>
-                <textarea name="message" rows="5" required class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="Tell me what you're trying to build..."></textarea>
-              </label>
-
-              <button class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]" type="submit">
-                Send Message
-              </button>
-            </form>
-          </div>
-        </section>
-
-        <footer class="mt-12 pb-10 text-center text-xs text-white/40">
-          © <span id="year"></span> OdotNYC. All rights reserved.
-        </footer>
-      </main>
-    </section>
-
-    <!-- ✅ PRODUCT MODAL -->
-    <div id="productModal" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
-      <div id="productModalBackdrop" class="absolute inset-0 bg-black/80"></div>
-
-      <div class="relative mx-auto mt-16 w-[94%] max-w-3xl">
-        <div class="glow-card animate-popIn overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/95 backdrop-blur" role="dialog" aria-modal="true">
-          <div class="flex items-start justify-between gap-4 border-b border-white/10 p-5 sm:p-6">
-            <div>
-              <p class="text-xs font-medium tracking-wide text-white/60">Product Details</p>
-              <h3 id="pmTitle" class="mt-1 text-xl font-semibold text-white/90">Product</h3>
-              <div id="pmPrice" class="mt-1 text-sm text-white/70">$0.00</div>
-            </div>
-
-            <button
-              id="productModalClose"
-              type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
-              aria-label="Close"
-            >
-              
-            </button>
-          </div>
-
-          <div class="grid gap-6 p-5 sm:grid-cols-2 sm:p-6">
-            <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/30">
-              <img id="pmImg" src="odotnyc.bigcartel.com" alt="" class="h-full w-full object-cover" />
-            </div>
-
-            <div>
-              <p id="pmDesc" class="text-sm text-white/70">Description goes here.</p>
-
-              <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                <a
-                  id="pmBuy"
-                  href="odotnyc.bigcartel.com"
-                  class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
-                >
-                  Buy Now →
-                </a>
-
-                <button
-                  id="pmContinue"
-                  type="button"
-                  class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
-                >
-                  Continue Browsing
-                </button>
-              </div>
-
-              <p class="mt-4 text-[11px] text-white/45">Tip: Press ESC to close.</p>
-            </div>
-          </div>
-        </div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <!-- viewport-fit=cover is crucial for iOS safe areas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>OdotNYC AR</title>
+
+  <!-- A-Frame + AR.js -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.7/aframe/build/aframe-ar.min.js"></script>
+
+  <style>
+    :root{
+      --glass: rgba(0,0,0,.68);
+      --line: rgba(255,255,255,.16);
+      --txt: #fff;
+      --accent: #9be7ff;
+
+      /* safe areas (iOS notch/home bar) */
+      --safeL: env(safe-area-inset-left);
+      --safeR: env(safe-area-inset-right);
+      --safeT: env(safe-area-inset-top);
+      --safeB: env(safe-area-inset-bottom);
+
+      --pad: 12px;
+    }
+
+    *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    html, body{
+      margin:0;
+      padding:0;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      background:#000;
+      color:var(--txt);
+    }
+
+    /* Make the layout truly full-screen across mobile browsers */
+    body{
+      position: fixed; /* prevents iOS rubber-band scrolling from messing up overlays */
+      inset: 0;
+      width: 100vw;
+      height: 100vh;   /* fallback */
+      height: 100dvh;  /* modern mobile viewport */
+      overflow: hidden;
+    }
+
+    /* Force A-Frame scene + canvas to fill screen */
+    a-scene{
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      z-index: 0;
+    }
+    /* A-Frame injects a canvas; make sure it obeys */
+    .a-canvas, canvas{
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      display: block;
+    }
+
+    /* ---------- LOADING (logo only) ---------- */
+    #loading{
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(1100px 600px at 50% 25%, rgba(255,255,255,.08), rgba(0,0,0,.96));
+      padding: calc(var(--pad) + var(--safeT)) calc(var(--pad) + var(--safeR)) calc(var(--pad) + var(--safeB)) calc(var(--pad) + var(--safeL));
+    }
+    .logo-only{
+      width: min(240px, 66vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      backdrop-filter: blur(10px);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      animation: pulse 1.3s ease-in-out infinite;
+    }
+    .logo-only img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.06);
+      filter: contrast(1.08) brightness(1.05);
+    }
+    @keyframes pulse{
+      0%,100%{ transform: translateY(0); opacity: .98; }
+      50%{ transform: translateY(-2px); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .logo-only{ animation: none; }
+    }
+
+    /* ---------- HUD ---------- */
+    #hud{
+      position: fixed;
+      left: calc(var(--pad) + var(--safeL));
+      right: calc(var(--pad) + var(--safeR));
+      top: calc(var(--pad) + var(--safeT));
+      z-index: 9998;
+      display:flex;
+      gap:10px;
+      justify-content: space-between;
+      pointer-events:none;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .pill{
+      pointer-events:auto;
+      background: rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      padding: 8px 12px;
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      line-height: 1;
+      user-select:none;
+      max-width: 70vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Hide HUD until scanning begins */
+    body.waiting #hud{ display:none; }
+
+    /* ---------- INSTRUCTIONS MODAL (mobile bottom sheet) ---------- */
+    #modal{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      place-items: end center; /* bottom sheet on mobile */
+      background: rgba(0,0,0,.50);
+      padding:
+        calc(var(--pad) + var(--safeT))
+        calc(var(--pad) + var(--safeR))
+        calc(var(--pad) + var(--safeB))
+        calc(var(--pad) + var(--safeL));
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .sheet{
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 14px 14px 12px;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+      transform: translateY(8px);
+      animation: rise .18s ease-out forwards;
+    }
+    @keyframes rise{ to { transform: translateY(0); } }
+    .handle{
+      width: 42px; height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.22);
+      margin: 2px auto 10px;
+    }
+    .sheet h2{
+      margin: 0 0 8px;
+      font-size: 15px;
+      letter-spacing: .01em;
+      font-weight: 850;
+    }
+    .sheet p{
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      opacity: .92;
+    }
+    .sheet ol{
+      margin: 10px 0 0 18px;
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      opacity: .92;
+    }
+    .sheet li{ margin: 6px 0; }
+    .sheet b{ color: var(--accent); font-weight: 850; }
+
+    .actions{
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .btn{
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.55);
+      color: var(--txt);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 800;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      user-select: none;
+    }
+    .btn.primary{
+      border-color: rgba(155,231,255,.45);
+      background: rgba(155,231,255,.14);
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    /* Desktop enhancement: center modal, side-by-side buttons */
+    @media (min-width: 760px){
+      #modal{ place-items: center; }
+      .sheet{ width: min(520px, calc(100% - 28px)); }
+      .actions{ grid-template-columns: 1fr 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .sheet{ animation:none; transform:none; }
+    }
+  </style>
+</head>
+
+<body class="waiting">
+  <!-- LOADING (logo-only, 3s) -->
+  <section id="loading" aria-hidden="true">
+    <div class="logo-only">
+      <img src="odotnyc3final.png" alt="OdotNYC logo" />
+    </div>
+  </section>
+
+  <!-- HUD -->
+  <div id="hud">
+    <div class="pill">📷 OdotNYC AR</div>
+    <div class="pill" id="status">Find marker…</div>
+  </div>
+
+  <!-- Instructions Modal -->
+  <section id="modal" role="dialog" aria-modal="true" aria-label="Scan Instructions">
+    <div class="sheet">
+      <div class="handle" aria-hidden="true"></div>
+      <h2>Scan Instructions</h2>
+      <p>When you start scanning, allow camera access if prompted.</p>
+      <ol>
+        <li>Point your camera at the <b>OdotNYC marker</b>.</li>
+        <li>Keep it <b>flat</b> and <b>well-lit</b>.</li>
+        <li>Hold steady — the <b>3D model</b> will appear.</li>
+      </ol>
+      <div class="actions">
+        <button class="btn" id="closeModal" type="button">Not now</button>
+        <button class="btn primary" id="startAR" type="button">Start scanning</button>
       </div>
     </div>
-
-    <!-- ✅ DISCOUNT MODAL -->
-    <div id="discountModal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
-      <div class="absolute inset-0 bg-black/75"></div>
-
-      <div class="relative mx-auto mt-24 w-[92%] max-w-md">
-        <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur animate-popIn">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-medium tracking-wide text-white/60">OdotNYC Snapback</p>
-              <h3 class="mt-1 text-xl font-semibold">Save 10% on your order?</h3>
-              <p class="mt-2 text-sm text-white/70">Drop your email and we’ll send you a 10% discount code.</p>
-            </div>
-
-            <button
-              id="discountClose"
-              type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-          </div>
-
-          <form id="discountForm" class="mt-5 grid gap-3">
-            <label class="grid gap-2">
-              <span class="text-sm text-white/70">Email address</span>
-              <input
-                id="discountEmail"
-                type="email"
-                required
-                class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30"
-                placeholder="you@example.com"
-              />
-            </label>
-
-            <div class="grid gap-3 sm:grid-cols-2">
-              <button
-                type="submit"
-                class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
-              >
-                Send My Code →
-              </button>
-
-              <button
-                id="discountNoThanks"
-                type="button"
-                class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
-              >
-                No thanks
-              </button>
-            </div>
-
-            <p class="text-[11px] text-white/45">We’ll only use this to send the discount code. No spam.</p>
-          </form>
-
-          <div id="discountSuccess" class="mt-5 hidden rounded-2xl border border-white/10 bg-black/30 p-4">
-            <div class="text-sm font-semibold text-white/90">You’re in.</div>
-            <div class="mt-1 text-sm text-white/70">Check your inbox for your 10% code.</div>
-            <button
-              id="discountContinue"
-              type="button"
-              class="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
-            >
-              Continue →
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ✅ Instagram Popup -->
-    <div id="igModal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
-      <div class="absolute inset-0 bg-black/70"></div>
-
-      <div class="relative mx-auto mt-24 w-[92%] max-w-md">
-        <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur animate-popIn">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-medium tracking-wide text-white/60">Social</p>
-              <h3 class="mt-1 text-xl font-semibold">Follow me on Instagram</h3>
-              <p class="mt-2 text-sm text-white/70">@odotnyctv</p>
-            </div>
-
-            <button
-              id="igClose"
-              type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div class="mt-6 grid gap-3 sm:grid-cols-2">
-            <a
-              id="igVisit"
-              href="https://instagram.com/odotnyctv"
-              target="_blank"
-              rel="noreferrer"
-              class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
-            >
-              Open Instagram →
-            </a>
-
-            <button
-              id="igLater"
-              type="button"
-              class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
-            >
-              Not now
-            </button>
-          </div>
-
-          <p class="mt-4 text-[11px] text-white/45">This pops once when you reach Contact.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ✅ NEW: COWOMO SPACE OF THE WEEK MODAL -->
-    <div id="cowomoModal" class="fixed inset-0 z-[70] hidden" aria-hidden="true">
-      <div id="cowomoModalBackdrop" class="absolute inset-0 bg-black/80"></div>
-
-      <div class="relative mx-auto mt-20 w-[94%] max-w-2xl">
-        <div class="glow-card animate-popIn overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/95 backdrop-blur" role="dialog" aria-modal="true">
-          <div class="flex items-start justify-between gap-4 border-b border-white/10 p-5 sm:p-6">
-            <div>
-              <p class="text-xs font-medium tracking-wide text-white/60">COWOMO • Space of the Week</p>
-              <h3 id="cwTitle" class="mt-1 text-xl font-semibold text-white/90">Location Name</h3>
-              <div id="cwAddress" class="mt-1 text-sm text-white/70">Address</div>
-            </div>
-
-            <button
-              id="cowomoModalClose"
-              type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10 active:scale-[0.98]"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div class="grid gap-6 p-5 sm:grid-cols-2 sm:p-6">
-            <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/30">
-              <img id="cwImg" src="" alt="" class="h-full w-full object-cover" />
-            </div>
-
-            <div>
-              <div class="rounded-2xl border border-white/10 bg-black/30 p-4">
-                <div class="text-xs text-white/50">Why it’s the pick</div>
-                <p id="cwNote" class="mt-2 text-sm text-white/70">
-                  Great Wi-Fi, solid seating, and a vibe that supports deep work.
-                </p>
-
-                <div class="mt-4 flex flex-wrap gap-2 text-xs text-white/60" id="cwTags">
-                  <!-- tags injected -->
-                </div>
-              </div>
-
-              <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-                <a
-                  id="cwMaps"
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                  class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]"
-                >
-                  Open in Maps →
-                </a>
-
-                <button
-                  id="cwDismiss"
-                  type="button"
-                  class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10 active:scale-[0.99]"
-                >
-                  Continue Browsing
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      // =========================================================
-      // CONFIG
-      // =========================================================
-      const AUTO_ENTER_MS = 3000;
-
-      // Medium
-      const MEDIUM_RSS_URL = "https://medium.com/feed/@almightyodot";
-      const MEDIUM_PROFILE_URL = "https://medium.com/@almightyodot";
-
-      // Discount popup behavior
-      const SHOW_DISCOUNT_ONCE = true;
-      const DISCOUNT_HOVER_DELAY_MS = 350;
-      const DISCOUNT_STORAGE_KEY = "odot_discount_seen_v1";
-      const DISCOUNT_EMAIL_POST_URL = "https://formsubmit.co/ajax/YOUR_EMAIL@domain.com";
-
-      // Instagram popup behavior (on contact view)
-      const SHOW_IG_ONCE = true;
-      const IG_STORAGE_KEY = "odot_ig_seen_v1";
-
-      // Gallery carousel
-      const GALLERY_AUTOPLAY_MS = 5500;
-
-      // ✅ NEW: Cowomo "Space of the Week" (edit these)
-      const COWOMO_SPOTLIGHT = {
-        name: "Starbucks (452 Knickerbocker Ave)",
-        address: "452 Knickerbocker Ave, Brooklyn, NY 11237",
-        image: "starbucks.jpg", // <- replace with your image file
-        mapsUrl: "https://www.google.com/maps/search/?api=1&query=452+Knickerbocker+Ave+Brooklyn+NY+11237",
-        note: "Quiet mornings + strong espresso. Great for deep work with reliable Wi-Fi and decent outlets.",
-        tags: ["Brooklyn", "Deep work", "Wi-Fi", "Outlets"]
-      };
-
-      // Auto-pop once per week when COWOMO section enters view
-      const SHOW_COWOMO_SPOTLIGHT_WEEKLY = true;
-      const COWOMO_WEEKLY_STORAGE_KEY = "cowomo_spotlight_week_";
-
-      // =========================================================
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const enterBtn = document.getElementById("enterBtn");
-        const landing = document.getElementById("landing");
-        const home = document.getElementById("home");
-
-        if (!landing || !home) return;
-
-        let entered = false;
-
-        function stopLandingVideo() {
-          const vid = document.getElementById("landingVideo");
-          if (!vid) return;
-          try {
-            vid.pause();
-            vid.removeAttribute("src");
-            const src = vid.querySelector("source");
-            if (src) src.removeAttribute("src");
-            vid.load();
-          } catch {}
-        }
-
-        function goHome() {
-          if (entered) return;
-          entered = true;
-
-          landing.classList.add("hidden");
-          home.classList.remove("hidden");
-          home.classList.add("animate-fadeIn");
-
-          stopLandingVideo();
-
-          initActiveMenu();
-          initCryptoTicker();
-          initMediumBlog();
-          initDiscountPopup();
-          initInstagramPopup();
-          initProductModal();
-          initScrollProgress();
-          initGalleryCarousel();
-
-          // ✅ new
-          initCowomoSpotlight();
-
-          setActiveNav("about");
-        }
-
-        enterBtn?.addEventListener("click", goHome, { passive: true });
-        setTimeout(goHome, AUTO_ENTER_MS);
-
-        // Menu toggle
-        const menuBtn = document.getElementById("menuBtn");
-        const menuPanel = document.getElementById("menuPanel");
-        if (menuBtn && menuPanel) {
-          menuBtn.addEventListener("click", () => {
-            const isOpen = !menuPanel.classList.contains("hidden");
-            menuPanel.classList.toggle("hidden");
-            menuBtn.setAttribute("aria-expanded", String(!isOpen));
-          });
-
-          document.querySelectorAll("#menuPanel a[href^='#']").forEach((a) => {
-            a.addEventListener("click", () => {
-              menuPanel.classList.add("hidden");
-              menuBtn.setAttribute("aria-expanded", "false");
-            });
-          });
-        }
-
-        const yearEl = document.getElementById("year");
-        if (yearEl) yearEl.textContent = new Date().getFullYear();
-      });
-
-      // --------------------------
-      // Micro: scroll progress bar
-      // --------------------------
-      function initScrollProgress() {
-        const header = document.querySelector("header");
-        if (!header) return;
-
-        const bar = document.createElement("div");
-        bar.className = "h-[2px] w-0 bg-white/40";
-        header.appendChild(bar);
-
-        const onScroll = () => {
-          const doc = document.documentElement;
-          const max = doc.scrollHeight - doc.clientHeight;
-          const p = max > 0 ? (doc.scrollTop / max) : 0;
-          bar.style.width = `${Math.max(0, Math.min(1, p)) * 100}%`;
-        };
-
-        window.addEventListener("scroll", onScroll, { passive: true });
-        onScroll();
-      }
-
-      // --------------------------
-      // Gallery Carousel
-      // --------------------------
-      function initGalleryCarousel() {
-        const track = document.getElementById("galTrack");
-        const prev = document.getElementById("galPrev");
-        const next = document.getElementById("galNext");
-        const dotsWrap = document.getElementById("galDots");
-        if (!track || !prev || !next || !dotsWrap) return;
-
-        const slides = Array.from(track.children);
-        const total = slides.length;
-        let idx = 0;
-
-        dotsWrap.innerHTML = slides.map((_, i) => `
-          <button
-            type="button"
-            class="h-2.5 w-2.5 rounded-full border border-white/20 bg-white/10 transition hover:bg-white/20"
-            aria-label="Go to photo ${i + 1}"
-            data-dot="${i}"
-          ></button>
-        `).join("");
-
-        const setDots = () => {
-          dotsWrap.querySelectorAll("button[data-dot]").forEach((b) => {
-            const isOn = Number(b.dataset.dot) === idx;
-            b.classList.toggle("bg-white/60", isOn);
-            b.classList.toggle("border-white/40", isOn);
-          });
-        };
-
-        const go = (n) => {
-          idx = (n + total) % total;
-          track.style.transform = `translateX(-${idx * 100}%)`;
-          setDots();
-        };
-
-        prev.addEventListener("click", () => go(idx - 1));
-        next.addEventListener("click", () => go(idx + 1));
-
-        dotsWrap.addEventListener("click", (e) => {
-          const btn = e.target.closest("button[data-dot]");
-          if (!btn) return;
-          go(Number(btn.dataset.dot));
-        });
-
-        // Swipe
-        let startX = 0;
-        let active = false;
-
-        track.addEventListener("pointerdown", (e) => {
-          active = true;
-          startX = e.clientX;
-          track.setPointerCapture?.(e.pointerId);
-        });
-
-        track.addEventListener("pointerup", (e) => {
-          if (!active) return;
-          active = false;
-          const dx = e.clientX - startX;
-          const threshold = 40;
-          if (dx > threshold) go(idx - 1);
-          else if (dx < -threshold) go(idx + 1);
-        });
-
-        track.addEventListener("pointercancel", () => (active = false));
-
-        // Autoplay (pause on hover)
-        let timer = setInterval(() => go(idx + 1), GALLERY_AUTOPLAY_MS);
-        const box = track.parentElement?.parentElement;
-        box?.addEventListener("mouseenter", () => clearInterval(timer));
-        box?.addEventListener("mouseleave", () => (timer = setInterval(() => go(idx + 1), GALLERY_AUTOPLAY_MS)));
-
-        go(0);
-      }
-
-      // --------------------------
-      // ✅ NEW: COWOMO spotlight modal
-      // --------------------------
-      function initCowomoSpotlight() {
-        const openBtn = document.getElementById("cowomoSpotlightBtn");
-        const cowomoSection = document.getElementById("cowomo");
-
-        const modal = document.getElementById("cowomoModal");
-        const backdrop = document.getElementById("cowomoModalBackdrop");
-        const closeBtn = document.getElementById("cowomoModalClose");
-        const dismissBtn = document.getElementById("cwDismiss");
-
-        const titleEl = document.getElementById("cwTitle");
-        const addrEl = document.getElementById("cwAddress");
-        const imgEl = document.getElementById("cwImg");
-        const mapsEl = document.getElementById("cwMaps");
-        const noteEl = document.getElementById("cwNote");
-        const tagsEl = document.getElementById("cwTags");
-
-        if (!modal || !backdrop || !closeBtn || !dismissBtn || !titleEl || !addrEl || !imgEl || !mapsEl || !noteEl || !tagsEl) return;
-
-        let lastFocus = null;
-
-        const hydrate = () => {
-          titleEl.textContent = COWOMO_SPOTLIGHT.name || "Coworking Space";
-          addrEl.textContent = COWOMO_SPOTLIGHT.address || "";
-          imgEl.src = COWOMO_SPOTLIGHT.image || "";
-          imgEl.alt = COWOMO_SPOTLIGHT.name || "Coworking space photo";
-          mapsEl.href = COWOMO_SPOTLIGHT.mapsUrl || "#";
-          noteEl.textContent = COWOMO_SPOTLIGHT.note || "Recommended spot.";
-          const tags = Array.isArray(COWOMO_SPOTLIGHT.tags) ? COWOMO_SPOTLIGHT.tags : [];
-          tagsEl.innerHTML = tags.map(t => `
-            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">${escapeHtml(String(t))}</span>
-          `).join("");
-        };
-
-        const open = () => {
-          hydrate();
-          lastFocus = document.activeElement;
-          modal.classList.remove("hidden");
-          modal.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-          closeBtn.focus?.();
-        };
-
-        const close = () => {
-          modal.classList.add("hidden");
-          modal.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-          lastFocus?.focus?.();
-        };
-
-        // Button: open anytime
-        openBtn?.addEventListener("click", open);
-
-        // Close interactions
-        backdrop.addEventListener("click", close);
-        closeBtn.addEventListener("click", close);
-        dismissBtn.addEventListener("click", close);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") close();
-        });
-
-        // Auto open once per week when COWOMO enters view
-        if (SHOW_COWOMO_SPOTLIGHT_WEEKLY && cowomoSection) {
-          const weekKey = getWeeklyKey();
-          const storageKey = COWOMO_WEEKLY_STORAGE_KEY + weekKey;
-
-          try {
-            if (localStorage.getItem(storageKey) === "1") return;
-          } catch {}
-
-          const io = new IntersectionObserver(
-            (entries) => {
-              const hit = entries.find((e) => e.isIntersecting);
-              if (!hit) return;
-
-              open();
-
-              try { localStorage.setItem(storageKey, "1"); } catch {}
-              io.disconnect();
-            },
-            { root: null, threshold: 0.35 }
-          );
-
-          io.observe(cowomoSection);
-        }
-      }
-
-      function getWeeklyKey() {
-        // ISO-ish week key: YYYY-W##
-        const d = new Date();
-        const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-        const dayNum = date.getUTCDay() || 7;
-        date.setUTCDate(date.getUTCDate() + 4 - dayNum);
-        const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
-        const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
-        return `${date.getUTCFullYear()}-W${String(weekNo).padStart(2, "0")}`;
-      }
-
-      function escapeHtml(str) {
-        return str.replace(/[&<>"']/g, (m) => ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        }[m]));
-      }
-
-      // --------------------------
-      // Product click -> modal
-      // --------------------------
-      function initProductModal() {
-        const modal = document.getElementById("productModal");
-        const backdrop = document.getElementById("productModalBackdrop");
-        const closeBtn = document.getElementById("productModalClose");
-        const contBtn = document.getElementById("pmContinue");
-
-        const titleEl = document.getElementById("pmTitle");
-        const priceEl = document.getElementById("pmPrice");
-        const descEl = document.getElementById("pmDesc");
-        const imgEl = document.getElementById("pmImg");
-        const buyEl = document.getElementById("pmBuy");
-
-        if (!modal || !backdrop || !closeBtn || !contBtn || !titleEl || !priceEl || !descEl || !imgEl || !buyEl) return;
-
-        let lastFocus = null;
-
-        const open = ({ title, price, desc, img, buyLink }) => {
-          lastFocus = document.activeElement;
-
-          titleEl.textContent = title || "Product";
-          priceEl.textContent = price || "";
-          descEl.textContent = desc || "";
-          imgEl.src = img || "";
-          imgEl.alt = title || "Product image";
-          buyEl.href = buyLink || "#";
-
-          modal.classList.remove("hidden");
-          modal.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-          closeBtn.focus?.();
-        };
-
-        const close = () => {
-          modal.classList.add("hidden");
-          modal.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-          lastFocus?.focus?.();
-        };
-
-        document.querySelectorAll(".product-card").forEach((card) => {
-          const handler = () => {
-            open({
-              title: card.dataset.title,
-              price: card.dataset.price,
-              desc: card.dataset.desc,
-              img: card.dataset.img,
-              buyLink: card.dataset.buy || "#",
-            });
-          };
-
-          card.addEventListener("click", handler);
-
-          card.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              handler();
-            }
-          });
-        });
-
-        backdrop.addEventListener("click", close);
-        closeBtn.addEventListener("click", close);
-        contBtn.addEventListener("click", close);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") close();
-        });
-      }
-
-      // --------------------------
-      // Instagram popup (when #contact enters view)
-      // --------------------------
-      function initInstagramPopup() {
-        const contact = document.getElementById("contact");
-        const modal = document.getElementById("igModal");
-        const close = document.getElementById("igClose");
-        const later = document.getElementById("igLater");
-
-        if (!contact || !modal || !close || !later) return;
-
-        if (SHOW_IG_ONCE) {
-          try { if (localStorage.getItem(IG_STORAGE_KEY) === "1") return; } catch {}
-        }
-
-        let shown = false;
-
-        const open = () => {
-          if (shown) return;
-          shown = true;
-          modal.classList.remove("hidden");
-          modal.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-
-          if (SHOW_IG_ONCE) {
-            try { localStorage.setItem(IG_STORAGE_KEY, "1"); } catch {}
-          }
-        };
-
-        const hide = () => {
-          modal.classList.add("hidden");
-          modal.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-        };
-
-        close.addEventListener("click", hide);
-        later.addEventListener("click", hide);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
-        });
-
-        const io = new IntersectionObserver(
-          (entries) => {
-            const hit = entries.find((e) => e.isIntersecting);
-            if (hit) {
-              open();
-              io.disconnect();
-            }
-          },
-          { root: null, threshold: 0.25 }
-        );
-
-        io.observe(contact);
-      }
-
-      // --------------------------
-      // Discount popup on hover over products grid
-      // --------------------------
-      function initDiscountPopup() {
-        const trigger = document.getElementById("odotProductsGrid");
-        const modal = document.getElementById("discountModal");
-        const close = document.getElementById("discountClose");
-        const noThanks = document.getElementById("discountNoThanks");
-        const form = document.getElementById("discountForm");
-        const emailInput = document.getElementById("discountEmail");
-        const success = document.getElementById("discountSuccess");
-        const cont = document.getElementById("discountContinue");
-
-        if (!trigger || !modal || !close || !noThanks || !form || !emailInput || !success || !cont) return;
-
-        if (SHOW_DISCOUNT_ONCE) {
-          try { if (localStorage.getItem(DISCOUNT_STORAGE_KEY) === "1") return; } catch {}
-        }
-
-        let opened = false;
-        let hoverTimer = null;
-
-        const open = () => {
-          if (opened) return;
-          opened = true;
-          modal.classList.remove("hidden");
-          modal.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-          success.classList.add("hidden");
-          form.classList.remove("hidden");
-          form.reset?.();
-          setTimeout(() => emailInput.focus?.(), 0);
-
-          if (SHOW_DISCOUNT_ONCE) {
-            try { localStorage.setItem(DISCOUNT_STORAGE_KEY, "1"); } catch {}
-          }
-        };
-
-        const hide = () => {
-          modal.classList.add("hidden");
-          modal.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-        };
-
-        trigger.addEventListener("pointerenter", () => {
-          hoverTimer = setTimeout(open, DISCOUNT_HOVER_DELAY_MS);
-        });
-
-        trigger.addEventListener("pointerleave", () => {
-          if (hoverTimer) clearTimeout(hoverTimer);
-          hoverTimer = null;
-        });
-
-        close.addEventListener("click", hide);
-        noThanks.addEventListener("click", hide);
-        cont.addEventListener("click", hide);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
-        });
-
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const email = (emailInput.value || "").trim();
-          if (!email) return;
-
-          const payload = {
-            email,
-            _subject: "OdotNYC - 10% Discount Request",
-            message: `New discount signup: ${email}`
-          };
-
-          try {
-            const res = await fetch(DISCOUNT_EMAIL_POST_URL, {
-              method: "POST",
-              headers: { "Content-Type": "application/json", "Accept": "application/json" },
-              body: JSON.stringify(payload),
-            });
-            if (!res.ok) throw new Error(`Email submit failed: ${res.status}`);
-            form.classList.add("hidden");
-            success.classList.remove("hidden");
-          } catch (err) {
-            console.error(err);
-            alert("Could not save your email right now. Please try again later.");
-          }
-        });
-      }
-
-      // --------------------------
-      // Active Menu Highlighting
-      // --------------------------
-      let setActiveNav = () => {};
-      function initActiveMenu() {
-        const links = Array.from(document.querySelectorAll(".navlink"));
-
-        setActiveNav = (id) => {
-          links.forEach((l) => {
-            const isActive = l.dataset.section === id;
-            l.classList.toggle("navlink-active", isActive);
-            l.classList.toggle("border", isActive);
-            l.classList.toggle("border-white/10", isActive);
-            l.classList.toggle("text-white/95", isActive);
-            l.classList.toggle("text-white/80", !isActive);
-          });
-        };
-
-        const ids = ["about","gallery","odotnyc","robotechi","services","creative","cowomo","blog","contact"];
-        const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
-        if (!sections.length) return;
-
-        const io = new IntersectionObserver(
-          (entries) => {
-            const visible = entries
-              .filter((e) => e.isIntersecting)
-              .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-            if (visible?.target?.id) setActiveNav(visible.target.id);
-          },
-          { root: null, rootMargin: "-35% 0px -55% 0px", threshold: [0.15, 0.25, 0.35, 0.5, 0.75] }
-        );
-
-        sections.forEach((s) => io.observe(s));
-      }
-
-      // --------------------------
-      // Medium Blog (RSS -> JSON)
-      // --------------------------
-      function stripHtml(html) {
-        const div = document.createElement("div");
-        div.innerHTML = html || "";
-        return (div.textContent || div.innerText || "").trim();
-      }
-
-      function fmtDate(d) {
-        try {
-          return new Date(d).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-        } catch { return ""; }
-      }
-
-      async function fetchMediumRSS() {
-        const api = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(MEDIUM_RSS_URL)}`;
-        const res = await fetch(api, { cache: "no-store" });
-        if (!res.ok) throw new Error(`Medium RSS fetch failed: ${res.status}`);
-        const data = await res.json();
-        if (!data || data.status !== "ok") throw new Error("Medium RSS parse failed");
-        return data;
-      }
-
-      function renderMediumPosts(items) {
-        const grid = document.getElementById("mediumGrid");
-        if (!grid) return;
-
-        if (!items?.length) {
-          grid.innerHTML = `
-            <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">
-              No posts found. Update your Medium RSS URL in the script.
-            </div>
-          `;
-          return;
-        }
-
-        grid.innerHTML = items.slice(0, 6).map((it) => {
-          const title = it.title || "Untitled";
-          const link = it.link || "#";
-          const date = fmtDate(it.pubDate);
-          const desc = stripHtml(it.description).slice(0, 140);
-          const thumb = it.thumbnail || "";
-          const thumbHtml = thumb
-            ? `<img src="${thumb}" alt="" class="h-full w-full object-cover" loading="lazy" />`
-            : `<div class="grid h-full w-full place-items-center text-xs text-white/40">MEDIUM</div>`;
-
-          return `
-            <a href="${link}" target="_blank" rel="noreferrer"
-              class="glow-card block rounded-2xl border border-white/10 bg-black/20 p-5 transition hover:bg-black/30">
-              <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                ${thumbHtml}
-              </div>
-              <div class="mt-4">
-                <div class="text-xs text-white/50">${date}</div>
-                <div class="mt-1 font-semibold text-white/90">${title}</div>
-                <div class="mt-2 text-sm text-white/70">${desc}${desc.length >= 140 ? "…" : ""}</div>
-                <div class="mt-3 text-xs text-white/50">Read on Medium →</div>
-              </div>
-            </a>
-          `;
-        }).join("");
-      }
-
-      function initMediumBlog() {
-        const btn = document.getElementById("mediumProfileBtn");
-        if (btn) btn.href = MEDIUM_PROFILE_URL;
-
-        (async () => {
-          try {
-            const data = await fetchMediumRSS();
-            renderMediumPosts(data.items || []);
-          } catch (e) {
-            console.error(e);
-          }
-        })();
-      }
-
-      // --------------------------
-      // Crypto Ticker (CoinGecko)
-      // --------------------------
-      function fmtUSD(n) {
-        if (!Number.isFinite(n)) return "—";
-        return n.toLocaleString(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-      }
-
-      async function fetchCrypto() {
-        const ids = "bitcoin,ethereum,solana,cardano,dogecoin,polkadot";
-        const url = `https://api.coingecko.com/api/v3/simple/price?ids=${encodeURIComponent(ids)}&vs_currencies=usd&include_24hr_change=true`;
-        const res = await fetch(url, { cache: "no-store" });
-        if (!res.ok) throw new Error(`Ticker fetch failed: ${res.status}`);
-        return res.json();
-      }
-
-      function buildTickerItems(data) {
-        const map = [
-          { id: "bitcoin", sym: "BTC" },
-          { id: "ethereum", sym: "ETH" },
-          { id: "solana", sym: "SOL" },
-          { id: "cardano", sym: "ADA" },
-          { id: "dogecoin", sym: "DOGE" },
-          { id: "polkadot", sym: "DOT" },
-        ];
-
-        return map.map(({ id, sym }) => {
-          const price = data?.[id]?.usd ?? null;
-          const ch = data?.[id]?.usd_24h_change ?? null;
-          const sign = typeof ch === "number" ? (ch >= 0 ? "+" : "") : "";
-          const chTxt = typeof ch === "number" ? `${sign}${ch.toFixed(2)}%` : "—";
-          return { sym, priceTxt: fmtUSD(price), ch, chTxt };
-        });
-      }
-
-      function renderTicker(items) {
-        const rowA = document.getElementById("tickerRowA");
-        const rowB = document.getElementById("tickerRowB");
-        if (!rowA || !rowB) return;
-
-        const html = items.map((it) => {
-          const up = typeof it.ch === "number" && it.ch >= 0;
-          const chClass = up ? "text-emerald-300/90" : "text-rose-300/90";
-          return `
-            <span class="inline-flex items-center gap-2">
-              <span class="font-semibold text-white/90">${it.sym}</span>
-              <span class="text-white/80">${it.priceTxt}</span>
-              <span class="${chClass}">${it.chTxt}</span>
-            </span>
-          `;
-        }).join("");
-
-        rowA.innerHTML = html;
-        rowB.innerHTML = html;
-      }
-
-      function initCryptoTicker() {
-        const btn = document.getElementById("tickerRefresh");
-
-        const load = async () => {
-          try {
-            const data = await fetchCrypto();
-            renderTicker(buildTickerItems(data));
-          } catch (e) {
-            console.error(e);
-            const rowA = document.getElementById("tickerRowA");
-            const rowB = document.getElementById("tickerRowB");
-            if (rowA) rowA.innerHTML = `<span class="opacity-70">Ticker unavailable (check console)</span>`;
-            if (rowB) rowB.innerHTML = `<span class="opacity-70">Ticker unavailable (check console)</span>`;
-          }
-        };
-
-        btn?.addEventListener("click", load);
-        load();
-        setInterval(load, 60000);
-      }
-    </script>
-  </body>
+  </section>
+
+  <!-- A-Frame AR Scene -->
+  <a-scene
+    embedded
+    vr-mode-ui="enabled:false"
+    renderer="antialias:true; alpha:true; logarithmicDepthBuffer:true"
+    arjs="sourceType:webcam; trackingMethod:best; debugUIEnabled:false;"
+  >
+    <a-entity light="type: ambient; intensity: 0.9"></a-entity>
+    <a-entity light="type: directional; intensity: 0.6" position="1 2 1"></a-entity>
+
+    <!-- Preload your model -->
+    <a-assets timeout="45000">
+      <!-- Using your uploaded file name -->
+      <a-asset-item id="odotModel" src="office_005.glb"></a-asset-item>
+    </a-assets>
+
+    <a-marker
+      id="marker"
+      type="pattern"
+      url="odotnyc.patt"
+      smooth="true"
+      smoothCount="8"
+      smoothTolerance="0.01"
+      smoothThreshold="2"
+    >
+      <!-- Model: start with conservative transform for big environment GLBs -->
+      <a-entity
+        id="model"
+        gltf-model="#odotModel"
+        position="0 0.05 0"
+        rotation="-90 0 0"
+        scale="0.08 0.08 0.08"
+      ></a-entity>
+    </a-marker>
+
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    const loading = document.getElementById('loading');
+    const modal = document.getElementById('modal');
+    const statusEl = document.getElementById('status');
+
+    const startARBtn = document.getElementById('startAR');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    const markerEl = document.getElementById('marker');
+    const assetItem = document.getElementById('odotModel');
+
+    let modelReady = false;
+    let scanningEnabled = false;
+
+    // Force 3-second splash, then show instructions
+    setTimeout(() => {
+      loading.style.display = 'none';
+      modal.style.display = 'grid';
+      statusEl.textContent = 'Loading model…';
+    }, 3000);
+
+    // Model load status
+    assetItem.addEventListener('loaded', () => {
+      modelReady = true;
+      if (scanningEnabled) statusEl.textContent = 'Find marker…';
+    });
+    assetItem.addEventListener('error', (e) => {
+      console.warn('GLB load error:', e);
+      statusEl.textContent = 'Model failed to load ❌';
+    });
+
+    function startScanning(){
+      modal.style.display = 'none';
+      document.body.classList.remove('waiting');
+      scanningEnabled = true;
+      statusEl.textContent = modelReady ? 'Find marker…' : 'Loading model…';
+    }
+
+    startARBtn.addEventListener('click', startScanning);
+    closeModalBtn.addEventListener('click', startScanning);
+
+    // Marker events
+    markerEl.addEventListener('markerFound', () => {
+      statusEl.textContent = modelReady ? 'Marker found 🎯' : 'Marker found (loading…)';
+    });
+    markerEl.addEventListener('markerLost', () => {
+      statusEl.textContent = modelReady ? 'Find marker…' : 'Loading model…';
+    });
+
+    // If iOS still shows slight height mismatch sometimes, nudge canvas sizing on resize
+    function forceResize(){
+      // A-Frame listens to resize, but we can help mobile browsers
+      window.dispatchEvent(new Event('resize'));
+    }
+    window.addEventListener('orientationchange', () => setTimeout(forceResize, 250));
+    window.addEventListener('resize', () => setTimeout(forceResize, 50), { passive: true });
+  </script>
+</body>
 </html>
 
