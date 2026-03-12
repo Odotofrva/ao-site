@@ -94,6 +94,137 @@
         mix-blend-mode: screen;
       }
 
+
+
+
+      .events-section {
+        padding: 80px 20px;
+        background: #0d0d0d;
+        color: #f5f5f5;
+      }
+      
+      .events-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .section-header {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto 50px;
+      }
+      
+      .section-tag {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 0.85rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #b0b0b0;
+      }
+      
+      .section-header h2 {
+        font-size: clamp(2rem, 5vw, 3.25rem);
+        margin-bottom: 12px;
+      }
+      
+      .section-header p {
+        color: #c8c8c8;
+        line-height: 1.6;
+      }
+      
+      .events-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      
+      .event-card {
+        background: #151515;
+        border: 1px solid #252525;
+        border-radius: 18px;
+        overflow: hidden;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+      
+      .event-card:hover {
+        transform: translateY(-6px);
+        border-color: #444;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+      }
+      
+      .event-image img {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        display: block;
+      }
+      
+      .event-content {
+        padding: 20px;
+      }
+      
+      .event-type {
+        display: inline-block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #9ad1ff;
+        margin-bottom: 10px;
+      }
+      
+      .event-content h3 {
+        margin: 0 0 8px;
+        font-size: 1.35rem;
+      }
+      
+      .event-meta {
+        font-size: 0.95rem;
+        color: #bdbdbd;
+        margin-bottom: 12px;
+      }
+      
+      .event-content p {
+        line-height: 1.6;
+        color: #d8d8d8;
+      }
+      
+      .event-btn {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 10px 16px;
+        background: #ffffff;
+        color: #111111;
+        text-decoration: none;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: opacity 0.2s ease;
+      }
+      
+      .event-btn:hover {
+        opacity: 0.85;
+      }
+      
+      @media (max-width: 991px) {
+        .events-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      
+      @media (max-width: 640px) {
+        .events-section {
+          padding: 60px 16px;
+        }
+      
+        .events-grid {
+          grid-template-columns: 1fr;
+        }
+      
+        .event-image img {
+          height: 220px;
+        }
+      }
+
       @keyframes glitchShiftA {
         0%   { transform: translate(0,0); clip-path: inset(0 0 0 0); opacity: 0; }
         10%  { transform: translate(-2px, 1px); clip-path: inset(12% 0 72% 0); opacity: .85; }
@@ -253,6 +384,69 @@
               <div class="rounded-3xl border border-white/10 bg-black/20 p-4">
                 <img src="odotnyctv.jpg" alt="Odot" class="w-full rounded-2xl object-cover" />
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="events" class="events-section">
+          <div class="container">
+            <div class="section-header">
+              <p class="section-tag">OdotNYC Community</p>
+              <h2>Upcoming Events</h2>
+              <p>
+                Pull up to OdotNYC events, popups, model calls, creative meetups,
+                and community experiences happening around the city.
+              </p>
+            </div>
+        
+            <div class="events-grid">
+              <article class="event-card">
+                <div class="event-image">
+                  <img src="images/event-style-syndrome.jpg" alt="Style Syndrome event flyer">
+                </div>
+                <div class="event-content">
+                  <span class="event-type">Fashion / Popup</span>
+                  <h3>Style Syndrome Vol. 1</h3>
+                  <p class="event-meta">Date Coming Soon • NYC</p>
+                  <p>
+                    A curated fashion and culture experience with streetwear, music,
+                    visuals, and community energy.
+                  </p>
+                  <a href="#" class="event-btn">Learn More</a>
+                </div>
+              </article>
+        
+              <article class="event-card">
+                <div class="event-image">
+                  <img src="images/event-model-call.jpg" alt="Model call flyer">
+                </div>
+                <div class="event-content">
+                  <span class="event-type">Casting / Creative</span>
+                  <h3>Style Syndrome Model Call</h3>
+                  <p class="event-meta">Signup Open • NYC</p>
+                  <p>
+                    Calling models, creatives, and talent to be part of future OdotNYC
+                    campaigns and live experiences.
+                  </p>
+                  <a href="https://odotnyc.xyz" class="event-btn">Sign Up</a>
+                </div>
+              </article>
+        
+              <article class="event-card">
+                <div class="event-image">
+                  <img src="images/event-makers.jpg" alt="Maker event flyer">
+                </div>
+                <div class="event-content">
+                  <span class="event-type">Community / Tech</span>
+                  <h3>Realm of Makers</h3>
+                  <p class="event-meta">Coming Soon • NYC</p>
+                  <p>
+                    A meetup for makers, designers, tinkerers, and builders to connect,
+                    share projects, and inspire the next wave.
+                  </p>
+                  <a href="#" class="event-btn">Stay Tuned</a>
+                </div>
+              </article>
             </div>
           </div>
         </section>
