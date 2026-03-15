@@ -1,0 +1,1423 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>COWOMO — Coworking Reviews by OdotNYC</title>
+  <meta name="description" content="COWOMO — coworking-friendly coffee house & cafe reviews." />
+
+  <style>
+    :root{
+      /* ☕ Light coffee theme */
+      --bg: #fbf6ee;          /* cream */
+      --bg2:#f3eadc;          /* latte */
+      --panel:#ffffff;        /* card */
+      --panel2:#fffaf2;       /* soft cream panel */
+      --text:#2a2016;         /* espresso */
+      --muted:#6b5847;        /* mocha */
+      --line: rgba(42,32,22,.12);
+      --shadow: 0 18px 45px rgba(42,32,22,.12);
+      --shadow2: 0 28px 90px rgba(42,32,22,.18);
+      --radius: 18px;
+      --radius2: 26px;
+      --accent:#6a4a2f;       /* coffee accent */
+      --accent2:#b07a44;      /* caramel */
+      --ok:#2ea67b;
+      --warn:#c77a2f;
+      --bad:#c43b3b;
+      --ease:cubic-bezier(.2,.9,.2,1);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 15% -10%, rgba(176,122,68,.18), transparent 60%),
+        radial-gradient(900px 520px at 85% 0%, rgba(106,74,47,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    button{ font:inherit; }
+
+    /* Layout */
+    .wrap{
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+    }
+
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(251,246,238,.86);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner{
+      max-width:1050px;
+      margin:0 auto;
+      padding: 14px 16px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    /* Top brand (small in header) */
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      min-width: 0;
+    }
+    .mark{
+      width:12px; height:12px; border-radius:99px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 25px rgba(176,122,68,.18);
+      flex: 0 0 auto;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 15px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .brand p{
+      margin:2px 0 0;
+      color:var(--muted);
+      font-size: 12px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .header-actions{
+      display:flex; gap:10px; align-items:center;
+      flex: 1;
+      justify-content:flex-end;
+      min-width: 0;
+    }
+
+    .search{
+      display:flex; align-items:center; gap:10px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      max-width: 420px;
+      width: min(520px, 56vw);
+      box-shadow: 0 10px 25px rgba(42,32,22,.06);
+    }
+    .search svg{ flex: 0 0 auto; opacity:.65; }
+    .search input{
+      width:100%;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:var(--text);
+      font-size: 14px;
+    }
+    .pill{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.72);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      transition: transform .12s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+      white-space: nowrap;
+      box-shadow: 0 10px 25px rgba(42,32,22,.06);
+    }
+    .pill:active{ transform: scale(.98); }
+    .pill:hover{
+      border-color: rgba(42,32,22,.22);
+      background: rgba(255,255,255,.92);
+    }
+
+    /* Big logo area */
+    .hero-logo{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding: 22px 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-logo img{
+      width: 210px;
+      max-width: 78vw;
+      height:auto;
+      display:block;
+      filter: drop-shadow(0 18px 30px rgba(42,32,22,.10));
+      transition: transform .25s var(--ease);
+    }
+    .hero-logo img:hover{ transform: translateY(-2px); }
+
+    /* NEW: Stock ticker */
+    .ticker-wrap{
+      position: relative;
+      z-index: 1;
+      margin: 8px 0 14px;
+    }
+    .ticker{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.72);
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(42,32,22,.06);
+      overflow:hidden;
+    }
+    .ticker-row{
+      display:flex;
+      gap: 14px;
+      align-items:center;
+      white-space: nowrap;
+      padding: 10px 12px;
+    }
+    .ticker-label{
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(42,32,22,.82);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
+    }
+    .ticker-label .mini-dot{
+      width:10px; height:10px; border-radius:99px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 25px rgba(176,122,68,.14);
+    }
+    .ticker-viewport{
+      overflow:hidden;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .ticker-track{
+      display:inline-flex;
+      gap: 18px;
+      align-items:center;
+      will-change: transform;
+      animation: marquee 22s linear infinite;
+      padding-left: 10px;
+    }
+    .ticker:hover .ticker-track{ animation-play-state: paused; }
+    @keyframes marquee{
+      from{ transform: translateX(0); }
+      to{ transform: translateX(-50%); }
+    }
+
+    .tick{
+      display:inline-flex;
+      gap: 10px;
+      align-items:baseline;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(42,32,22,.10);
+      background: rgba(42,32,22,.03);
+      font-size: 13px;
+    }
+    .tick b{ font-weight: 800; }
+    .tick .p{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .tick .chg{
+      font-size: 12px;
+      font-weight: 800;
+      opacity: .9;
+    }
+    .chg.up{ color: #1c7d57; }
+    .chg.down{ color: #a33838; }
+    .chg.flat{ color: rgba(42,32,22,.72); }
+
+    /* Filter chips */
+    .filters{
+      display:flex;
+      gap:10px;
+      padding: 12px 16px 14px;
+      max-width:1050px;
+      margin:0 auto;
+      overflow:auto;
+      scrollbar-width:none;
+    }
+    .filters::-webkit-scrollbar{ display:none; }
+
+    .chip{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.72);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-size: 13px;
+      transition: background .2s var(--ease), border-color .2s var(--ease), transform .12s var(--ease);
+      box-shadow: 0 10px 22px rgba(42,32,22,.05);
+    }
+    .chip:hover{ border-color: rgba(42,32,22,.22); background: rgba(255,255,255,.92); }
+    .chip:active{ transform: scale(.98); }
+    .chip[aria-pressed="true"]{
+      border-color: rgba(176,122,68,.45);
+      background: rgba(176,122,68,.14);
+    }
+
+    /* Grid */
+    main{ padding-top: 14px; }
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 720px){
+      .wrap{ padding: 18px 16px 54px; }
+      .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .brand h1{ font-size: 16px; }
+      .hero-logo img{ width: 250px; }
+    }
+    @media (min-width: 1020px){
+      .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .hero-logo img{ width: 290px; }
+    }
+
+    .card{
+      position:relative;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,250,242,.92));
+      border-radius: var(--radius2);
+      overflow:hidden;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transition: transform .18s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+      cursor:pointer;
+      min-height: 260px;
+      transform-origin: center;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: rgba(42,32,22,.18);
+    }
+    .card:active{ transform: translateY(-1px) scale(.995); }
+
+    .thumb{
+      height: 160px;
+      background: #efe5d8;
+      position: relative;
+      overflow:hidden;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
+      transition: transform .6s var(--ease), filter .6s var(--ease);
+      filter: saturate(1.05) contrast(1.02);
+    }
+    .card:hover .thumb img{ transform: scale(1.06); }
+
+    .thumb::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(to bottom, rgba(42,32,22,.04), rgba(42,32,22,.28));
+      pointer-events:none;
+    }
+
+    .badge{
+      position:absolute;
+      left: 12px;
+      top: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(42,32,22,.14);
+      font-size: 12px;
+      color: var(--text);
+      display:flex; gap:8px; align-items:center;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 12px 25px rgba(42,32,22,.08);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: var(--ok);
+      box-shadow: 0 0 0 5px rgba(46,166,123,.14);
+    }
+
+    .card-body{
+      padding: 14px 14px 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+    }
+    .title{
+      font-size: 15px;
+      margin:0;
+      letter-spacing:.01em;
+      line-height:1.25;
+    }
+    .address{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.35;
+    }
+    .notes{
+      margin:0;
+      color: rgba(42,32,22,.92);
+      font-size: 13px;
+      line-height:1.45;
+      display:-webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+    }
+    .meta{
+      margin-top: 6px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .tag{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(42,32,22,.05);
+      border: 1px solid rgba(42,32,22,.10);
+      color: rgba(42,32,22,.92);
+    }
+    .cta{
+      margin-left:auto;
+      font-size: 12px;
+      color: rgba(42,32,22,.85);
+      opacity:.9;
+      display:flex; align-items:center; gap:8px;
+    }
+
+    /* Detail overlay (with FLIP expand animation) */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display:none;
+      background: rgba(30,18,10,.35);
+      backdrop-filter: blur(10px);
+    }
+    .overlay.open{ display:block; animation: fadeIn .18s var(--ease) both; }
+    @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+    .sheet{
+      position:absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(980px, 94vw);
+      max-height: 92vh;
+      overflow:auto;
+      border-radius: 28px;
+      border: 1px solid rgba(42,32,22,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,250,242,.96));
+      box-shadow: var(--shadow2);
+    }
+
+    /* When animating, we temporarily set the sheet to fixed bounds */
+    .sheet.is-animating{
+      overflow:hidden;
+      will-change: transform, width, height, left, top;
+    }
+
+    .sheet-top{
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,.85);
+      border-bottom: 1px solid rgba(42,32,22,.10);
+      padding: 12px 12px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      z-index:10;
+      backdrop-filter: blur(10px);
+    }
+    .back-btn{
+      display:flex; align-items:center; gap:10px;
+      border: 1px solid rgba(42,32,22,.12);
+      background: rgba(42,32,22,.04);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      transition: transform .12s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+    }
+    .back-btn:hover{ background: rgba(42,32,22,.07); border-color: rgba(42,32,22,.18); }
+    .back-btn:active{ transform: scale(.98); }
+
+    .share-btn{
+      border: 1px solid rgba(42,32,22,.12);
+      background: rgba(176,122,68,.16);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      transition: transform .12s var(--ease), background .2s var(--ease);
+    }
+    .share-btn:active{ transform: scale(.98); }
+
+    .hero{
+      padding: 0;
+    }
+    .hero-img{
+      height: min(46vh, 360px);
+      background:#efe5d8;
+      overflow:hidden;
+    }
+    .hero-img img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform-origin: center;
+      animation: popIn .28s var(--ease) both;
+    }
+    @keyframes popIn{
+      from{ transform: scale(1.04); filter: blur(8px); opacity:.0; }
+      to{ transform: scale(1); filter: blur(0); opacity:1; }
+    }
+
+    .hero-body{
+      padding: 14px 16px 18px;
+      display:grid;
+      gap: 10px;
+    }
+    .hero-title{
+      margin: 2px 0 0;
+      font-size: 18px;
+      line-height:1.22;
+      letter-spacing:.01em;
+    }
+    .hero-address{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.4;
+    }
+    .hero-notes{
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height:1.6;
+      color: rgba(42,32,22,.92);
+      white-space: pre-wrap;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (min-width: 860px){
+      .hero-body{ padding: 16px 18px 22px; }
+      .hero-title{ font-size: 22px; }
+      .hero-grid{ grid-template-columns: 1.1fr .9fr; align-items:start; }
+    }
+
+    .info-card{
+      border: 1px solid rgba(42,32,22,.10);
+      background: rgba(42,32,22,.03);
+      border-radius: 18px;
+      padding: 12px;
+      display:grid;
+      gap:10px;
+    }
+    .info-row{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      font-size: 13px;
+      color: rgba(42,32,22,.92);
+    }
+    .info-row span{ color: var(--muted); }
+
+    /* Map block */
+    .map{
+      border: 1px solid rgba(42,32,22,.10);
+      background: rgba(42,32,22,.03);
+      border-radius: 18px;
+      overflow:hidden;
+    }
+    .map iframe{
+      width:100%;
+      height: 260px;
+      border: 0;
+      display:block;
+    }
+    .map-actions{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 12px;
+      border-top: 1px solid rgba(42,32,22,.08);
+      background: rgba(255,255,255,.65);
+    }
+    .map-actions a{
+      font-size: 12px;
+      color: rgba(42,32,22,.88);
+      padding: 8px 10px;
+      border: 1px solid rgba(42,32,22,.12);
+      border-radius: 999px;
+      background: rgba(42,32,22,.04);
+      transition: transform .12s var(--ease), background .2s var(--ease);
+      white-space:nowrap;
+    }
+    .map-actions a:active{ transform: scale(.98); }
+    .map-actions a:hover{ background: rgba(42,32,22,.07); }
+
+    .empty{
+      padding: 34px 12px;
+      text-align:center;
+      color: var(--muted);
+      border: 1px dashed rgba(42,32,22,.20);
+      border-radius: 18px;
+      background: rgba(255,255,255,.60);
+    }
+
+    footer{
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+      opacity:.9;
+    }
+
+    /* NEW: Floating World Clock */
+    .floating-clock{
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 120;
+      width: min(360px, calc(100vw - 28px));
+      border: 1px solid rgba(42,32,22,.14);
+      background: rgba(255,255,255,.78);
+      border-radius: 22px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 22px 70px rgba(42,32,22,.18);
+      overflow:hidden;
+      transform: translateZ(0);
+    }
+    .floating-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(42,32,22,.10);
+      background: rgba(255,255,255,.62);
+    }
+    .floating-title{
+      margin:0;
+      font-size: 12px;
+      letter-spacing:.14em;
+      text-transform: uppercase;
+      color: rgba(42,32,22,.86);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      white-space:nowrap;
+    }
+    .floating-title .mini-dot{
+      width:10px; height:10px; border-radius:99px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 10px 25px rgba(176,122,68,.14);
+      flex:0 0 auto;
+    }
+    .clock-actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex:0 0 auto;
+    }
+    .icon-btn{
+      border: 1px solid rgba(42,32,22,.12);
+      background: rgba(42,32,22,.04);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 999px;
+      cursor:pointer;
+      transition: transform .12s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .icon-btn:hover{ background: rgba(42,32,22,.07); border-color: rgba(42,32,22,.18); }
+    .icon-btn:active{ transform: scale(.98); }
+
+    .floating-body{
+      padding: 10px 12px 12px;
+    }
+    .clock-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 0;
+    }
+    @media (min-width: 520px){
+      .clock-grid{
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+    }
+    .clock-card{
+      border: 1px solid rgba(42,32,22,.10);
+      background: rgba(42,32,22,.03);
+      border-radius: 18px;
+      padding: 10px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      transition: transform .18s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+    }
+    .clock-card:hover{
+      transform: translateY(-2px);
+      background: rgba(176,122,68,.08);
+      border-color: rgba(176,122,68,.22);
+    }
+    .clock-left{ min-width: 0; }
+    .clock-city{
+      font-weight: 800;
+      font-size: 12px;
+      margin:0;
+      letter-spacing:.02em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .clock-sub{
+      margin:4px 0 0;
+      font-size: 11px;
+      color: var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .clock-time{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      white-space:nowrap;
+    }
+
+    /* collapsed state */
+    .floating-clock.collapsed .floating-body{ display:none; }
+    .floating-clock.collapsed{ width: min(320px, calc(100vw - 28px)); }
+
+    /* keep widgets above overlay but under modal */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important; }
+      .ticker-track{ animation:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div style="min-width:0">
+          <h1>COWOMO</h1>
+          <p>Coworking Reviews by OdotNYC</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="search" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" opacity=".7"/>
+            <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+          </svg>
+          <input id="q" placeholder="Search spots, neighborhoods, notes…" autocomplete="off" />
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="filters" id="filters"></div>
+  </header>
+
+  <div class="wrap">
+
+    <!-- ✅ Logo placeholder (put your logo at: cowomo.png) -->
+    <div class="hero-logo">
+      <img src="cowomo.png" alt="COWOMO logo" />
+    </div>
+
+    <!-- ✅ NEW: Stock ticker under logo -->
+    <div class="ticker-wrap" aria-label="Stock ticker">
+      <div class="ticker">
+        <div class="ticker-row">
+          <div class="ticker-label">
+            <span class="mini-dot" aria-hidden="true"></span>
+            Market
+          </div>
+          <div class="ticker-viewport">
+            <div class="ticker-track" id="tickerTrack" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <div class="grid" id="grid"></div>
+      <div id="empty" class="empty" style="display:none;">
+        No reviews match your search / filters.
+      </div>
+    </main>
+
+    <footer>
+      &copy; 2026 OdotNYC.xyz | All Rights Reserved.
+    </footer>
+  </div>
+
+  <!-- ✅ Floating World Clock -->
+  <aside class="floating-clock" id="floatingClock" aria-label="Floating world clock">
+    <div class="floating-top">
+      <h2 class="floating-title"><span class="mini-dot" aria-hidden="true"></span>World Clock</h2>
+      <div class="clock-actions">
+        <button class="icon-btn" id="clockCollapseBtn" type="button" title="Collapse">—</button>
+        <button class="icon-btn" id="clockPinBtn" type="button" title="Move (drag)">⇕</button>
+      </div>
+    </div>
+    <div class="floating-body">
+      <div class="clock-grid" id="clockGrid"></div>
+      <div style="margin-top:10px; font-size:12px; color:var(--muted); line-height:1.45;">
+        Tip: Drag the panel by the header to reposition.
+      </div>
+    </div>
+  </aside>
+
+  <!-- Detail Overlay -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Review details">
+      <div class="sheet-top">
+        <button class="back-btn" id="closeBtn" type="button" aria-label="Close review">
+          <span style="display:inline-flex; transform: translateY(1px);">←</span>
+          Back
+        </button>
+        <button class="share-btn" id="shareBtn" type="button">Share</button>
+      </div>
+
+      <section class="hero">
+        <div class="hero-img">
+          <img id="detailImg" alt="" />
+        </div>
+
+        <div class="hero-body">
+          <div class="hero-grid">
+            <div>
+              <h2 class="hero-title" id="detailTitle"></h2>
+              <p class="hero-address" id="detailAddress"></p>
+              <p class="hero-notes" id="detailNotes"></p>
+            </div>
+
+            <aside style="display:grid; gap:12px;">
+              <div class="info-card">
+                <div class="info-row"><span>Type</span><b id="detailType"></b></div>
+                <div class="info-row"><span>Work vibe</span><b id="detailVibe"></b></div>
+                <div class="info-row"><span>Wi-Fi</span><b id="detailWifi"></b></div>
+                <div class="info-row"><span>Outlets</span><b id="detailOutlets"></b></div>
+                <div class="info-row"><span>Noise</span><b id="detailNoise"></b></div>
+              </div>
+
+              <!-- ✅ Map view -->
+              <div class="map">
+                <iframe
+                  id="mapFrame"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen
+                  title="Map">
+                </iframe>
+                <div class="map-actions">
+                  <a id="openMaps" href="#" target="_blank" rel="noreferrer">Open in Google Maps</a>
+                  <a id="copyAddress" href="#" role="button">Copy address</a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // -----------------------------
+    // Floating World Clock (reposition + collapse)
+    // -----------------------------
+    const CLOCKS = [
+      { city: "New York", tz: "America/New_York", label: "NYC" },
+      { city: "Los Angeles", tz: "America/Los_Angeles", label: "LA" },
+      { city: "London", tz: "Europe/London", label: "LDN" },
+      { city: "Lagos", tz: "Africa/Lagos", label: "LOS" },
+      { city: "Tokyo", tz: "Asia/Tokyo", label: "TYO" },
+      { city: "Dubai", tz: "Asia/Dubai", label: "DXB" }
+    ];
+
+    const clockGrid = document.getElementById("clockGrid");
+    const floatingClock = document.getElementById("floatingClock");
+    const clockCollapseBtn = document.getElementById("clockCollapseBtn");
+
+    function fmtTime(tz){
+      return new Intl.DateTimeFormat(undefined, {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+        timeZone: tz
+      }).format(new Date());
+    }
+
+    function fmtSub(tz){
+      return new Intl.DateTimeFormat(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        timeZone: tz
+      }).format(new Date());
+    }
+
+    function renderClocks(){
+      clockGrid.innerHTML = "";
+      CLOCKS.forEach(c => {
+        const el = document.createElement("div");
+        el.className = "clock-card";
+        el.innerHTML = `
+          <div class="clock-left">
+            <p class="clock-city">${escapeHtml(c.city)} <span style="opacity:.55; font-weight:900;">· ${escapeHtml(c.label)}</span></p>
+            <p class="clock-sub">${escapeHtml(fmtSub(c.tz))}</p>
+          </div>
+          <div class="clock-time" data-tz="${escapeHtml(c.tz)}">${escapeHtml(fmtTime(c.tz))}</div>
+        `;
+        clockGrid.appendChild(el);
+      });
+    }
+
+    function tickClocks(){
+      document.querySelectorAll(".clock-time[data-tz]").forEach(node => {
+        const tz = node.getAttribute("data-tz");
+        node.textContent = fmtTime(tz);
+      });
+    }
+
+    renderClocks();
+    tickClocks();
+    setInterval(tickClocks, 1000);
+
+    // Collapse toggle
+    clockCollapseBtn.addEventListener("click", () => {
+      floatingClock.classList.toggle("collapsed");
+      clockCollapseBtn.textContent = floatingClock.classList.contains("collapsed") ? "+" : "—";
+      clockCollapseBtn.title = floatingClock.classList.contains("collapsed") ? "Expand" : "Collapse";
+    });
+
+    // Drag-to-move (drag header)
+    (function enableDrag(){
+      const header = floatingClock.querySelector(".floating-top");
+      let dragging = false;
+      let startX = 0, startY = 0;
+      let startRight = 0, startBottom = 0;
+
+      // load saved position
+      try{
+        const saved = JSON.parse(localStorage.getItem("cowomo_clock_pos") || "null");
+        if(saved && typeof saved.right === "number" && typeof saved.bottom === "number"){
+          floatingClock.style.right = saved.right + "px";
+          floatingClock.style.bottom = saved.bottom + "px";
+        }
+      }catch(e){}
+
+      function onDown(e){
+        // don't start drag from button taps
+        if(e.target.closest("button")) return;
+        dragging = true;
+        header.style.cursor = "grabbing";
+        const rect = floatingClock.getBoundingClientRect();
+        startX = (e.touches ? e.touches[0].clientX : e.clientX);
+        startY = (e.touches ? e.touches[0].clientY : e.clientY);
+
+        // compute current right/bottom from viewport
+        startRight = window.innerWidth - rect.right;
+        startBottom = window.innerHeight - rect.bottom;
+
+        document.addEventListener("mousemove", onMove);
+        document.addEventListener("mouseup", onUp);
+        document.addEventListener("touchmove", onMove, { passive: false });
+        document.addEventListener("touchend", onUp);
+      }
+
+      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+      function onMove(e){
+        if(!dragging) return;
+        if(e.cancelable) e.preventDefault();
+        const x = (e.touches ? e.touches[0].clientX : e.clientX);
+        const y = (e.touches ? e.touches[0].clientY : e.clientY);
+
+        const dx = x - startX;
+        const dy = y - startY;
+
+        // moving right decreases "right"
+        let nextRight = startRight - dx;
+        let nextBottom = startBottom - dy;
+
+        // clamp to viewport padding
+        const pad = 8;
+        const rect = floatingClock.getBoundingClientRect();
+        const maxRight = window.innerWidth - rect.width - pad;
+        const maxBottom = window.innerHeight - rect.height - pad;
+
+        nextRight = clamp(nextRight, pad, maxRight);
+        nextBottom = clamp(nextBottom, pad, maxBottom);
+
+        floatingClock.style.right = nextRight + "px";
+        floatingClock.style.bottom = nextBottom + "px";
+      }
+
+      function onUp(){
+        if(!dragging) return;
+        dragging = false;
+        header.style.cursor = "";
+        document.removeEventListener("mousemove", onMove);
+        document.removeEventListener("mouseup", onUp);
+        document.removeEventListener("touchmove", onMove);
+        document.removeEventListener("touchend", onUp);
+
+        // save position
+        const right = parseFloat(getComputedStyle(floatingClock).right) || 14;
+        const bottom = parseFloat(getComputedStyle(floatingClock).bottom) || 14;
+        try{
+          localStorage.setItem("cowomo_clock_pos", JSON.stringify({ right, bottom }));
+        }catch(e){}
+      }
+
+      header.addEventListener("mousedown", onDown);
+      header.addEventListener("touchstart", onDown, { passive: true });
+    })();
+
+    // -----------------------------
+    // Stock ticker (offline demo)
+    // -----------------------------
+    const TICKERS = [
+      { sym:"SPY", name:"S&P 500 ETF", price: 0, chg: 0 },
+      { sym:"QQQ", name:"Nasdaq 100 ETF", price: 0, chg: 0 },
+      { sym:"AAPL", name:"Apple", price: 0, chg: 0 },
+      { sym:"MSFT", name:"Microsoft", price: 0, chg: 0 },
+      { sym:"NVDA", name:"NVIDIA", price: 0, chg: 0 },
+      { sym:"TSLA", name:"Tesla", price: 0, chg: 0 },
+      { sym:"BTC", name:"Bitcoin", price: 0, chg: 0 },
+      { sym:"ETH", name:"Ethereum", price: 0, chg: 0 }
+    ];
+
+    // seed values (deterministic-ish per session)
+    function seedBase(){
+      const base = {
+        SPY: 480.12,
+        QQQ: 420.55,
+        AAPL: 192.34,
+        MSFT: 415.08,
+        NVDA: 875.22,
+        TSLA: 201.67,
+        BTC: 61250.00,
+        ETH: 3320.00
+      };
+      TICKERS.forEach(t => { t.price = base[t.sym] ?? (Math.random()*200+50); t.chg = 0; });
+    }
+    seedBase();
+
+    const tickerTrack = document.getElementById("tickerTrack");
+
+    function chgClass(v){
+      if(v > 0.0001) return "up";
+      if(v < -0.0001) return "down";
+      return "flat";
+    }
+
+    function fmtPrice(sym, v){
+      const isCrypto = (sym === "BTC" || sym === "ETH");
+      return isCrypto ? v.toLocaleString(undefined, { maximumFractionDigits: 0 }) :
+                        v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function fmtPct(v){
+      const sign = v > 0 ? "+" : (v < 0 ? "−" : "");
+      return `${sign}${Math.abs(v).toFixed(2)}%`;
+    }
+
+    function renderTicker(){
+      const items = TICKERS.map(t => {
+        const cls = chgClass(t.chg);
+        return `
+          <span class="tick">
+            <b>${escapeHtml(t.sym)}</b>
+            <span class="p">${escapeHtml(fmtPrice(t.sym, t.price))}</span>
+            <span class="chg ${cls}">${escapeHtml(fmtPct(t.chg))}</span>
+          </span>
+        `;
+      }).join("");
+
+      // Duplicate content so marquee can loop seamlessly
+      tickerTrack.innerHTML = items + items;
+    }
+
+    function tickTicker(){
+      // small random walk
+      TICKERS.forEach(t => {
+        const vol = (t.sym === "BTC" || t.sym === "ETH") ? 0.0012 : 0.0008;
+        const deltaPct = (Math.random() - 0.5) * vol * 100; // percent points
+        t.chg = clampNum(t.chg + deltaPct, -4.5, 4.5);
+        t.price = Math.max(0.01, t.price * (1 + (deltaPct/100)));
+      });
+      renderTicker();
+    }
+
+    function clampNum(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+    renderTicker();
+    setInterval(tickTicker, 2500);
+
+    // -----------------------------
+    // Reviews App (your original code)
+    // -----------------------------
+    const REVIEWS = [
+      {
+        id: "cowomo-001",
+        type: "Coffee House",
+        name: "Brew & Byte",
+        address: "123 Queens Blvd, Queens, NY 11101",
+        image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&w=1600&q=70",
+        notes:
+`Strong morning spot for laptop sessions.
+• Seating: mix of stools + small tables
+• Wi-Fi: stable for video calls
+• Outlets: near the back wall (grab early)
+• Noise: moderate — music but not too loud
+Order: oat latte + butter croissant.`,
+        vibe: "Focused",
+        wifi: "Strong",
+        outlets: "Some",
+        noise: "Medium"
+      },
+      {
+        id: "cowomo-002",
+        type: "Cafe",
+        name: "Corner Leaf Cafe",
+        address: "77 Jackson Ave, Long Island City, NY 11101",
+        image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1600&q=70",
+        notes:
+`Great natural light. Best for writing / light work.
+• Seating: comfy bench seats
+• Wi-Fi: decent
+• Outlets: limited (bring a charger pack)
+• Noise: low until lunch rush`,
+        vibe: "Chill",
+        wifi: "Okay",
+        outlets: "Limited",
+        noise: "Low"
+      },
+      {
+        id: "cowomo-003",
+        type: "Bakery + Coffee",
+        name: "11 Skillman Ave, Brooklyn, NY 11211",
+        address: "11 Skillman Ave, Brooklyn, NY 11211",
+        image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1600&q=70",
+        notes:
+`Pastries are the star. Seating turns over fast.
+• Good for: quick planning sessions
+• Not ideal for: long calls
+Try: almond croissant + cold brew.`,
+        vibe: "Fast-paced",
+        wifi: "Good",
+        outlets: "Rare",
+        noise: "High"
+      }
+    ];
+
+    const TYPES = ["All", ...Array.from(new Set(REVIEWS.map(r => r.type)))];
+
+    // ---- State ----
+    let activeType = "All";
+    let query = "";
+    let openId = null;
+    let lastCardRect = null;
+
+    const elGrid = document.getElementById("grid");
+    const elEmpty = document.getElementById("empty");
+    const elFilters = document.getElementById("filters");
+    const elQ = document.getElementById("q");
+
+    const overlay = document.getElementById("overlay");
+    const sheet = document.getElementById("sheet");
+    const closeBtn = document.getElementById("closeBtn");
+    const shareBtn = document.getElementById("shareBtn");
+
+    const detailImg = document.getElementById("detailImg");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailAddress = document.getElementById("detailAddress");
+    const detailNotes = document.getElementById("detailNotes");
+    const detailType = document.getElementById("detailType");
+    const detailVibe = document.getElementById("detailVibe");
+    const detailWifi = document.getElementById("detailWifi");
+    const detailOutlets = document.getElementById("detailOutlets");
+    const detailNoise = document.getElementById("detailNoise");
+
+    const mapFrame = document.getElementById("mapFrame");
+    const openMaps = document.getElementById("openMaps");
+    const copyAddress = document.getElementById("copyAddress");
+
+    // ---- Render Filters ----
+    function renderFilters(){
+      elFilters.innerHTML = "";
+      TYPES.forEach(t => {
+        const b = document.createElement("button");
+        b.className = "chip";
+        b.type = "button";
+        b.textContent = t;
+        b.setAttribute("aria-pressed", String(t === activeType));
+        b.addEventListener("click", () => {
+          activeType = t;
+          renderFilters();
+          renderGrid();
+        });
+        elFilters.appendChild(b);
+      });
+    }
+
+    // ---- Filter logic ----
+    function getFiltered(){
+      const q = query.trim().toLowerCase();
+      return REVIEWS.filter(r => {
+        const typeOk = (activeType === "All") || (r.type === activeType);
+        const text = `${r.name} ${r.address} ${r.notes} ${r.type}`.toLowerCase();
+        const qOk = !q || text.includes(q);
+        return typeOk && qOk;
+      });
+    }
+
+    // ---- Render Grid ----
+    function renderGrid(){
+      const list = getFiltered();
+      elGrid.innerHTML = "";
+
+      if(list.length === 0){
+        elEmpty.style.display = "block";
+        return;
+      }
+      elEmpty.style.display = "none";
+
+      list.forEach(r => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.tabIndex = 0;
+        card.dataset.id = r.id;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", `Open review for ${r.name}`);
+
+        card.innerHTML = `
+          <div class="thumb">
+            <img src="${r.image}" alt="${escapeHtml(r.name)} photo" loading="lazy" />
+            <div class="badge"><span class="dot"></span>${escapeHtml(r.type)}</div>
+          </div>
+          <div class="card-body">
+            <h3 class="title">${escapeHtml(r.name)}</h3>
+            <p class="address">${escapeHtml(r.address)}</p>
+            <p class="notes">${escapeHtml(r.notes)}</p>
+            <div class="meta">
+              <span class="tag">${escapeHtml(r.vibe)}</span>
+              <span class="tag">Wi-Fi: ${escapeHtml(r.wifi)}</span>
+              <span class="tag">Noise: ${escapeHtml(r.noise)}</span>
+              <span class="cta">View →</span>
+            </div>
+          </div>
+        `;
+
+        const open = () => openDetail(r.id, card);
+        card.addEventListener("click", open);
+        card.addEventListener("keydown", (e) => {
+          if(e.key === "Enter" || e.key === " "){ e.preventDefault(); open(); }
+        });
+
+        elGrid.appendChild(card);
+      });
+    }
+
+    // ---- Map helpers ----
+    function makeMapsQuery(r){
+      if(typeof r.lat === "number" && typeof r.lng === "number"){
+        return `${r.lat},${r.lng}`;
+      }
+      return r.address;
+    }
+
+    function setMap(r){
+      const q = encodeURIComponent(makeMapsQuery(r));
+      mapFrame.src = `https://www.google.com/maps?q=${q}&output=embed`;
+      openMaps.href = `https://www.google.com/maps/search/?api=1&query=${q}`;
+    }
+
+    // ---- FLIP expand animation ----
+    function animateSheetFromRect(fromRect){
+      const toRect = sheet.getBoundingClientRect();
+
+      sheet.classList.add("is-animating");
+
+      const dx = (fromRect.left + fromRect.width/2) - (toRect.left + toRect.width/2);
+      const dy = (fromRect.top + fromRect.height/2) - (toRect.top + toRect.height/2);
+      const sx = fromRect.width / toRect.width;
+      const sy = fromRect.height / toRect.height;
+
+      sheet.style.transform = `translate(-50%, -50%) translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`;
+      sheet.style.transition = "none";
+
+      requestAnimationFrame(() => {
+        sheet.style.transition = `transform 360ms var(--ease)`;
+        sheet.style.transform = "translate(-50%, -50%) translate(0px, 0px) scale(1, 1)";
+      });
+
+      const done = () => {
+        sheet.classList.remove("is-animating");
+        sheet.style.transition = "";
+        sheet.style.transform = "";
+        sheet.removeEventListener("transitionend", done);
+      };
+      sheet.addEventListener("transitionend", done);
+    }
+
+    // ---- Detail Overlay ----
+    function openDetail(id, cardEl){
+      const r = REVIEWS.find(x => x.id === id);
+      if(!r) return;
+
+      openId = id;
+
+      if(cardEl){
+        lastCardRect = cardEl.getBoundingClientRect();
+      }else{
+        lastCardRect = null;
+      }
+
+      detailImg.src = r.image;
+      detailImg.alt = `${r.name} photo`;
+      detailTitle.textContent = r.name;
+      detailAddress.textContent = r.address;
+      detailNotes.textContent = r.notes;
+      detailType.textContent = r.type;
+      detailVibe.textContent = r.vibe;
+      detailWifi.textContent = r.wifi;
+      detailOutlets.textContent = r.outlets;
+      detailNoise.textContent = r.noise;
+
+      setMap(r);
+
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      history.replaceState(null, "", `#${encodeURIComponent(id)}`);
+
+      requestAnimationFrame(() => {
+        if(lastCardRect) animateSheetFromRect(lastCardRect);
+      });
+    }
+
+    function closeDetail(){
+      openId = null;
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      mapFrame.src = "";
+
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+
+    overlay.addEventListener("click", (e) => {
+      if(e.target === overlay) closeDetail();
+    });
+    closeBtn.addEventListener("click", closeDetail);
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && overlay.classList.contains("open")) closeDetail();
+    });
+
+    // Share button
+    shareBtn.addEventListener("click", async () => {
+      const r = REVIEWS.find(x => x.id === openId);
+      if(!r) return;
+      const url = location.href;
+      const text = `${r.name} — ${r.address}`;
+      try{
+        if(navigator.share){
+          await navigator.share({ title: "COWOMO Review", text, url });
+        }else{
+          await navigator.clipboard.writeText(url);
+          shareBtn.textContent = "Copied!";
+          setTimeout(()=> shareBtn.textContent = "Share", 900);
+        }
+      }catch(err){}
+    });
+
+    // Copy address
+    copyAddress.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const r = REVIEWS.find(x => x.id === openId);
+      if(!r) return;
+      try{
+        await navigator.clipboard.writeText(r.address);
+        copyAddress.textContent = "Copied!";
+        setTimeout(()=> copyAddress.textContent = "Copy address", 900);
+      }catch(err){}
+    });
+
+    // Search input
+    elQ.addEventListener("input", (e) => {
+      query = e.target.value;
+      renderGrid();
+    });
+
+    // Deep link open if #id is present
+    function handleHashOpen(){
+      const raw = location.hash.replace("#","");
+      const id = decodeURIComponent(raw);
+      if(id && REVIEWS.some(r => r.id === id)){
+        openDetail(id, document.querySelector(`.card[data-id="${CSS.escape(id)}"]`));
+      }
+    }
+    window.addEventListener("hashchange", handleHashOpen);
+
+    // Basic HTML escape for safety in template strings
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // Init
+    renderFilters();
+    renderGrid();
+    handleHashOpen();
+
+    // Placeholder "Add" button
+    document.getElementById("addBtn").addEventListener("click", () => {
+      alert("Next step: I can add an 'Add Review' form (photo + address + notes) and save to localStorage or Firebase.");
+    });
+  </script>
+</body>
+</html>
