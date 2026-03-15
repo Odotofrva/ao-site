@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>VR OdotNYC Cardboard</title>
+  <meta name="description" content="Mobile-first VR OdotNYC Cardboard starter app with landing screen, world picker, model preview, and Cardboard help modal." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- model-viewer -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-2: #0d0d0d;
+      --panel: rgba(255,255,255,0.06);
+      --panel-2: rgba(255,255,255,0.1);
+      --line: rgba(255,255,255,0.12);
+      --line-2: rgba(255,255,255,0.2);
+      --text: #f5f5f5;
+      --muted: #b0b0b0;
+      --soft: #888;
+      --accent: #fff;
+      --shadow: 0 12px 40px rgba(0,0,0,0.35);
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: radial-gradient(circle at top, #111 0%, var(--bg) 45%, #000 100%);
+      color: var(--text);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,0.015), rgba(255,255,255,0.015)),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.03) 0,
+          rgba(255,255,255,0.03) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      pointer-events: none;
+      opacity: 0.25;
+      z-index: 1;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    .app-shell {
+      position: relative;
+      width: 100%;
+      min-height: 100dvh;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.02);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    .screen.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    /* Landing */
+    .landing {
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.1), transparent 28%),
+        linear-gradient(180deg, #0b0b0b 0%, #040404 100%);
+    }
+
+    .landing-inner {
+      width: min(100%, 440px);
+      display: grid;
+      gap: 28px;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .logo-wrap {
+      position: relative;
+      width: clamp(170px, 55vw, 260px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: radial-gradient(circle, rgba(255,255,255,0.08), rgba(255,255,255,0.02) 50%, transparent 70%);
+      box-shadow: 0 0 90px rgba(255,255,255,0.06);
+      overflow: hidden;
+      animation: pulseGlow 2.8s ease-in-out infinite;
+    }
+
+    .logo-wrap::before,
+    .logo-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+      transform: translateX(-120%);
+      animation: scan 2.4s linear infinite;
+    }
+
+    .logo-wrap::after {
+      animation-delay: 1.2s;
+      opacity: 0.5;
+    }
+
+    .load-block {
+      width: 100%;
+      display: grid;
+      gap: 10px;
+    }
+
+    .load-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .load-bar {
+      height: 12px;
+      width: 100%;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .load-progress {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #8f8f8f, #fff, #b6b6b6);
+      box-shadow: 0 0 24px rgba(255,255,255,0.35);
+      transition: width 0.25s ease;
+    }
+
+    .load-caption {
+      color: #cfcfcf;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* Hub */
+    .hub {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      padding: calc(16px + var(--safe-top)) 16px calc(18px + var(--safe-bottom));
+      gap: 14px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), transparent 24%),
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08), transparent 30%),
+        #060606;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .main-logo {
+      width: 52px;
+      height: 52px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.25));
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      padding: 5px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .title-stack {
+      min-width: 0;
+    }
+
+    .title-stack h1 {
+      margin: 0;
+      font-size: clamp(20px, 5vw, 28px);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .title-stack p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .icon-btn,
+    .ghost-btn,
+    .primary-btn,
+    .secondary-btn {
+      appearance: none;
+      border: 1px solid var(--line-2);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 14px 16px;
+      min-height: 48px;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .icon-btn:active,
+    .ghost-btn:active,
+    .primary-btn:active,
+    .secondary-btn:active {
+      transform: scale(0.98);
+    }
+
+    .icon-btn {
+      padding: 12px 14px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .hub-content {
+      display: grid;
+      gap: 14px;
+      min-height: 0;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .world-card,
+    .control-card,
+    .viewer-card {
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .world-card {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    .world-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .world-title-row h2 {
+      margin: 0;
+      font-size: clamp(22px, 6vw, 32px);
+      line-height: 1;
+    }
+
+    .world-tag {
+      white-space: nowrap;
+      border: 1px solid var(--line-2);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #d9d9d9;
+      font-size: 12px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .world-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .viewer-card {
+      position: relative;
+      background: #cfcfcf;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      min-height: 44dvh;
+      --poster-color: transparent;
+      background: #d9d9d9;
+    }
+
+    .viewer-hud {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+    }
+
+    .hud-chip-row,
+    .hud-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hud-chip {
+      pointer-events: auto;
+      border: 1px solid var(--line-2);
+      background: rgba(0,0,0,0.45);
+      color: #eee;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: "IBM Plex Mono", monospace;
+    }
+
+    .control-card {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .primary-btn {
+      background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+      border-color: rgba(255,255,255,0.24);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 30px rgba(255,255,255,0.08);
+    }
+
+    .secondary-btn,
+    .ghost-btn {
+      color: #e6e6e6;
+    }
+
+    .controls-inline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .helper {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #8a8a8a;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* VR overlay */
+    .vr-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .vr-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .vr-ui {
+      position: absolute;
+      top: calc(12px + var(--safe-top));
+      left: 12px;
+      right: 12px;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .vr-ui > * {
+      pointer-events: auto;
+    }
+
+    .vr-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .vr-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .vr-top-logo {
+      width: 78%;
+      height: 78%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.28));
+    }
+
+    .vr-pill {
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: "IBM Plex Mono", monospace;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      white-space: nowrap;
+    }
+
+    .vr-scene-wrap {
+      position: absolute;
+      inset: 0;
+    }
+
+    a-scene {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Modal + sheet */
+    .scrim {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 60;
+    }
+
+    .scrim.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal,
+    .sheet {
+      position: absolute;
+      z-index: 70;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.28s ease, opacity 0.28s ease;
+      background: linear-gradient(180deg, rgba(30,30,30,0.95), rgba(10,10,10,0.95));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .modal.active,
+    .sheet.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      left: 16px;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-46%) scale(0.97);
+      border-radius: 26px;
+      padding: 18px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .modal.active {
+      transform: translateY(-50%) scale(1);
+    }
+
+    .sheet {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: translateY(100%);
+      border-radius: 28px 28px 0 0;
+      padding: 14px 14px calc(18px + var(--safe-bottom));
+      max-height: 76dvh;
+      overflow: auto;
+    }
+
+    .sheet.active {
+      transform: translateY(0);
+    }
+
+    .sheet-handle {
+      width: 54px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      margin: 2px auto 14px;
+    }
+
+    .modal-header,
+    .sheet-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .modal-title,
+    .sheet-title {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .modal-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 10px 0 0;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0 0;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.1);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 13px;
+    }
+
+    .step p {
+      margin: 0;
+      color: #ebebeb;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .world-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .world-option {
+      width: 100%;
+      text-align: left;
+      display: grid;
+      gap: 8px;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .world-option.active {
+      border-color: rgba(255,255,255,0.32);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
+    }
+
+    .world-option-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .world-option h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .world-option p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .world-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: #ddd;
+      font-family: "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .meta-pill {
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .close-btn {
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 520px) {
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .topbar-left {
+        gap: 10px;
+      }
+
+      .main-logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .vr-pill {
+        font-size: 10px;
+        padding: 9px 12px;
+      }
+
+      .vr-logo-wrap {
+        width: 42px;
+        height: 42px;
+      }
+    }
+
+    /* Desktop refinements */
+    @media (min-width: 760px) {
+      .hub {
+        padding-left: 24px;
+        padding-right: 24px;
+        gap: 18px;
+      }
+
+      .hub-content {
+        grid-template-columns: 1.1fr 1.1fr;
+        grid-template-rows: auto 1fr;
+        align-items: stretch;
+      }
+
+      .world-card {
+        grid-column: 1 / -1;
+      }
+
+      .viewer-card {
+        min-height: 52dvh;
+      }
+
+      model-viewer {
+        min-height: 52dvh;
+      }
+
+      .control-card {
+        align-content: start;
+      }
+
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sheet {
+        left: auto;
+        right: 20px;
+        bottom: 20px;
+        width: min(460px, calc(100vw - 40px));
+        border-radius: 28px;
+        transform: translateY(20px);
+        max-height: calc(100dvh - 40px);
+      }
+
+      .sheet.active {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 70px rgba(255,255,255,0.05); }
+      50% { box-shadow: 0 0 110px rgba(255,255,255,0.11); }
+    }
+
+    @keyframes scan {
+      0% { transform: translateX(-140%); }
+      100% { transform: translateX(140%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Landing -->
+    <section class="screen landing active" id="landingScreen" aria-label="Loading screen">
+      <div class="landing-inner">
+        <div class="logo-wrap" aria-hidden="true">
+          <img src="odotnyc3final.png" alt="OdotNYC Logo" style="width:82%;height:auto;object-fit:contain;filter:drop-shadow(0 0 16px rgba(255,255,255,0.28));" />
+        </div>
+
+        <div class="load-block">
+          <div class="load-label">
+            <span>Booting VR OdotNYC</span>
+            <span id="loadPercent">0%</span>
+          </div>
+          <div class="load-bar" aria-hidden="true">
+            <div class="load-progress" id="loadProgress"></div>
+          </div>
+          <div class="load-caption">Preparing worlds, viewer, and mobile VR interface...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main hub -->
+    <main class="screen hub" id="hubScreen" aria-label="Main application screen">
+      <header class="topbar">
+        <div class="topbar-left">
+          <img src="odotnyc3final.png" alt="OdotNYC logo" class="main-logo" />
+          <div class="title-stack">
+            <h1>VR OdotNYC</h1>
+            <p>The Official VR OdotNYC</p>
+          </div>
+        </div>
+        <button class="icon-btn" id="openHelpBtn" type="button">Help</button>
+      </header>
+
+      <section class="hub-content">
+        <article class="world-card" aria-live="polite">
+          <div class="eyebrow">Current World</div>
+          <div class="world-title-row">
+            <h2 id="worldTitle">Neon Rooftop</h2>
+            <div class="world-tag" id="worldStyleTag">Mono / Futuristic</div>
+          </div>
+          <p class="world-desc" id="worldDescription">
+            A dark rooftop world with soft skyline glow, floating structures, and clean monochrome geometry.
+          </p>
+        </article>
+
+        <article class="viewer-card">
+          <model-viewer
+            id="modelViewer"
+            src="planet_earth.glb"
+            alt="Preview of selected OdotNYC world"
+            camera-controls
+            touch-action="pan-y"
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="20deg"
+            shadow-intensity="1"
+            exposure="1"
+            interaction-prompt="none"
+            environment-image="neutral"
+            ar-status="not-presenting"
+          ></model-viewer>
+
+          <div class="viewer-hud">
+            <div class="hud-chip-row">
+              <button class="hud-chip" id="resetCameraBtn" type="button">Reset View</button>
+              <div class="hud-chip">Spin + Zoom Enabled</div>
+            </div>
+            <div class="hud-bottom-row">
+              <div class="hud-chip" id="modelFileLabel">Realm One</div>
+              <div class="hud-chip">Touch to orbit</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="control-card">
+          <div class="eyebrow">Controls</div>
+          <div class="button-grid">
+            <button class="primary-btn" id="enterVrBtn" type="button">Enter VR</button>
+            <div class="controls-inline">
+              <button class="secondary-btn" id="openWorldsBtn" type="button">Choose World</button>
+              <button class="secondary-btn" id="cardboardBtn" type="button">Cardboard Guide</button>
+            </div>
+            <button class="ghost-btn" id="toggleRotateBtn" type="button">Pause Auto Spin</button>
+          </div>
+          <p class="helper">
+            Preview the realm on the main screen by dragging to spin and pinching to zoom. Enter VR when you're ready to explore the selected world in an immersive OdotNYC Cardboard-style view.
+          </p>
+        </article>
+      </section>
+
+      <div class="footer-note">© 2026 RoboTechi | All Rights Reserved</div>
+    </main>
+
+    <!-- VR overlay -->
+    <section class="vr-overlay" id="vrOverlay" aria-label="VR mode">
+      <div class="vr-ui">
+        <div class="vr-left">
+          <div class="vr-logo-wrap">
+            <img src="odotnyc3final.png" alt="OdotNYC logo" class="vr-top-logo" />
+          </div>
+          <div class="vr-pill" id="vrWorldName">Neon Rooftop</div>
+        </div>
+        <button class="vr-pill" id="exitVrBtn" type="button">Exit VR</button>
+      </div>
+
+      <div class="vr-scene-wrap">
+        <a-scene embedded xr-mode-ui="enabled: true" renderer="colorManagement: true; physicallyCorrectLights: true" vr-mode-ui="enabled: true">
+          <a-assets>
+            <a-asset-item id="worldModel" src="planet_earth.glb"></a-asset-item>
+            <a-asset-item id="propModel" src="planet_earth.glb"></a-asset-item>
+            <img id="vrLogoTexture" src="odotnyc3final.png" alt="OdotNYC Logo">
+          </a-assets>
+
+          <a-sky color="#060606"></a-sky>
+          <a-entity light="type: ambient; intensity: 1.1; color: #ffffff"></a-entity>
+          <a-entity light="type: directional; intensity: 0.8; color: #ffffff" position="1 3 2"></a-entity>
+
+          <a-cylinder position="0 0 -4" radius="8" height="0.05" color="#111111"></a-cylinder>
+          <a-ring position="0 0.06 -4" rotation="-90 0 0" radius-inner="4.5" radius-outer="5.1" color="#777777"></a-ring>
+
+          <a-entity id="worldEntity" gltf-model="#worldModel" position="0 0 -5" scale="1 1 1"></a-entity>
+
+          <a-entity id="propEntity" gltf-model="#propModel" position="0 1.4 -2.4" rotation="0 40 0" scale="0.9 0.9 0.9" animation="property: rotation; to: 0 400 0; loop: true; dur: 24000; easing: linear"></a-entity>
+
+          <a-entity id="hotspotLeft" geometry="primitive: circle; radius: 0.38" material="color: #ffffff; opacity: 0.75" position="-1.4 1.2 -3.3" class="clickable"></a-entity>
+          <a-text value="Prev" position="-1.62 0.7 -3.3" color="#ffffff" width="3"></a-text>
+
+          <a-entity id="hotspotRight" geometry="primitive: circle; radius: 0.38" material="color: #bdbdbd; opacity: 0.75" position="1.4 1.2 -3.3" class="clickable"></a-entity>
+          <a-text value="Next" position="1.18 0.7 -3.3" color="#ffffff" width="3"></a-text>
+
+          <!-- Center branding in VR -->
+          <a-image
+            id="vrBrandLogo"
+            src="#vrLogoTexture"
+            position="0 1.15 -3.25"
+            width="1.35"
+            height="0.78"
+            material="shader: flat; transparent: true; opacity: 0.95"
+          ></a-image>
+
+          <a-entity id="rig" position="0 1.6 0">
+            <a-camera wasd-controls-enabled="false" look-controls="touchEnabled: true; magicWindowTrackingEnabled: true">
+              <a-cursor
+                fuse="true"
+                fuse-timeout="1200"
+                geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.018"
+                material="color: #ffffff; shader: flat"
+              ></a-cursor>
+            </a-camera>
+          </a-entity>
+        </a-scene>
+      </div>
+    </section>
+
+    <!-- Scrim -->
+    <div class="scrim" id="scrim"></div>
+
+    <!-- Help modal -->
+    <section class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <div class="modal-header">
+        <div>
+          <div class="eyebrow">OdotNYC VR Cardboard</div>
+          <h2 class="modal-title" id="helpTitle">How to use VR OdotNYC</h2>
+        </div>
+        <button class="close-btn" data-close="help" type="button" aria-label="Close help">✕</button>
+      </div>
+
+      <p class="modal-copy">
+         To preview the realm on-screen, place your phone into your cardboard viewer, then enter VR mode to explore the selected low-poly scene.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <p>Select a realm and preview it by dragging to rotate and pinching to zoom.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <p>Set screen brightness high, mute extra tabs, and rotate your phone to landscape before placing it into your cardboard viewer.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <p>Tap <strong>Enter VR</strong>. If your browser supports immersive mode, use the headset icon inside the scene for a more native VR handoff.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <p>Look at the left and right hotspot circles to switch worlds. The center ring acts as a gaze cursor.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Worlds sheet -->
+    <section class="sheet" id="worldsSheet" role="dialog" aria-modal="true" aria-labelledby="worldsTitle">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div>
+          <div class="eyebrow">World Selector</div>
+          <h2 class="sheet-title" id="worldsTitle">Choose your world</h2>
+        </div>
+        <button class="close-btn" data-close="worlds" type="button" aria-label="Close worlds">✕</button>
+      </div>
+
+      <div class="world-list" id="worldList"></div>
+    </section>
+  </div>
+
+  <script>
+    const worlds = [
+      {
+        id: "neon-rooftop",
+        name: "Planet Earth",
+        tag: "OdotNYC.xyz",
+        desc: "Planet Earth",
+        previewModel: "planet_earth.glb",
+        worldModel: "planet_earth.glb",
+        sky: "#060606",
+        accent: "Silver Skyline",
+        details: ["Low Poly", "Cardboard Ready", "Night World"]
+      },
+      {
+        id: "digital-gallery",
+        name: "Entreprenur Room",
+        tag: "Bedroom / Minimal",
+        desc: "The Bedroom OdotNYC started his amazing tech journey.",
+        previewModel: "small_room_scene.glb",
+        worldModel: "small_room_scene.glb",
+        sky: "#060606",
+        accent: "Gallery Mode",
+        details: ["Indoor", "Clean Lighting", "Showcase"]
+      },
+      {
+        id: "monochrome-city",
+        name: "Monochrome City",
+        tag: "Urban / Sci-Fi",
+        desc: "A stylized low-poly city with bold geometry, floating signs, and a grayscale cyber-future mood.",
+        previewModel: "alien_planet_lv-426.glb",
+        worldModel: "alien_planet_lv-426.glb",
+        sky: "#0a0a0a",
+        accent: "Urban Grid",
+        details: ["Open World", "Street Feel", "High Contrast"]
+      },
+      {
+        id: "dreamscape-core",
+        name: "Dreamscape Core",
+        tag: "Abstract / Atmospheric",
+        desc: "A surreal world of floating platforms, soft fog, and calm monochrome shapes for ambient exploration.",
+        previewModel: "alien_planet_lv-426.glb",
+        worldModel: "alien_planet_lv-426.glb",
+        sky: "#151515",
+        accent: "Ambient Space",
+        details: ["Abstract", "Floating Forms", "Atmospheric"]
+      }
+    ];
+
+    let selectedWorldIndex = 0;
+    let autoRotateOn = true;
+
+    const landingScreen = document.getElementById('landingScreen');
+    const hubScreen = document.getElementById('hubScreen');
+    const vrOverlay = document.getElementById('vrOverlay');
+    const loadProgress = document.getElementById('loadProgress');
+    const loadPercent = document.getElementById('loadPercent');
+
+    const worldTitle = document.getElementById('worldTitle');
+    const worldStyleTag = document.getElementById('worldStyleTag');
+    const worldDescription = document.getElementById('worldDescription');
+    const modelViewer = document.getElementById('modelViewer');
+    const modelFileLabel = document.getElementById('modelFileLabel');
+    const vrWorldName = document.getElementById('vrWorldName');
+
+    const helpModal = document.getElementById('helpModal');
+    const worldsSheet = document.getElementById('worldsSheet');
+    const scrim = document.getElementById('scrim');
+    const worldList = document.getElementById('worldList');
+
+    const openHelpBtn = document.getElementById('openHelpBtn');
+    const cardboardBtn = document.getElementById('cardboardBtn');
+    const openWorldsBtn = document.getElementById('openWorldsBtn');
+    const enterVrBtn = document.getElementById('enterVrBtn');
+    const exitVrBtn = document.getElementById('exitVrBtn');
+    const toggleRotateBtn = document.getElementById('toggleRotateBtn');
+    const resetCameraBtn = document.getElementById('resetCameraBtn');
+
+    const worldAsset = document.getElementById('worldModel');
+    const propAsset = document.getElementById('propModel');
+    const worldEntity = document.getElementById('worldEntity');
+    const propEntity = document.getElementById('propEntity');
+    const sky = document.querySelector('a-sky');
+    const hotspotLeft = document.getElementById('hotspotLeft');
+    const hotspotRight = document.getElementById('hotspotRight');
+
+    function renderWorldList() {
+      worldList.innerHTML = worlds.map((world, index) => `
+        <button class="world-option ${index === selectedWorldIndex ? 'active' : ''}" data-world-index="${index}" type="button">
+          <div class="world-option-top">
+            <h3>${world.name}</h3>
+            <span class="world-tag">${world.tag}</span>
+          </div>
+          <p>${world.desc}</p>
+          <div class="world-meta">
+            ${world.details.map(detail => `<span class="meta-pill">${detail}</span>`).join('')}
+          </div>
+        </button>
+      `).join('');
+
+      worldList.querySelectorAll('[data-world-index]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = Number(btn.dataset.worldIndex);
+          setWorld(index);
+          closeWorlds();
+        });
+      });
+    }
+
+    function setWorld(index) {
+      selectedWorldIndex = index;
+      const world = worlds[index];
+
+      worldTitle.textContent = world.name;
+      worldStyleTag.textContent = world.tag;
+      worldDescription.textContent = world.desc;
+      modelFileLabel.textContent = world.previewModel.split('/').pop();
+      vrWorldName.textContent = world.name;
+
+      modelViewer.src = world.previewModel;
+      modelViewer.setAttribute('alt', `${world.name} preview model`);
+
+      worldAsset.setAttribute('src', world.worldModel);
+      propAsset.setAttribute('src', world.previewModel);
+      sky.setAttribute('color', world.sky);
+
+      worldEntity.setAttribute('gltf-model', `url(${world.worldModel})`);
+      propEntity.setAttribute('gltf-model', `url(${world.previewModel})`);
+
+      renderWorldList();
+    }
+
+    function nextWorld() {
+      const nextIndex = (selectedWorldIndex + 1) % worlds.length;
+      setWorld(nextIndex);
+    }
+
+    function prevWorld() {
+      const prevIndex = (selectedWorldIndex - 1 + worlds.length) % worlds.length;
+      setWorld(prevIndex);
+    }
+
+    function openHelp() {
+      scrim.classList.add('active');
+      helpModal.classList.add('active');
+      worldsSheet.classList.remove('active');
+    }
+
+    function closeHelp() {
+      helpModal.classList.remove('active');
+      closeScrimIfIdle();
+    }
+
+    function openWorlds() {
+      scrim.classList.add('active');
+      worldsSheet.classList.add('active');
+      helpModal.classList.remove('active');
+    }
+
+    function closeWorlds() {
+      worldsSheet.classList.remove('active');
+      closeScrimIfIdle();
+    }
+
+    function closeScrimIfIdle() {
+      const anyOpen = helpModal.classList.contains('active') || worldsSheet.classList.contains('active');
+      if (!anyOpen) scrim.classList.remove('active');
+    }
+
+    function enterVr() {
+      vrOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      const prop = document.getElementById("propEntity");
+      prop.removeAttribute("animation");
+    }
+
+    function exitVr() {
+      vrOverlay.classList.remove('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function resetCamera() {
+      modelViewer.cameraOrbit = '0deg 75deg 105%';
+      modelViewer.fieldOfView = '32deg';
+    }
+
+    function toggleRotate() {
+      autoRotateOn = !autoRotateOn;
+      modelViewer.autoRotate = autoRotateOn;
+      toggleRotateBtn.textContent = autoRotateOn ? 'Pause Auto Spin' : 'Resume Auto Spin';
+    }
+
+    function bootApp() {
+      let progress = 0;
+      const timer = setInterval(() => {
+        progress += Math.floor(Math.random() * 14) + 8;
+        if (progress > 100) progress = 100;
+        loadProgress.style.width = `${progress}%`;
+        loadPercent.textContent = `${progress}%`;
+
+        if (progress >= 100) {
+          clearInterval(timer);
+          setTimeout(() => {
+            landingScreen.classList.remove('active');
+            hubScreen.classList.add('active');
+          }, 320);
+        }
+      }, 150);
+    }
+
+    openHelpBtn.addEventListener('click', openHelp);
+    cardboardBtn.addEventListener('click', openHelp);
+    openWorldsBtn.addEventListener('click', openWorlds);
+    enterVrBtn.addEventListener('click', enterVr);
+    exitVrBtn.addEventListener('click', exitVr);
+    toggleRotateBtn.addEventListener('click', toggleRotate);
+    resetCameraBtn.addEventListener('click', resetCamera);
+
+    hotspotLeft.addEventListener('click', prevWorld);
+    hotspotRight.addEventListener('click', nextWorld);
+
+    scrim.addEventListener('click', () => {
+      closeHelp();
+      closeWorlds();
+    });
+
+    document.querySelectorAll('[data-close="help"]').forEach(btn => btn.addEventListener('click', closeHelp));
+    document.querySelectorAll('[data-close="worlds"]').forEach(btn => btn.addEventListener('click', closeWorlds));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeHelp();
+        closeWorlds();
+        exitVr();
+      }
+    });
+
+    setWorld(0);
+    renderWorldList();
+    bootApp();
+  </script>
+</body>
+</html>
