@@ -5,50 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OdotNYC</title>
 
-    <!-- Tailwind (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-      /* Fade + slight rise */
       @keyframes fadeUp {
         from { opacity: 0; transform: translateY(14px); }
-        to   { opacity: 1; transform: translateY(0); }
+        to { opacity: 1; transform: translateY(0); }
       }
       .animate-fadeUp { animation: fadeUp 900ms ease-out both; }
       .delay-150 { animation-delay: 150ms; }
       .delay-300 { animation-delay: 300ms; }
 
-      /* Simple page transition */
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
       .animate-fadeIn { animation: fadeIn 350ms ease-out both; }
+
+      @keyframes popIn {
+        from { opacity: 0; transform: translateY(10px) scale(0.98); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-popIn { animation: popIn 220ms ease-out both; }
+
+      @keyframes marquee {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
 
       video { object-fit: cover; }
 
-      /* Active nav item */
-      .navlink-active {
-        background: rgba(255,255,255,0.10);
-        border-color: rgba(255,255,255,0.18);
-        color: rgba(255,255,255,0.95);
-      }
-
-      /* Card glow on hover */
-      .glow-card {
-        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
-      }
-      .glow-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(255,255,255,0.22);
-        box-shadow:
-          0 0 0 1px rgba(255,255,255,0.06),
-          0 18px 50px rgba(0,0,0,0.55),
-          0 0 36px rgba(255,255,255,0.08);
-      }
-
-      /* Ticker animation */
-      @keyframes marquee {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50%); }
-      }
       .marquee {
         display: flex;
         width: max-content;
@@ -56,25 +42,55 @@
       }
       .marquee:hover { animation-play-state: paused; }
 
-      /* Popup animation */
-      @keyframes popIn {
-        from { opacity: 0; transform: translateY(10px) scale(0.98); }
-        to   { opacity: 1; transform: translateY(0) scale(1); }
+      .glow-card {
+        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
       }
-      .animate-popIn { animation: popIn 220ms ease-out both; }
+      .glow-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255,255,255,0.20);
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,0.05),
+          0 18px 50px rgba(0,0,0,0.50),
+          0 0 38px rgba(255,255,255,0.06);
+      }
 
-      /* Adding section for the photos of OdotNYC */
+      .navlink-active {
+        background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+        color: rgba(255,255,255,0.98);
+        border-color: rgba(255,255,255,0.18);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      }
+
+      .tech-grid {
+        background-image:
+          linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 26px 26px;
+      }
+
+      .grain-overlay::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.12;
+        background-image:
+          radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18) 0.5px, transparent 0.6px),
+          radial-gradient(circle at 80% 40%, rgba(255,255,255,0.14) 0.5px, transparent 0.6px),
+          radial-gradient(circle at 40% 80%, rgba(255,255,255,0.12) 0.5px, transparent 0.6px);
+        background-size: 18px 18px, 22px 22px, 28px 28px;
+      }
 
       .about-lookbook {
         width: 100%;
         margin-top: 1.25rem;
       }
-      
+
       .about-lookbook__wrap {
         display: grid;
         gap: 0.75rem;
       }
-      
+
       .about-lookbook__main {
         position: relative;
         width: 100%;
@@ -83,20 +99,20 @@
         background: #111;
         box-shadow: 0 10px 30px rgba(0,0,0,0.16);
       }
-      
+
       .about-lookbook__main img {
         display: block;
         width: 100%;
         aspect-ratio: 4 / 5;
         object-fit: cover;
       }
-      
+
       .about-lookbook__thumbs {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 0.65rem;
       }
-      
+
       .about-thumb {
         appearance: none;
         border: 0;
@@ -108,50 +124,24 @@
         position: relative;
         transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
       }
-      
+
       .about-thumb img {
         display: block;
         width: 100%;
         aspect-ratio: 1 / 1;
         object-fit: cover;
       }
-      
-      .about-thumb:hover {
-        transform: translateY(-2px);
-      }
-      
-      .about-thumb.active {
-        box-shadow: 0 0 0 2px #000;
-      }
-      
-      .about-thumb:not(.active) {
-        opacity: 0.82;
-      }
-      
-      /* Optional: slightly larger spacing on bigger screens */
+
+      .about-thumb:hover { transform: translateY(-2px); }
+      .about-thumb.active { box-shadow: 0 0 0 2px #fff; }
+      .about-thumb:not(.active) { opacity: 0.82; }
+
       @media (min-width: 768px) {
-        .about-lookbook {
-          margin-top: 1.5rem;
-        }
-      
-        .about-lookbook__wrap {
-          gap: 1rem;
-        }
-      
-        .about-lookbook__main img {
-          aspect-ratio: 16 / 10;
-        }
-      
-        .about-lookbook__thumbs {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0.65rem;
-        }
+        .about-lookbook { margin-top: 1.5rem; }
+        .about-lookbook__wrap { gap: 1rem; }
+        .about-lookbook__main img { aspect-ratio: 16 / 10; }
       }
 
-      /* =========================================
-         LOADING LOGO GLITCH (LANDING)
-         ========================================= */
       .logo-glitch {
         position: relative;
         display: inline-block;
@@ -178,137 +168,6 @@
         pointer-events: none;
         filter: contrast(1.15) brightness(1.08);
         mix-blend-mode: screen;
-      }
-
-
-
-
-      .events-section {
-        padding: 80px 20px;
-        background: #0d0d0d;
-        color: #f5f5f5;
-      }
-      
-      .events-section .container {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-      
-      .section-header {
-        text-align: center;
-        max-width: 760px;
-        margin: 0 auto 50px;
-      }
-      
-      .section-tag {
-        display: inline-block;
-        margin-bottom: 10px;
-        font-size: 0.85rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: #b0b0b0;
-      }
-      
-      .section-header h2 {
-        font-size: clamp(2rem, 5vw, 3.25rem);
-        margin-bottom: 12px;
-      }
-      
-      .section-header p {
-        color: #c8c8c8;
-        line-height: 1.6;
-      }
-      
-      .events-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-      }
-      
-      .event-card {
-        background: #151515;
-        border: 1px solid #252525;
-        border-radius: 18px;
-        overflow: hidden;
-        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      }
-      
-      .event-card:hover {
-        transform: translateY(-6px);
-        border-color: #444;
-        box-shadow: 0 12px 30px rgba(0,0,0,0.28);
-      }
-      
-      .event-image img {
-        width: 100%;
-        height: 240px;
-        object-fit: cover;
-        display: block;
-      }
-      
-      .event-content {
-        padding: 20px;
-      }
-      
-      .event-type {
-        display: inline-block;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: #9ad1ff;
-        margin-bottom: 10px;
-      }
-      
-      .event-content h3 {
-        margin: 0 0 8px;
-        font-size: 1.35rem;
-      }
-      
-      .event-meta {
-        font-size: 0.95rem;
-        color: #bdbdbd;
-        margin-bottom: 12px;
-      }
-      
-      .event-content p {
-        line-height: 1.6;
-        color: #d8d8d8;
-      }
-      
-      .event-btn {
-        display: inline-block;
-        margin-top: 16px;
-        padding: 10px 16px;
-        background: #ffffff;
-        color: #111111;
-        text-decoration: none;
-        border-radius: 999px;
-        font-weight: 600;
-        transition: opacity 0.2s ease;
-      }
-      
-      .event-btn:hover {
-        opacity: 0.85;
-      }
-      
-      @media (max-width: 991px) {
-        .events-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-      
-      @media (max-width: 640px) {
-        .events-section {
-          padding: 60px 16px;
-        }
-      
-        .events-grid {
-          grid-template-columns: 1fr;
-        }
-      
-        .event-image img {
-          height: 220px;
-        }
       }
 
       @keyframes glitchShiftA {
@@ -338,38 +197,169 @@
         76% { filter: brightness(1.1) contrast(1.25); }
       }
 
-      /* Glitch runs only on landing (subtle, looped) */
       .glitch-on::before { animation: glitchShiftA 1.7s infinite linear; }
       .glitch-on::after  { animation: glitchShiftB 1.9s infinite linear; }
       .glitch-on img     { animation: glitchFlicker 2.4s infinite linear; }
+
+      .events-section {
+        padding: 84px 20px;
+        background:
+          radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 35%),
+          linear-gradient(180deg, #090909 0%, #101010 100%);
+        color: #f5f5f5;
+      }
+
+      .events-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto 50px;
+      }
+
+      .section-tag {
+        display: inline-block;
+        margin-bottom: 10px;
+        font-size: 0.85rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #b0b0b0;
+      }
+
+      .section-header h2 {
+        font-size: clamp(2rem, 5vw, 3.25rem);
+        margin-bottom: 12px;
+      }
+
+      .section-header p {
+        color: #c8c8c8;
+        line-height: 1.6;
+      }
+
+      .events-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .event-card {
+        background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 22px;
+        overflow: hidden;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .event-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(255,255,255,0.18);
+        box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      }
+
+      .event-image {
+        position: relative;
+        cursor: zoom-in;
+        overflow: hidden;
+      }
+
+      .event-image img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.35s ease;
+      }
+
+      .event-image:hover img {
+        transform: scale(1.04);
+      }
+
+      .event-image::after {
+        content: "Expand";
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        background: rgba(0,0,0,0.65);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.12);
+      }
+
+      .event-content {
+        padding: 20px;
+      }
+
+      .event-type {
+        display: inline-block;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #b6deff;
+        margin-bottom: 10px;
+      }
+
+      .event-content h3 {
+        margin: 0 0 8px;
+        font-size: 1.35rem;
+      }
+
+      .event-meta {
+        font-size: 0.95rem;
+        color: #bdbdbd;
+        margin-bottom: 12px;
+      }
+
+      .event-content p {
+        line-height: 1.6;
+        color: #d8d8d8;
+      }
+
+      .event-btn {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 10px 16px;
+        background: #ffffff;
+        color: #111111;
+        text-decoration: none;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .event-btn:hover {
+        opacity: 0.92;
+        transform: translateY(-1px);
+      }
+
+      @media (max-width: 991px) {
+        .events-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .events-section {
+          padding: 60px 16px;
+        }
+
+        .events-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .event-image img {
+          height: 220px;
+        }
+      }
     </style>
   </head>
-  <script>
-    (function () {
-      const mainPhoto = document.getElementById("aboutMainPhoto");
-      const thumbs = document.querySelectorAll(".about-thumb");
-  
-      if (!mainPhoto || !thumbs.length) return;
-  
-      thumbs.forEach((thumb) => {
-        thumb.addEventListener("click", () => {
-          const fullImage = thumb.getAttribute("data-full");
-          const thumbImg = thumb.querySelector("img");
-  
-          if (fullImage) {
-            mainPhoto.src = fullImage;
-          }
-  
-          if (thumbImg && thumbImg.alt) {
-            mainPhoto.alt = thumbImg.alt.replace("Thumbnail", "OdotNYC photo");
-          }
-  
-          thumbs.forEach((item) => item.classList.remove("active"));
-          thumb.classList.add("active");
-        });
-      });
-    })();
-  </script>
 
   <body class="w-screen bg-black text-white">
     <!-- LANDING -->
@@ -381,7 +371,6 @@
 
       <main class="flex h-screen w-screen items-center justify-center p-6">
         <div class="flex flex-col items-center text-center">
-          <!-- ✅ Glitch logo wrapper -->
           <div class="logo-glitch glitch-on animate-fadeUp">
             <img src="odotnyc3final.png" alt="OdotNYC Logo" />
           </div>
@@ -394,18 +383,15 @@
             Enter Now
           </button>
 
-          <p class="mt-4 text-xs text-white/60">
-            Auto-enter in 3 seconds…
-          </p>
+          <p class="mt-4 text-xs text-white/60">Auto-enter in 3 seconds…</p>
         </div>
       </main>
     </section>
 
     <!-- HOME -->
     <section id="home" class="hidden min-h-screen bg-zinc-950">
-      <!-- Sticky Header + Ticker -->
-      <header class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/70 backdrop-blur">
-        <!-- Crypto ticker bar -->
+      <header class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/75 backdrop-blur-xl">
+        <!-- Crypto ticker -->
         <div class="border-b border-white/10 bg-black/30">
           <div class="mx-auto w-full max-w-6xl px-5 py-2 sm:px-8">
             <div class="flex items-center gap-3">
@@ -438,17 +424,21 @@
           </div>
         </div>
 
-        <!-- Top bar -->
+        <!-- top bar -->
         <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <div class="w-12"></div>
+          <div class="flex items-center gap-3">
+            <div class="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] uppercase tracking-[0.3em] text-white/55">
+              NYC / Tech / Culture
+            </div>
+          </div>
 
           <div class="flex items-center justify-center">
-            <img src="odotnyc3final.png" alt="Logo" class="h-30 w-auto sm:h-40" />
+            <img src="odotnyc3final.png" alt="Logo" class="h-16 w-auto sm:h-20" />
           </div>
 
           <button
             id="menuBtn"
-            class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40"
+            class="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40"
             type="button"
             aria-label="Open menu"
             aria-expanded="false"
@@ -461,19 +451,21 @@
           </button>
         </div>
 
-        <!-- Menu Panel -->
+        <!-- redesigned nav -->
         <nav id="menuPanel" class="mx-auto hidden w-full max-w-6xl px-5 pb-4 sm:px-8">
-          <div class="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur">
-            <ul class="grid gap-2 sm:grid-cols-8">
-              <li><a data-section="about" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#about">About</a></li>
-              <li><a data-section="odotnyc" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#odotnyc">OdotNYC</a></li>
-              <li><a data-section="robotechi" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="https://odotofrva.github.io/rt-site-odotnyc/">RoboTechi</a></li>
-              <li><a data-section="creative" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#creative">Creative</a></li>
-             
-              <li><a data-section="cowomo" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="https://odotofrva.github.io/CoWoMoSite/">CoWoMo</a></li>
-              <li><a data-section="blog" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="https://medium.com/@almightyodot">Blog</a></li>
-              <li class="sm:col-span-8">
-                <a data-section="contact" class="navlink block rounded-xl border border-transparent px-4 py-3 text-white/80 hover:bg-white/10" href="#contact">Contact</a>
+          <div class="rounded-[28px] border border-white/10 bg-gradient-to-br from-white/8 to-white/4 p-3 shadow-2xl backdrop-blur-xl">
+            <ul class="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+              <li><a data-section="about" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#about">About</a></li>
+              <li><a data-section="odotnyc" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#odotnyc">Brand Awareness</a></li>
+              <li><a data-section="events" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#events">Events</a></li>
+              <li><a data-section="robotechi" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#robotechi">RoboTechi</a></li>
+              <li><a data-section="menoclone" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#menoclone">MENOCLONE</a></li>
+              <li><a data-section="cowomo" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#cowomo">CoMoWo</a></li>
+              <li><a data-section="blog" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#blog">Blog</a></li>
+              <li class="sm:col-span-2 lg:col-span-2">
+                <a data-section="contact" class="navlink block rounded-2xl border border-white/5 bg-white/95 px-4 py-3 text-sm font-semibold text-black transition hover:bg-white" href="#contact">
+                  Contact
+                </a>
               </li>
             </ul>
           </div>
@@ -491,10 +483,9 @@
                 <p class="mt-3 max-w-3xl text-white/70">
                   OdotNYC is the creative identity of a New York City–based builder who merges technology, engineering, art, and street culture into one evolving ecosystem. A self-taught full-stack developer and electronics enthusiast, OdotNYC designs digital platforms, embedded systems, and experimental applications while exploring the intersection of software, hardware, and creative expression.
                 </p>
-                <br>
-            
+                <br />
                 <p class="mt-3 max-w-3xl text-white/70">
-                 His work spans web development, electrical engineering concepts, interactive media, augmented reality experiences, and independent product design. Whether building immersive digital environments, developing electronics projects, or designing streetwear concepts, OdotNYC approaches each project with the mindset of a builder and storyteller.
+                  His work spans web development, electrical engineering concepts, interactive media, augmented reality experiences, and independent product design. Whether building immersive digital environments, developing electronics projects, or designing streetwear concepts, OdotNYC approaches each project with the mindset of a builder and storyteller.
                 </p>
 
                 <p class="mt-3 max-w-3xl text-white/70">
@@ -513,41 +504,34 @@
           </div>
         </section>
 
-        <!--- Section for the Photos of OdotNYC -->
-
+        <!-- ABOUT LOOKBOOK -->
         <section class="about-lookbook" id="about-lookbook" aria-label="About photo gallery">
           <div class="about-lookbook__wrap">
             <div class="about-lookbook__main">
-              <img
-                id="aboutMainPhoto"
-                src="odoteye.jpg"
-                alt="OdotNYC featured photo"
-              />
+              <img id="aboutMainPhoto" src="odoteye.jpg" alt="OdotNYC featured photo" />
             </div>
-        
+
             <div class="about-lookbook__thumbs" role="tablist" aria-label="Photo thumbnails">
-              <button class="about-thumb active" type="button" data-full="images/about-1.jpg" aria-label="Show photo 1">
+              <button class="about-thumb active" type="button" data-full="odotbrown.jpg" aria-label="Show photo 1">
                 <img src="odotbrown.jpg" alt="Thumbnail 1" />
               </button>
-        
-              <button class="about-thumb" type="button" data-full="images/about-2.jpg" aria-label="Show photo 2">
+
+              <button class="about-thumb" type="button" data-full="odotredblkjersey.jpg" aria-label="Show photo 2">
                 <img src="odotredblkjersey.jpg" alt="Thumbnail 2" />
               </button>
-        
-              <button class="about-thumb" type="button" data-full="images/about-3.jpg" aria-label="Show photo 3">
+
+              <button class="about-thumb" type="button" data-full="odoteagles1.jpg" aria-label="Show photo 3">
                 <img src="odoteagles1.jpg" alt="Thumbnail 3" />
               </button>
-        
-              <button class="about-thumb" type="button" data-full="images/about-4.jpg" aria-label="Show photo 4">
+
+              <button class="about-thumb" type="button" data-full="odotredwhitehat.jpg" aria-label="Show photo 4">
                 <img src="odotredwhitehat.jpg" alt="Thumbnail 4" />
               </button>
             </div>
           </div>
         </section>
 
-        
-
-        <!-- ODOTNYC -->
+        <!-- ODOTNYC / BRAND AWARENESS -->
         <section id="odotnyc" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <p class="text-sm font-medium tracking-wide text-white/60">Brand Awareness</p>
@@ -557,39 +541,29 @@
               <div>
                 <p class="max-w-xl text-white/70">
                   OdotNYC was born the moment I arrived in New York and realized the truth:
-                  <span class="text-white/90 font-semibold">all bets were placed on me</span>.
+                  <span class="font-semibold text-white/90">all bets were placed on me</span>.
                   Survival meant rebuilding from nothing — mentally, creatively, and financially —
                   in the loudest city in the world.
                 </p>
               </div>
 
               <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
-                <img
-                  src="odotnyc3final.png"
-                  alt="Odot arriving in NYC"
-                  class="h-full w-full object-cover"
-                  loading="lazy"
-                />
+                <img src="odotnyc3final.png" alt="OdotNYC logo" class="h-full w-full object-cover" loading="lazy" />
               </div>
             </div>
 
             <div class="mt-10 grid items-center gap-6 lg:grid-cols-2">
               <div class="order-2 overflow-hidden rounded-2xl border border-white/10 bg-black/20 lg:order-1">
-                <img
-                  src="odotnycstate.png"
-                  alt="OdotNYC brand rebuild"
-                  class="h-full w-full object-cover"
-                  loading="lazy"
-                />
+                <img src="odotnycstate.png" alt="OdotNYC brand rebuild" class="h-full w-full object-cover" loading="lazy" />
               </div>
 
               <div class="order-1 lg:order-2">
                 <p class="max-w-xl text-white/70">
                   The 3 stars represent the constellation "Orion's Belt" as well as OdotNYC. Being my first name actually being "Orion", the logo was simple.
                   OdotNYC lives at the intersection of
-                  <span class="text-white/90 font-semibold">technology</span>,
-                  <span class="text-white/90 font-semibold">fashion</span>, and
-                  <span class="text-white/90 font-semibold">art</span>.
+                  <span class="font-semibold text-white/90">technology</span>,
+                  <span class="font-semibold text-white/90">fashion</span>, and
+                  <span class="font-semibold text-white/90">art</span>.
                 </p>
 
                 <div class="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -610,13 +584,83 @@
               </div>
             </div>
 
+            <!-- MOVED PRODUCTS SECTION -->
+            <div class="mt-14 border-t border-white/10 pt-10">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p class="text-sm font-medium tracking-wide text-white/60">ODOT / Products</p>
+                  <h3 class="mt-2 text-2xl font-semibold sm:text-3xl">Products by Odot</h3>
+                  <p class="mt-2 max-w-2xl text-white/70">Innovation lives where imagination exists.</p>
+                  <p class="mt-1 text-xs text-white/45">Tip: click any product to view details.</p>
+                </div>
+              </div>
+
+              <div id="odotProductsGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <article
+                  class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
+                  tabindex="0"
+                  role="button"
+                  data-title="OdotNYC 'Stars Aligned' Snapback"
+                  data-desc="OdotNYC 'Stars Aligned' Snapback features an embroidered 'Stars Aligned' logo at the front with the OdotNYC signature logo on the side."
+                  data-price="$80.00"
+                  data-img="odotnyc4odc.png"
+                  data-buy="https://odotnyc.bigcartel.com/"
+                >
+                  <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                    <img src="odotnyc4odc.png" alt="OdotNYC Snapback" class="h-full w-full object-cover" loading="lazy" />
+                  </div>
+                  <h3 class="mt-4 font-semibold">- OdotNYC "Stars Aligned" Snapback -</h3>
+                  <p class="mt-1 text-sm text-white/70">
+                    OdotNYC "Stars Aligned" Snapback features an embroidered "Stars Aligned" logo at the front with the OdotNYC signature logo on the side.
+                  </p>
+                </article>
+
+                <article
+                  class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
+                  tabindex="0"
+                  role="button"
+                  data-title="OdotNYC Signature Crewneck"
+                  data-desc="Whether you're traveling your daily MTA commute or out on leisure, this premium sweatshirt reps OdotNYC with unapologetic energy."
+                  data-price="$60.00"
+                  data-img="odotNYCcrewneckblk.png"
+                  data-buy="https://odotnyc.bigcartel.com/"
+                >
+                  <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                    <img src="odotNYCcrewneckblk.png" alt="OdotNYC Crewneck" class="h-full w-full object-cover" loading="lazy" />
+                  </div>
+                  <h3 class="mt-4 font-semibold">- OdotNYC Signature Crewneck -</h3>
+                  <p class="mt-1 text-sm text-white/70">
+                    Whether you're traveling your daily MTA commute or out on leisure, this premium sweatshirt reps OdotNYC with unapologetic energy.
+                  </p>
+                </article>
+
+                <article
+                  class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
+                  tabindex="0"
+                  role="button"
+                  data-title="OdotNYC Signature Sticker Pack"
+                  data-desc="Signature OdotNYC Sticker Pack (x3)"
+                  data-price="$10.00"
+                  data-img="odotnyc3final.png"
+                  data-buy="https://odotnyc.bigcartel.com/"
+                >
+                  <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                    <img src="odotnyc3.png" alt="ODOTNYC Sticker Pack" class="h-full w-full object-cover" loading="lazy" />
+                  </div>
+                  <h3 class="mt-4 font-semibold">- OdotNYC Signature Sticker Pack -</h3>
+                  <p class="mt-1 text-sm text-white/70">OdotNYC Signature Sticker Pack (x3)</p>
+                </article>
+              </div>
+            </div>
+
             <p class="mt-8 text-xs text-white/50">
               "Keep Your Vision Further Than Your Eyesight!" - OdotNYC
             </p>
           </div>
         </section>
 
-        <section id="events" class="events-section">
+        <!-- EVENTS -->
+        <section id="events" class="events-section scroll-mt-40">
           <div class="container">
             <div class="section-header">
               <p class="section-tag">OdotNYC Community</p>
@@ -626,11 +670,11 @@
                 and community experiences happening around the city.
               </p>
             </div>
-        
+
             <div class="events-grid">
               <article class="event-card">
-                <div class="event-image">
-                  <img src="SSv1.png" alt="Style Syndrome event flyer">
+                <div class="event-image event-expand" data-img="SSv1.png" data-title="Style Syndrome Vol. 1 flyer">
+                  <img src="SSv1.png" alt="Style Syndrome event flyer" />
                 </div>
                 <div class="event-content">
                   <span class="event-type">Fashion / Popup</span>
@@ -640,13 +684,13 @@
                     A curated fashion and culture experience with streetwear, music,
                     visuals, and community energy.
                   </p>
-                  <a href="#" class="event-btn">Learn More</a>
+                  <a href="#contact" class="event-btn">Learn More</a>
                 </div>
               </article>
-        
+
               <article class="event-card">
-                <div class="event-image">
-                  <img src="SSv1MC.png" alt="Model call flyer">
+                <div class="event-image event-expand" data-img="SSv1MC.png" data-title="Style Syndrome Model Call flyer">
+                  <img src="SSv1MC.png" alt="Model call flyer" />
                 </div>
                 <div class="event-content">
                   <span class="event-type">Casting / Fashion</span>
@@ -656,236 +700,318 @@
                     Calling models, creatives, and talent to be part of future OdotNYC
                     campaigns and live experiences.
                   </p>
-                  <a href="https://odotnyc.xyz" class="event-btn">Sign Up</a>
+                  <a href="#contact" class="event-btn">Sign Up</a>
                 </div>
               </article>
 
               <article class="event-card">
-                <div class="event-image">
-                  <img src="SSv1FF.png" alt="Model call flyer">
+                <div class="event-image event-expand" data-img="SSv1FF.png" data-title="Style Syndrome Fresh Frames flyer">
+                  <img src="SSv1FF.png" alt="Fresh Frames flyer" />
                 </div>
                 <div class="event-content">
                   <span class="event-type">Fashion / Popup</span>
                   <h3>Style Syndrome: Fresh Frames v1</h3>
                   <p class="event-meta">Date Coming Soon • NYC</p>
                   <p>
-                  Fresh Frames v1 is a fashion-forward showcase celebrating bold eyewear and street style culture. Featuring stylish models rocking designer frames, this visual experience highlights how the right pair of sunglasses can elevate any look. Join us as fashion, art, and street culture collide under the Style Syndrome movement hosted by OdotNYC..
+                    Fresh Frames v1 is a fashion-forward showcase celebrating bold eyewear and street style culture.
+                    Featuring stylish models rocking designer frames, this visual experience highlights how the right pair
+                    of sunglasses can elevate any look.
                   </p>
-                  <a href="https://odotnyc.xyz" class="event-btn">Sign Up</a>
+                  <a href="#contact" class="event-btn">Sign Up</a>
                 </div>
               </article>
-              
             </div>
           </div>
         </section>
 
         <!-- ROBOTECHI -->
         <section id="robotechi" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="grid items-center gap-8 lg:grid-cols-2">
-              <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">Featured</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">RoboTechi Co.</h2>
-                <p class="mt-3 max-w-2xl text-white/70">
-                  RoboTechi is a technology-driven company focused on designing and building solutions around embedded systems and modern electronics.
-                </p>
-              </div>
+          <div class="relative overflow-hidden rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-[#08111a] via-[#0b1320] to-[#04070c] p-6 backdrop-blur sm:p-10">
+            <div class="absolute inset-0 tech-grid opacity-40"></div>
+            <div class="absolute -left-10 top-10 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl"></div>
+            <div class="absolute right-0 top-0 h-48 w-48 rounded-full bg-sky-500/10 blur-3xl"></div>
 
-              <div class="relative">
-                <div class="glow-card relative h-[260px] overflow-hidden rounded-3xl border border-white/10 bg-black/20 sm:h-[320px] lg:h-[380px]">
-                  <img
-                    src="rtlogo.png"
-                    alt="RoboTechi – Embedded Systems & Electronics"
-                    class="absolute inset-0 h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-br from-black/30 via-black/20 to-black/60"></div>
-                  <div class="absolute bottom-4 right-4 z-10">
-                    <a
-                      href="https://odotofrva.github.io/rt-site-odotnyc/"
-                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-                    >
-                      Enter RoboTechi →
-                    </a>
+            <div class="relative grid items-center gap-8 lg:grid-cols-[1.15fr_.85fr]">
+              <div>
+                <div class="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-200">
+                  Embedded Systems / IoT / Maker Education
+                </div>
+
+                <h2 class="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+                  RoboTechi Co.
+                </h2>
+
+                <p class="mt-4 max-w-2xl text-white/70">
+                  RoboTechi is the technology division within the OdotNYC ecosystem — focused on electronics,
+                  modern embedded systems, hardware concepts, creative coding, and educational innovation for the next wave of builders.
+                </p>
+
+                <div class="mt-8 grid gap-3 sm:grid-cols-3">
+                  <div class="rounded-2xl border border-cyan-400/15 bg-white/[0.03] p-4">
+                    <div class="text-[11px] uppercase tracking-[0.18em] text-cyan-200/70">Focus</div>
+                    <div class="mt-2 text-sm font-semibold text-white/90">Hardware + Software</div>
+                  </div>
+                  <div class="rounded-2xl border border-cyan-400/15 bg-white/[0.03] p-4">
+                    <div class="text-[11px] uppercase tracking-[0.18em] text-cyan-200/70">Builds</div>
+                    <div class="mt-2 text-sm font-semibold text-white/90">PCBs, Prototypes, Web Apps</div>
+                  </div>
+                  <div class="rounded-2xl border border-cyan-400/15 bg-white/[0.03] p-4">
+                    <div class="text-[11px] uppercase tracking-[0.18em] text-cyan-200/70">Mission</div>
+                    <div class="mt-2 text-sm font-semibold text-white/90">Teach + Inspire Makers</div>
                   </div>
                 </div>
-              </div>
 
-            </div>
-          </div>
-        </section>
-
-        <!-- CREATIVE -->
-        <section id="creative" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">ODOT / Creative</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Products by Odot</h2>
-                <p class="mt-2 max-w-2xl text-white/70">Innovation lives where imagination exist.</p>
-                <p class="mt-1 text-xs text-white/45">Tip: click any product to view details.</p>
-              </div>
-            </div>
-
-            <div id="odotProductsGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <article
-                class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                tabindex="0"
-                role="button"
-                data-title="OdotNYC 'Stars Aligned' Snapback"
-                data-desc="OdotNYC 'Stars Aligned' Snapback features an embroidered 'Stars Aligned' logo at the front with the OdotNYC signature logo on the side."
-                data-price="$80.00"
-                data-img="odotnyc4odc.png"
-                data-buy="#"
-              >
-                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotnyc4odc.png" alt="OdotNYC Snapback" class="h-full w-full object-cover" loading="lazy" />
-                </div>
-                <h3 class="mt-4 font-semibold">- OdotNYC "Stars Aligned" Snapback-</h3>
-                <p class="mt-1 text-sm text-white/70">OdotNYC "Stars Aligned" Snapback features an embroidered "Stars Aligned" logo at the front with the OdotNYC signature logo on the side.</p>
-              </article>
-
-              <article
-                class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                tabindex="0"
-                role="button"
-                data-title="OdotNYC Signature Crewneck"
-                data-desc="Whether you're traveling your daily MTA commute or out on leisure, this premium sweatshirt reps OdotNYC with unapologetic energy"
-                data-price="$60.00"
-                data-img="odotNYCcrewneckblk.png"
-                data-buy="#"
-              >
-                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotNYCcrewneckblk.png" alt="OdotNYC Patch" class="h-full w-full object-cover" loading="lazy" />
-                </div>
-                <h3 class="mt-4 font-semibold">- OdotNYC Signature Crewneck -</h3>
-                <p class="mt-1 text-sm text-white/70">Whether you're traveling your daily MTA commute or out on leisure, this premium sweatshirt reps OdotNYC with unapologetic energy.</p>
-              </article>
-
-              <article
-                class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                tabindex="0"
-                role="button"
-                data-title="OdotNYC Signature Sticker Pack"
-                data-desc='Signature OdotNYC Sticker Pack (x3)'
-                data-price="$10.00"
-                data-img="odotnyc3final.png"
-                data-buy="#"
-              >
-                <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                  <img src="odotnyc3.png" alt="ODOTNYC x METS Sticker" class="h-full w-full object-cover" loading="lazy" />
-                </div>
-                <h3 class="mt-4 font-semibold">- OdotNYC Signature Sticker Pack -</h3>
-                <p class="mt-1 text-sm text-white/70">OdotNYC Signature Sticker Pack (x3)</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-
-        <!-- COWOMO -->
-        <section id="cowomo" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <img src="cowomo.png" alt="COWOMO Logo" class="mx-auto h-24 w-auto object-contain" loading="lazy" />
-
-            <div class="mt-6 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div class="max-w-2xl">
-                <p class="text-sm font-medium tracking-wide text-white/60">NYC Work Spots</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">COWOMO</h2>
-                <p class="mt-3 text-white/70">
-                  COWOMO is a coworking review section built for entrepreneurs in NYC — quick insights on
-                  coffee shops, cafés, and hidden gems where you can actually get work done.
-                </p>
-
-                <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                <div class="mt-8 flex flex-col gap-3 sm:flex-row">
                   <a
-                    id="cowomoBtn"
-                    href="https://odotofrva.github.io/CoWoMoSite/"
-                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                    href="https://odotofrva.github.io/rt-site-odotnyc/"
+                    class="inline-flex items-center justify-center rounded-full bg-cyan-300 px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
                   >
-                    View COWOMO Reviews →
+                    Enter RoboTechi →
                   </a>
 
                   <a
                     href="#contact"
-                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                    class="inline-flex items-center justify-center rounded-full border border-cyan-300/20 px-6 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-white/5"
                   >
-                    Suggest a Spot
+                    Build With Me
                   </a>
                 </div>
-
-                <p class="mt-4 text-xs text-white/50">
-                  Includes: Wi-Fi quality, outlet availability, noise level, seating comfort, and vibe.
-                </p>
               </div>
 
-              <div class="w-full lg:max-w-md">
-                <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20 p-6">
-                  <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-black/40"></div>
-
+              <div class="relative">
+                <div class="relative overflow-hidden rounded-[28px] border border-cyan-400/20 bg-black/30 p-5 shadow-2xl">
+                  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.15),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01))]"></div>
                   <div class="relative">
-                    <div class="mt-4 grid place-items-center rounded-2xl border border-dashed border-white/20 bg-black/30 p-10">
-                      <div class="text-center">
-                        <img src="cowomo.png" alt="COWOMO Logo" class="mx-auto mb-4 h-24 w-auto object-contain" />
+                    <div class="rounded-3xl border border-cyan-400/15 bg-[#02060b] p-5">
+                      <div class="flex items-center justify-between border-b border-cyan-400/10 pb-4">
+                        <div>
+                          <div class="text-[11px] uppercase tracking-[0.22em] text-cyan-200/60">System Node</div>
+                          <div class="mt-1 text-lg font-semibold text-white/90">RoboTechi Interface</div>
+                        </div>
+                        <div class="rounded-full border border-cyan-400/20 bg-cyan-300/10 px-3 py-1 text-[11px] text-cyan-100">
+                          Online
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="mt-5 grid gap-3 sm:grid-cols-3">
-                      <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <div class="text-xs text-white/50">Wi-Fi</div>
-                        <div class="mt-1 text-sm font-semibold text-white/85">Fast / Stable</div>
+                      <div class="mt-5 overflow-hidden rounded-2xl border border-cyan-400/10 bg-black/40 p-4">
+                        <img
+                          src="rtlogo.png"
+                          alt="RoboTechi – Embedded Systems & Electronics"
+                          class="mx-auto h-56 w-auto object-contain"
+                          loading="lazy"
+                        />
                       </div>
-                      <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <div class="text-xs text-white/50">Outlets</div>
-                        <div class="mt-1 text-sm font-semibold text-white/85">Plenty</div>
-                      </div>
-                      <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <div class="text-xs text-white/50">Vibe</div>
-                        <div class="mt-1 text-sm font-semibold text-white/85">Work-Friendly</div>
+
+                      <div class="mt-5 grid grid-cols-2 gap-3">
+                        <div class="rounded-2xl border border-cyan-400/10 bg-white/[0.03] p-4">
+                          <div class="text-xs text-cyan-200/60">Signal</div>
+                          <div class="mt-1 text-sm font-semibold text-white/90">Stable</div>
+                        </div>
+                        <div class="rounded-2xl border border-cyan-400/10 bg-white/[0.03] p-4">
+                          <div class="text-xs text-cyan-200/60">Mode</div>
+                          <div class="mt-1 text-sm font-semibold text-white/90">Prototype</div>
+                        </div>
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs text-white/50">Starbucks (157-41 Cross Bay Blvd)</div>
-                <h3 class="mt-2 text-lg font-semibold text-white/90">“Quiet mornings + strong espresso.”</h3>
-                <p class="mt-2 text-sm text-white/70">
-                  Great for deep work. Solid Wi-Fi, decent seating, and outlets available near the wall.
-                </p>
-                <div class="mt-4 flex items-center gap-2 text-xs text-white/55">
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Queens</span>
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Best 8am–11am</span>
-                </div>
-              </article>
+        <!-- MENOCLONE -->
+        <section id="menoclone" class="mt-14 scroll-mt-40">
+          <div class="relative overflow-hidden rounded-3xl border border-amber-200/10 bg-gradient-to-br from-[#17120d] via-[#120f0d] to-[#090909] p-6 sm:p-10">
+            <div class="absolute inset-0 opacity-25 mix-blend-screen grain-overlay"></div>
 
-              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs text-white/50">Bon Tree</div>
-                <h3 class="mt-2 text-lg font-semibold text-white/90">“Crowded but creative energy.”</h3>
-                <p class="mt-2 text-sm text-white/70">
-                  Better for quick sessions. Noise is higher, but the vibe is motivating and social.
+            <div class="relative grid items-center gap-8 lg:grid-cols-2">
+              <div>
+                <p class="text-sm font-medium tracking-wide text-amber-100/60">Archive / Streetwear / Thrift Energy</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">MENOCLONE</h2>
+                <p class="mt-4 max-w-2xl text-white/70">
+                  MENOCLONE lives in the space between vintage discovery and futuristic identity — a curated streetwear concept
+                  built around rare energy, expressive style, and the feeling of finding that one piece nobody else has.
                 </p>
-                <div class="mt-4 flex items-center gap-2 text-xs text-white/55">
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Brooklyn</span>
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Bring headphones</span>
-                </div>
-              </article>
+                <p class="mt-3 max-w-2xl text-white/65">
+                  Think thrift-shop textures, layered fits, washed tones, statement graphics, and pieces that feel collected rather than mass produced.
+                </p>
 
-              <article class="glow-card rounded-2xl border border-white/10 bg-black/20 p-5">
-                <div class="text-xs text-white/50">Starbucks (157-41 Cross Bay Blvd)</div>
-                <h3 class="mt-2 text-lg font-semibold text-white/90">“Outlet heaven + big tables.”</h3>
-                <p class="mt-2 text-sm text-white/70">
-                  Laptop-friendly setup. Great seating, strong Wi-Fi, and easy to camp for a few hours.
-                </p>
-                <div class="mt-4 flex items-center gap-2 text-xs text-white/55">
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">Manhattan</span>
-                  <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">2–4 hr sessions</span>
+                <div class="mt-6 flex flex-wrap gap-2">
+                  <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70">Curated Drops</span>
+                  <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70">Archive Feel</span>
+                  <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70">Street Luxury</span>
                 </div>
-              </article>
+
+                <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="#contact"
+                    class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                  >
+                    Ask About MENOCLONE →
+                  </a>
+                  <a
+                    href="#contact"
+                    class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                  >
+                    Collab / Styling
+                  </a>
+                </div>
+              </div>
+
+              <div class="grid gap-4">
+                <div class="rounded-[28px] border border-white/10 bg-black/25 p-6">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="text-xs uppercase tracking-[0.24em] text-white/45">MENOCLONE Archive</div>
+                      <div class="mt-2 text-lg font-semibold text-white/90">Thrifted Futurewear</div>
+                    </div>
+                    <div class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/60">
+                      Curated
+                    </div>
+                  </div>
+
+                  <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                    <div class="overflow-hidden rounded-2xl border border-white/10 bg-[#1c1713] p-4">
+                      <img src="menoclone-logo.png" alt="MENOCLONE logo" class="mx-auto h-28 w-auto object-contain" loading="lazy" />
+                    </div>
+                    <div class="rounded-2xl border border-dashed border-white/15 bg-black/20 p-5">
+                      <div class="text-xs uppercase tracking-[0.2em] text-white/45">Aesthetic Notes</div>
+                      <ul class="mt-3 space-y-2 text-sm text-white/70">
+                        <li>• worn textures</li>
+                        <li>• curated thrift vibe</li>
+                        <li>• layered urban styling</li>
+                        <li>• rare-piece energy</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid gap-4 sm:grid-cols-3">
+                  <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                    <div class="text-xs text-white/45">Mood</div>
+                    <div class="mt-1 text-sm font-semibold text-white/90">Vintage + Elevated</div>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                    <div class="text-xs text-white/45">Feel</div>
+                    <div class="mt-1 text-sm font-semibold text-white/90">Collected, not copied</div>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+                    <div class="text-xs text-white/45">Style</div>
+                    <div class="mt-1 text-sm font-semibold text-white/90">Streetwear Archive</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- COWOMO -->
+        <section id="cowomo" class="mt-14 scroll-mt-40">
+          <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0d0d0d] via-[#111111] to-[#171717] p-6 sm:p-10">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.07),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.05),transparent_28%)]"></div>
+
+            <div class="relative">
+              <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                <div class="max-w-2xl">
+                  <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-white/55">
+                    NYC Work Spots / Coffee / Remote Life
+                  </div>
+                  <h2 class="mt-4 text-2xl font-semibold sm:text-3xl">CoMoWo</h2>
+                  <p class="mt-3 text-white/70">
+                    COWOMO is a sleek NYC work-spot guide for founders, freelancers, and creatives searching for cafés,
+                    coffee shops, and hidden corners where productivity actually happens.
+                  </p>
+
+                  <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                    <a
+                      id="cowomoBtn"
+                      href="https://odotofrva.github.io/CoWoMoSite/"
+                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+                    >
+                      View CoMoWo →
+                    </a>
+
+                    <a
+                      href="#contact"
+                      class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                    >
+                      Suggest a Spot
+                    </a>
+                  </div>
+                </div>
+
+                <div class="rounded-[26px] border border-white/10 bg-black/25 p-5 lg:min-w-[330px]">
+                  <img src="cowomo.png" alt="COWOMO Logo" class="mx-auto h-24 w-auto object-contain" loading="lazy" />
+                  <div class="mt-5 grid grid-cols-3 gap-3 text-center">
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <div class="text-[11px] uppercase tracking-[0.15em] text-white/45">Wi-Fi</div>
+                      <div class="mt-1 text-sm font-semibold text-white/90">Fast</div>
+                    </div>
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <div class="text-[11px] uppercase tracking-[0.15em] text-white/45">Outlets</div>
+                      <div class="mt-1 text-sm font-semibold text-white/90">Available</div>
+                    </div>
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                      <div class="text-[11px] uppercase tracking-[0.15em] text-white/45">Vibe</div>
+                      <div class="mt-1 text-sm font-semibold text-white/90">Focused</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 grid gap-4 lg:grid-cols-3">
+                <article class="glow-card rounded-[24px] border border-white/10 bg-white/5 p-5">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <div class="text-xs uppercase tracking-[0.2em] text-white/45">Queens</div>
+                      <h3 class="mt-2 text-lg font-semibold text-white/90">Starbucks</h3>
+                    </div>
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[11px] text-white/55">Best 8am–11am</span>
+                  </div>
+                  <p class="mt-4 text-sm text-white/70">
+                    Quiet mornings, dependable Wi-Fi, wall outlets nearby, and enough breathing room for focused laptop sessions.
+                  </p>
+                  <div class="mt-5 flex flex-wrap gap-2">
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Strong espresso</span>
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Deep work</span>
+                  </div>
+                </article>
+
+                <article class="glow-card rounded-[24px] border border-white/10 bg-white/5 p-5">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <div class="text-xs uppercase tracking-[0.2em] text-white/45">Brooklyn</div>
+                      <h3 class="mt-2 text-lg font-semibold text-white/90">Bon Tree</h3>
+                    </div>
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[11px] text-white/55">Bring headphones</span>
+                  </div>
+                  <p class="mt-4 text-sm text-white/70">
+                    More social and visually inspiring. Better for lighter work sessions, brainstorming, and quick creative planning.
+                  </p>
+                  <div class="mt-5 flex flex-wrap gap-2">
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Creative energy</span>
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Livelier crowd</span>
+                  </div>
+                </article>
+
+                <article class="glow-card rounded-[24px] border border-white/10 bg-white/5 p-5">
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <div class="text-xs uppercase tracking-[0.2em] text-white/45">Manhattan</div>
+                      <h3 class="mt-2 text-lg font-semibold text-white/90">Laptop-Friendly Pick</h3>
+                    </div>
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[11px] text-white/55">2–4 hr sessions</span>
+                  </div>
+                  <p class="mt-4 text-sm text-white/70">
+                    Bigger tables, reliable internet, and enough space to stay planted for a longer, more intentional work block.
+                  </p>
+                  <div class="mt-5 flex flex-wrap gap-2">
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Outlets</span>
+                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Good seating</span>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </section>
@@ -914,14 +1040,14 @@
           </div>
         </section>
 
-        
-
         <!-- CONTACT -->
         <section id="contact" class="mt-14 scroll-mt-40">
           <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
             <p class="text-sm font-medium tracking-wide text-white/60">Contact</p>
             <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Send a message</h2>
-            <p class="mt-3 max-w-2xl text-white/70">Interested in connecting with me? Fill the form completely and I will connect with you soon.</p>
+            <p class="mt-3 max-w-2xl text-white/70">
+              Interested in connecting with me? Fill the form completely and I will connect with you soon.
+            </p>
 
             <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST">
               <input type="hidden" name="_subject" value="New Website Contact Submission" />
@@ -958,7 +1084,7 @@
       </main>
     </section>
 
-    <!-- ✅ FLOATING: VR ODOT -->
+    <!-- FLOATING VR -->
     <a
       id="vrOdot"
       href="https://odotofrva.github.io/VROdotNYC/"
@@ -978,7 +1104,7 @@
       </div>
     </a>
 
-    <!-- ✅ PRODUCT MODAL -->
+    <!-- PRODUCT MODAL -->
     <div id="productModal" class="fixed inset-0 z-[60] hidden">
       <div id="productModalBackdrop" class="absolute inset-0 bg-black/80"></div>
 
@@ -1034,7 +1160,27 @@
       </div>
     </div>
 
-    <!-- 21+ MODAL (reLEAF Gate) -->
+    <!-- EVENT IMAGE LIGHTBOX -->
+    <div id="eventLightbox" class="fixed inset-0 z-[70] hidden">
+      <div id="eventLightboxBackdrop" class="absolute inset-0 bg-black/90"></div>
+      <div class="relative flex min-h-screen items-center justify-center px-4 py-8">
+        <div class="relative w-full max-w-5xl">
+          <button
+            id="eventLightboxClose"
+            type="button"
+            class="absolute right-0 top-[-54px] rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white transition hover:bg-white/15"
+          >
+            Close ✕
+          </button>
+          <div class="overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/95 shadow-2xl">
+            <img id="eventLightboxImg" src="" alt="" class="max-h-[82vh] w-full object-contain" />
+          </div>
+          <p id="eventLightboxCaption" class="mt-4 text-center text-sm text-white/65"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 21+ MODAL -->
     <div id="ageModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/70"></div>
       <div class="relative mx-auto mt-24 w-[92%] max-w-md">
@@ -1062,7 +1208,7 @@
       </div>
     </div>
 
-    <!-- ✅ 10% OFF POPUP (hover products section) -->
+    <!-- DISCOUNT MODAL -->
     <div id="discountModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/75"></div>
 
@@ -1132,7 +1278,7 @@
       </div>
     </div>
 
-    <!-- ✅ Instagram Popup (shows when contact section enters view) -->
+    <!-- INSTAGRAM POPUP -->
     <div id="igModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/70"></div>
 
@@ -1181,37 +1327,26 @@
     </div>
 
     <script>
-      // =========================================================
-      // CONFIG (CHANGE THESE)
-      // =========================================================
       const AUTO_ENTER_MS = 3000;
-
       const MEDIUM_RSS_URL = "https://medium.com/feed/@almightyodot";
       const MEDIUM_PROFILE_URL = "https://medium.com/@almightyodot";
-
       const RELEAF_URL = "https://odotofrva.github.io/releafco/#products";
-      const COWOMO_URL = "cowomo.html";
-
-      // ✅ Discount popup behavior
+      const COWOMO_URL = "https://odotofrva.github.io/CoWoMoSite/";
       const SHOW_DISCOUNT_ONCE = true;
       const DISCOUNT_HOVER_DELAY_MS = 300;
       const DISCOUNT_STORAGE_KEY = "odot_discount_seen_v1";
       const DISCOUNT_EMAIL_POST_URL = "https://formsubmit.co/ajax/YOUR_EMAIL@domain.com";
-
-      // ✅ Instagram popup behavior (on contact view)
       const SHOW_IG_ONCE = true;
       const IG_STORAGE_KEY = "odot_ig_seen_v1";
-      // =========================================================
+
+      let setActiveNav = () => {};
 
       document.addEventListener("DOMContentLoaded", () => {
         const enterBtn = document.getElementById("enterBtn");
         const landing = document.getElementById("landing");
         const home = document.getElementById("home");
 
-        if (!landing || !home) {
-          console.error("Missing #landing or #home section in HTML.");
-          return;
-        }
+        if (!landing || !home) return;
 
         let entered = false;
 
@@ -1240,7 +1375,7 @@
           stopLandingVideo();
 
           initActiveMenu();
-          initLookbookCarousel();
+          initLookbookThumbs();
           initCryptoTicker();
           initMediumBlog();
           initReleafGate();
@@ -1248,6 +1383,7 @@
           initCowomoButton();
           initInstagramPopup();
           initProductModal();
+          initEventLightbox();
 
           setActiveNav("about");
         }
@@ -1257,6 +1393,7 @@
 
         const menuBtn = document.getElementById("menuBtn");
         const menuPanel = document.getElementById("menuPanel");
+
         if (menuBtn && menuPanel) {
           menuBtn.addEventListener("click", () => {
             const isOpen = !menuPanel.classList.contains("hidden");
@@ -1276,15 +1413,70 @@
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
 
-      // --------------------------
-      // ✅ Product click -> modal
-      // --------------------------
+      function initLookbookThumbs() {
+        const mainPhoto = document.getElementById("aboutMainPhoto");
+        const thumbs = document.querySelectorAll(".about-thumb");
+        if (!mainPhoto || !thumbs.length) return;
+
+        thumbs.forEach((thumb) => {
+          thumb.addEventListener("click", () => {
+            const fullImage = thumb.getAttribute("data-full");
+            const thumbImg = thumb.querySelector("img");
+
+            if (fullImage) mainPhoto.src = fullImage;
+            if (thumbImg && thumbImg.alt) {
+              mainPhoto.alt = thumbImg.alt.replace("Thumbnail", "OdotNYC photo");
+            }
+
+            thumbs.forEach((item) => item.classList.remove("active"));
+            thumb.classList.add("active");
+          });
+        });
+      }
+
+      function initEventLightbox() {
+        const modal = document.getElementById("eventLightbox");
+        const backdrop = document.getElementById("eventLightboxBackdrop");
+        const closeBtn = document.getElementById("eventLightboxClose");
+        const img = document.getElementById("eventLightboxImg");
+        const caption = document.getElementById("eventLightboxCaption");
+        const triggers = document.querySelectorAll(".event-expand");
+
+        if (!modal || !backdrop || !closeBtn || !img || !caption || !triggers.length) return;
+
+        const open = (src, title) => {
+          img.src = src || "";
+          img.alt = title || "Expanded event flyer";
+          caption.textContent = title || "";
+          modal.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+        };
+
+        const close = () => {
+          modal.classList.add("hidden");
+          document.body.style.overflow = "";
+          img.src = "";
+        };
+
+        triggers.forEach((el) => {
+          el.addEventListener("click", () => {
+            open(el.dataset.img, el.dataset.title);
+          });
+        });
+
+        closeBtn.addEventListener("click", close);
+        backdrop.addEventListener("click", close);
+
+        document.addEventListener("keydown", (e) => {
+          if (!modal.classList.contains("hidden") && e.key === "Escape") close();
+        });
+      }
+
       function initProductModal() {
         const modal = document.getElementById("productModal");
         const backdrop = document.getElementById("productModalBackdrop");
         const closeBtn = document.getElementById("productModalClose");
         const contBtn = document.getElementById("pmContinue");
-
         const titleEl = document.getElementById("pmTitle");
         const priceEl = document.getElementById("pmPrice");
         const descEl = document.getElementById("pmDesc");
@@ -1300,7 +1492,6 @@
           imgEl.src = img || "";
           imgEl.alt = title || "Product image";
           buyEl.href = buyLink || "#";
-
           modal.classList.remove("hidden");
           document.body.style.overflow = "hidden";
           closeBtn.focus?.();
@@ -1340,17 +1531,11 @@
         });
       }
 
-      // --------------------------
-      // COWOMO button wiring
-      // --------------------------
       function initCowomoButton() {
         const btn = document.getElementById("cowomoBtn");
         if (btn) btn.href = COWOMO_URL;
       }
 
-      // --------------------------
-      // ✅ Instagram popup (when #contact enters view)
-      // --------------------------
       function initInstagramPopup() {
         const contact = document.getElementById("contact");
         const modal = document.getElementById("igModal");
@@ -1370,7 +1555,6 @@
           shown = true;
           modal.classList.remove("hidden");
           document.body.style.overflow = "hidden";
-
           if (SHOW_IG_ONCE) {
             try { localStorage.setItem(IG_STORAGE_KEY, "1"); } catch {}
           }
@@ -1402,9 +1586,6 @@
         io.observe(contact);
       }
 
-      // --------------------------
-      // Discount popup on hover over products grid
-      // --------------------------
       function initDiscountPopup() {
         const trigger = document.getElementById("odotProductsGrid");
         const modal = document.getElementById("discountModal");
@@ -1488,9 +1669,6 @@
         });
       }
 
-      // --------------------------
-      // reLEAF 21+ Gate
-      // --------------------------
       function initReleafGate() {
         const openBtn = document.getElementById("releafEnterBtn");
         const modal = document.getElementById("ageModal");
@@ -1527,10 +1705,6 @@
         });
       }
 
-      // --------------------------
-      // Active Menu Highlighting
-      // --------------------------
-      let setActiveNav = () => {};
       function initActiveMenu() {
         const links = Array.from(document.querySelectorAll(".navlink"));
 
@@ -1538,14 +1712,12 @@
           links.forEach((l) => {
             const isActive = l.dataset.section === id;
             l.classList.toggle("navlink-active", isActive);
-            l.classList.toggle("border", isActive);
-            l.classList.toggle("border-white/10", isActive);
             l.classList.toggle("text-white/95", isActive);
             l.classList.toggle("text-white/80", !isActive);
           });
         };
 
-        const ids = ["about","odotnyc","robotechi","creative","lookbook","cowomo","blog","releaf","contact"];
+        const ids = ["about", "odotnyc", "events", "robotechi", "menoclone", "cowomo", "blog", "contact"];
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
 
@@ -1563,87 +1735,6 @@
         sections.forEach((s) => io.observe(s));
       }
 
-      // --------------------------
-      // Gallery Carousel (dots + swipe)
-      // --------------------------
-      function initLookbookCarousel() {
-        const track = document.getElementById("lookTrack");
-        const prev = document.getElementById("lookPrev");
-        const next = document.getElementById("lookNext");
-        const dotsWrap = document.getElementById("lookDots");
-
-        if (!track || !prev || !next) return;
-
-        const slides = Array.from(track.children);
-        const total = slides.length;
-        let idx = 0;
-
-        if (dotsWrap) {
-          dotsWrap.innerHTML = slides.map((_, i) => `
-            <button
-              type="button"
-              class="h-2.5 w-2.5 rounded-full border border-white/20 bg-white/10 transition hover:bg-white/20"
-              aria-label="Go to slide ${i + 1}"
-              data-dot="${i}"
-            ></button>
-          `).join("");
-        }
-
-        const setDots = () => {
-          if (!dotsWrap) return;
-          dotsWrap.querySelectorAll("button[data-dot]").forEach((b) => {
-            const isOn = Number(b.dataset.dot) === idx;
-            b.classList.toggle("bg-white/60", isOn);
-            b.classList.toggle("border-white/40", isOn);
-          });
-        };
-
-        const go = (n) => {
-          idx = (n + total) % total;
-          track.style.transform = `translateX(-${idx * 100}%)`;
-          setDots();
-        };
-
-        prev.addEventListener("click", () => go(idx - 1));
-        next.addEventListener("click", () => go(idx + 1));
-
-        dotsWrap?.addEventListener("click", (e) => {
-          const btn = e.target.closest("button[data-dot]");
-          if (!btn) return;
-          go(Number(btn.dataset.dot));
-        });
-
-        let startX = 0;
-        let active = false;
-
-        track.addEventListener("pointerdown", (e) => {
-          active = true;
-          startX = e.clientX;
-          track.setPointerCapture?.(e.pointerId);
-        });
-
-        track.addEventListener("pointerup", (e) => {
-          if (!active) return;
-          active = false;
-          const dx = e.clientX - startX;
-          const threshold = 40;
-          if (dx > threshold) go(idx - 1);
-          else if (dx < -threshold) go(idx + 1);
-        });
-
-        track.addEventListener("pointercancel", () => (active = false));
-
-        let timer = setInterval(() => go(idx + 1), 6000);
-        const carouselBox = track.parentElement;
-        carouselBox?.addEventListener("mouseenter", () => clearInterval(timer));
-        carouselBox?.addEventListener("mouseleave", () => (timer = setInterval(() => go(idx + 1), 6000)));
-
-        go(0);
-      }
-
-      // --------------------------
-      // Medium Blog (RSS -> JSON)
-      // --------------------------
       function stripHtml(html) {
         const div = document.createElement("div");
         div.innerHTML = html || "";
@@ -1653,7 +1744,9 @@
       function fmtDate(d) {
         try {
           return new Date(d).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-        } catch { return ""; }
+        } catch {
+          return "";
+        }
       }
 
       async function fetchMediumRSS() {
@@ -1719,9 +1812,6 @@
         })();
       }
 
-      // --------------------------
-      // Crypto Ticker (CoinGecko)
-      // --------------------------
       function fmtUSD(n) {
         if (!Number.isFinite(n)) return "—";
         return n.toLocaleString(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 });
@@ -1786,8 +1876,8 @@
             console.error(e);
             const rowA = document.getElementById("tickerRowA");
             const rowB = document.getElementById("tickerRowB");
-            if (rowA) rowA.innerHTML = `<span class="opacity-70">Ticker unavailable (check console)</span>`;
-            if (rowB) rowB.innerHTML = `<span class="opacity-70">Ticker unavailable (check console)</span>`;
+            if (rowA) rowA.innerHTML = `<span class="opacity-70">Ticker unavailable</span>`;
+            if (rowB) rowB.innerHTML = `<span class="opacity-70">Ticker unavailable</span>`;
           }
         };
 
