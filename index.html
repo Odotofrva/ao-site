@@ -383,7 +383,7 @@
       }
 
 
-      /*  APPLE-STYLE SCROLL EXPERIENCE */
+      /* NODEBLK APPLE-STYLE SCROLL EXPERIENCE */
       .nodeblk-shell {
         position: relative;
         margin-top: 3rem;
@@ -527,7 +527,7 @@
       }
 
       .nodeblk-panel-visual {
-        min-height: 240px;
+        min-height: 280px;
         display: grid;
         place-items: center;
         border-radius: 24px;
@@ -540,8 +540,39 @@
 
       .nodeblk-panel-visual img {
         width: 100%;
-        max-width: 360px;
+        max-width: 420px;
+        max-height: 320px;
         object-fit: contain;
+        object-position: center;
+      }
+
+      .nodeblk-placeholder-frame {
+        width: 100%;
+        max-width: 420px;
+        min-height: 300px;
+        display: grid;
+        place-items: center;
+        border-radius: 26px;
+        border: 1px solid rgba(34,211,238,0.15);
+        background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
+        padding: 1rem;
+      }
+
+      .nodeblk-placeholder-frame img {
+        width: 100%;
+        height: 100%;
+        max-height: 320px;
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .nodeblk-placeholder-label {
+        margin-top: 0.85rem;
+        text-align: center;
+        font-size: 0.78rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(186,230,253,0.62);
       }
 
       .nodeblk-stat-row {
@@ -1118,32 +1149,31 @@
                 <span class="nodeblk-kicker">RoboTechi Product / NodeBlk</span>
                 <h3 class="nodeblk-title">NodeBlk</h3>
                 <p class="nodeblk-subtitle">
-                  A pocket-sized device built for fast access to real-world information, emergency guidance,
-                  offline-first utility, and purpose-driven technology. Designed to feel premium, useful, and made for the future.
+                  A pocket-sized device powered by the Raspberry Pi Zero 2 W and a suitable battery pack, built for fast access to real-world information, emergency guidance, offline-first utility, and purpose-driven technology. Designed to feel premium, useful, and made for the future.
                 </p>
 
                 <div class="nodeblk-hero-grid">
                   <div class="nodeblk-device">
-                    <img src="nodeblkfinal.png" alt="NodeBlk device render" loading="lazy" />
+                    <img src="nodeblk.png" alt="NodeBlk device render" loading="lazy" />
                   </div>
 
                   <div>
                     <div class="nodeblk-mini-specs">
                       <div class="nodeblk-mini-spec">
                         <div class="label">Form</div>
-                        <div class="value">Pocket-ready device</div>
+                        <div class="value">Pi Zero 2 W handheld</div>
                       </div>
                       <div class="nodeblk-mini-spec">
-                        <div class="label">Core</div>
-                        <div class="value">Fast access UI</div>
+                        <div class="label">Compute</div>
+                        <div class="value">Raspberry Pi Zero 2 W</div>
                       </div>
                       <div class="nodeblk-mini-spec">
-                        <div class="label">Use</div>
-                        <div class="value">Offline-first guidance</div>
+                        <div class="label">Power</div>
+                        <div class="value">Portable battery powered</div>
                       </div>
                       <div class="nodeblk-mini-spec">
                         <div class="label">Vision</div>
-                        <div class="value">Community-focused tech</div>
+                        <div class="value">Offline-first community tech</div>
                       </div>
                     </div>
 
@@ -1174,8 +1204,7 @@
                     <div class="nodeblk-panel-copy">
                       <h3>Built to put critical information in your hand.</h3>
                       <p>
-                        NodeBlk is meant to feel immediate. The experience should be quick, focused, and useful the second someone powers it on.
-                        That means clear UI, fast navigation, and a design language that feels serious enough for real-world use while still looking futuristic.
+                        NodeBlk is meant to feel immediate. Powered by a Raspberry Pi Zero 2 W with a dedicated battery pack, the experience should be quick, focused, and useful the second someone powers it on. That means clear UI, fast navigation, dependable portable power, and a design language that feels serious enough for real-world use while still looking futuristic.
                       </p>
 
                       <div class="nodeblk-stat-row">
@@ -1184,14 +1213,16 @@
                           <span>Clean screen hierarchy for information that matters now.</span>
                         </div>
                         <div class="nodeblk-stat">
-                          <strong>Portable utility</strong>
-                          <span>Designed to move with the user, not stay on a desk.</span>
+                          <strong>Battery-powered mobility</strong>
+                          <span>Built to move with the user instead of staying tied to a desk or outlet.</span>
                         </div>
                       </div>
                     </div>
 
                     <div class="nodeblk-panel-visual">
-                      <img src="nodeblk.png" alt="NodeBlk product concept front view" loading="lazy" />
+                      <div class="nodeblk-placeholder-frame">
+                        <img src="real-world-guidance-placeholder.svg" alt="Real World Guidance placeholder" loading="lazy" />
+                      </div>
                     </div>
                   </div>
                 </article>
@@ -1201,33 +1232,24 @@
                     <div class="nodeblk-panel-copy">
                       <h3>Offline-first thinking for real situations.</h3>
                       <p>
-                        Whether it is survival information, emergency resources, navigation help, or key educational references,
-                        NodeBlk is envisioned as a device that remains useful when attention is limited and internet access is not guaranteed.
+                        Whether it is survival information, emergency resources, navigation help, or key educational references, NodeBlk is envisioned as a Pi Zero 2 W based device that remains useful when attention is limited, power needs to stay portable, and internet access is not guaranteed.
                       </p>
 
                       <div class="nodeblk-stat-row">
                         <div class="nodeblk-stat">
-                          <strong>Guidance on demand</strong>
-                          <span>Quick-entry categories and direct access to useful knowledge.</span>
+                          <strong>Real-world guidance</strong>
+                          <span>Quick-entry categories and direct access to useful knowledge in the field.</span>
                         </div>
                         <div class="nodeblk-stat">
-                          <strong>Low-friction experience</strong>
-                          <span>Minimal steps between the user and the answer they need.</span>
+                          <strong>Offline-first system</strong>
+                          <span>Minimal steps between the user and the answer they need, even without a connection.</span>
                         </div>
                       </div>
                     </div>
 
                     <div class="nodeblk-panel-visual">
-                      <div class="w-full max-w-[360px] rounded-[26px] border border-cyan-400/15 bg-black/40 p-5">
-                        <div class="rounded-[20px] border border-white/10 bg-cyan-300/5 p-4">
-                          <div class="text-xs uppercase tracking-[0.2em] text-cyan-100/60">NodeBlk UI</div>
-                          <div class="mt-4 space-y-3">
-                            <div class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">Emergency Guide</div>
-                            <div class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">Offline Resources</div>
-                            <div class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">Community Tools</div>
-                            <div class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">Local Utility</div>
-                          </div>
-                        </div>
+                      <div class="nodeblk-placeholder-frame">
+                        <img src="offline-first-system-placeholder.svg" alt="Offline First System placeholder" loading="lazy" />
                       </div>
                     </div>
                   </div>
@@ -1238,9 +1260,7 @@
                     <div class="nodeblk-panel-copy">
                       <h3>A startup concept with premium product energy.</h3>
                       <p>
-                        The site experience should make NodeBlk feel like more than an idea. It should feel investable.
-                        That is why this section treats the product like a flagship launch: strong typography, spacious layout,
-                        focused messaging, and a premium reveal that guides the visitor down the page.
+                        The site experience should make NodeBlk feel like more than an idea. It should feel investable. That is why this section treats the product like a flagship launch: strong typography, spacious layout, focused messaging, and a premium reveal that guides the visitor down the page while clearly showing a Pi Zero 2 W based hardware direction with portable power.
                       </p>
 
                       <div class="nodeblk-stat-row">
@@ -1249,8 +1269,8 @@
                           <span>Explains the vision fast and gives the product a premium frame.</span>
                         </div>
                         <div class="nodeblk-stat">
-                          <strong>Customer-facing clarity</strong>
-                          <span>Easy to understand what NodeBlk is and why it matters.</span>
+                          <strong>Hardware direction made clear</strong>
+                          <span>Easy to understand the Pi Zero 2 W plus battery pack direction and why it matters.</span>
                         </div>
                       </div>
 
