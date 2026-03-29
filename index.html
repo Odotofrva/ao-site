@@ -383,287 +383,166 @@
       }
 
 
-      /* NODEBLK APPLE-STYLE SCROLL EXPERIENCE */
-      .nodeblk-shell {
-        position: relative;
-        margin-top: 3rem;
-        border-top: 1px solid rgba(255,255,255,0.08);
-        padding-top: 2.5rem;
-      }
-
-      .nodeblk-hero {
+      .blog-shell {
         position: relative;
         overflow: hidden;
         border-radius: 32px;
-        border: 1px solid rgba(34, 211, 238, 0.16);
+        border: 1px solid rgba(255,255,255,0.1);
         background:
-          radial-gradient(circle at top, rgba(34,211,238,0.16), transparent 30%),
-          linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-        padding: 2rem;
+          radial-gradient(circle at top right, rgba(255,255,255,0.08), transparent 28%),
+          linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025) 45%, rgba(0,0,0,0.22));
       }
 
-      .nodeblk-kicker {
+      .blog-shell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 34px 34px;
+        opacity: 0.16;
+      }
+
+      .blog-hero {
+        position: relative;
+        display: grid;
+        gap: 1.25rem;
+      }
+
+      .blog-kicker {
         display: inline-flex;
+        width: fit-content;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.55rem;
         border-radius: 999px;
-        border: 1px solid rgba(34,211,238,0.18);
-        background: rgba(34,211,238,0.08);
-        padding: 0.6rem 1rem;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.06);
+        padding: 0.55rem 0.9rem;
         font-size: 11px;
         font-weight: 700;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
-        letter-spacing: 0.22em;
-        color: rgba(186, 230, 253, 0.95);
-      }
-
-      .nodeblk-title {
-        margin-top: 1.2rem;
-        font-size: clamp(2.5rem, 8vw, 5.5rem);
-        line-height: 0.95;
-        font-weight: 700;
-        letter-spacing: -0.04em;
-      }
-
-      .nodeblk-subtitle {
-        margin-top: 1rem;
-        max-width: 820px;
-        font-size: clamp(1rem, 2vw, 1.25rem);
-        line-height: 1.7;
         color: rgba(255,255,255,0.72);
       }
 
-      .nodeblk-hero-grid {
-        display: grid;
-        gap: 1.5rem;
-        align-items: center;
-        margin-top: 2rem;
+      .blog-summary {
+        max-width: 44rem;
+        color: rgba(255,255,255,0.72);
+        line-height: 1.7;
       }
 
-      .nodeblk-device {
+      .blog-grid {
         position: relative;
-        overflow: hidden;
-        border-radius: 28px;
-        border: 1px solid rgba(34,211,238,0.15);
-        background:
-          radial-gradient(circle at top right, rgba(34,211,238,0.12), transparent 36%),
-          #02060b;
-        padding: 1.5rem;
-        box-shadow:
-          0 25px 60px rgba(0,0,0,0.45),
-          inset 0 1px 0 rgba(255,255,255,0.03);
-      }
-
-      .nodeblk-device img {
-        display: block;
-        width: 100%;
-        max-width: 460px;
-        margin: 0 auto;
-        object-fit: contain;
-      }
-
-      .nodeblk-mini-specs {
-        display: grid;
-        gap: 0.85rem;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        margin-top: 1rem;
-      }
-
-      .nodeblk-mini-spec {
-        border-radius: 20px;
-        border: 1px solid rgba(34,211,238,0.12);
-        background: rgba(255,255,255,0.03);
-        padding: 1rem;
-      }
-
-      .nodeblk-mini-spec .label {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        color: rgba(186,230,253,0.65);
-      }
-
-      .nodeblk-mini-spec .value {
-        margin-top: 0.35rem;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: rgba(255,255,255,0.92);
-      }
-
-      .nodeblk-story {
         margin-top: 2rem;
         display: grid;
         gap: 1rem;
       }
 
-      .nodeblk-panel {
+      .blog-card {
         position: relative;
         overflow: hidden;
-        border-radius: 28px;
-        border: 1px solid rgba(34,211,238,0.12);
-        background:
-          linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-        padding: 1.5rem;
-        min-height: 320px;
-      }
-
-      .nodeblk-panel-inner {
-        display: grid;
-        gap: 1.5rem;
-        align-items: center;
-      }
-
-      .nodeblk-panel-copy h3 {
-        font-size: clamp(1.7rem, 4vw, 3rem);
-        line-height: 1.02;
-        letter-spacing: -0.03em;
-      }
-
-      .nodeblk-panel-copy p {
-        margin-top: 0.9rem;
-        max-width: 650px;
-        color: rgba(255,255,255,0.72);
-        line-height: 1.75;
-      }
-
-      .nodeblk-panel-visual {
-        min-height: 280px;
-        display: grid;
-        place-items: center;
         border-radius: 24px;
-        border: 1px solid rgba(34,211,238,0.12);
-        background:
-          radial-gradient(circle at center, rgba(34,211,238,0.12), transparent 48%),
-          rgba(0,0,0,0.28);
-        padding: 1.5rem;
-      }
-
-      .nodeblk-panel-visual img {
-        width: 100%;
-        max-width: 420px;
-        max-height: 320px;
-        object-fit: contain;
-        object-position: center;
-      }
-
-      .nodeblk-placeholder-frame {
-        width: 100%;
-        max-width: 420px;
-        min-height: 300px;
-        display: grid;
-        place-items: center;
-        border-radius: 26px;
-        border: 1px solid rgba(34,211,238,0.15);
+        border: 1px solid rgba(255,255,255,0.1);
         background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
-        padding: 1rem;
+        backdrop-filter: blur(12px);
+        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
       }
 
-      .nodeblk-placeholder-frame img {
+      .blog-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(255,255,255,0.18);
+        box-shadow: 0 22px 44px rgba(0,0,0,0.28);
+      }
+
+      .blog-card__media {
+        position: relative;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
+      }
+
+      .blog-card__media img {
         width: 100%;
         height: 100%;
-        max-height: 320px;
-        object-fit: contain;
-        object-position: center;
-      }
-
-      .nodeblk-placeholder-label {
-        margin-top: 0.85rem;
-        text-align: center;
-        font-size: 0.78rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: rgba(186,230,253,0.62);
-      }
-
-      .nodeblk-stat-row {
-        display: grid;
-        gap: 0.85rem;
-        margin-top: 1.25rem;
-      }
-
-      .nodeblk-stat {
-        border-radius: 18px;
-        border: 1px solid rgba(255,255,255,0.08);
-        background: rgba(255,255,255,0.03);
-        padding: 0.95rem 1rem;
-      }
-
-      .nodeblk-stat strong {
+        object-fit: cover;
         display: block;
-        font-size: 0.9rem;
+        transition: transform 260ms ease;
+      }
+
+      .blog-card:hover .blog-card__media img {
+        transform: scale(1.04);
+      }
+
+      .blog-card__overlay {
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 50%;
+        background: linear-gradient(180deg, transparent, rgba(0,0,0,0.68));
+        pointer-events: none;
+      }
+
+      .blog-card__body {
+        padding: 1.2rem;
+      }
+
+      .blog-date {
+        display: inline-flex;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.05);
+        padding: 0.4rem 0.7rem;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.58);
+      }
+
+      .blog-title {
+        margin-top: 0.9rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        line-height: 1.4;
         color: rgba(255,255,255,0.94);
       }
 
-      .nodeblk-stat span {
-        display: block;
-        margin-top: 0.3rem;
-        font-size: 0.9rem;
-        color: rgba(255,255,255,0.62);
+      .blog-desc {
+        margin-top: 0.75rem;
+        color: rgba(255,255,255,0.68);
+        line-height: 1.65;
+        font-size: 0.92rem;
       }
 
-      .nodeblk-cta {
-        margin-top: 1.8rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-      }
-
-      .nodeblk-btn-primary,
-      .nodeblk-btn-secondary {
+      .blog-readmore {
+        margin-top: 1rem;
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        border-radius: 999px;
-        padding: 0.95rem 1.4rem;
-        font-size: 0.95rem;
-        font-weight: 600;
-        text-decoration: none;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        gap: 0.4rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.8);
       }
 
-      .nodeblk-btn-primary {
-        background: #67e8f9;
-        color: #03131b;
+      .blog-empty {
+        border-radius: 24px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(0,0,0,0.2);
+        padding: 1.2rem;
+        color: rgba(255,255,255,0.68);
       }
 
-      .nodeblk-btn-secondary {
-        border: 1px solid rgba(103,232,249,0.18);
-        color: #d7f9ff;
-        background: rgba(255,255,255,0.03);
-      }
-
-      .nodeblk-btn-primary:hover,
-      .nodeblk-btn-secondary:hover {
-        transform: translateY(-2px);
-      }
-
-      .nodeblk-reveal {
-        opacity: 0;
-        transform: translateY(34px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-      }
-
-      .nodeblk-reveal.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      @media (min-width: 900px) {
-        .nodeblk-hero-grid {
-          grid-template-columns: 1.1fr 0.9fr;
+      @media (min-width: 768px) {
+        .blog-hero {
+          grid-template-columns: 1.2fr auto;
+          align-items: end;
         }
 
-        .nodeblk-panel-inner {
-          grid-template-columns: 1fr 1fr;
-        }
-
-        .nodeblk-story {
-          gap: 1.25rem;
-        }
-
-        .nodeblk-panel {
-          padding: 2rem;
-          min-height: 420px;
+        .blog-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
         }
       }
 
@@ -766,7 +645,6 @@
             <ul class="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
               <li><a data-section="about" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#about">About</a></li>
               <li><a data-section="odotnyc" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#odotnyc">Brand Awareness</a></li>
-              <li><a data-section="events" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#events">Events</a></li>
               <li><a data-section="robotechi" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#robotechi">RoboTechi</a></li>
               <li><a data-section="ar-odotnyc" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#ar-odotnyc">AR-OdotNYC</a></li>
               <li><a data-section="hacim-alyn" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#hacim-alyn">Hacim Alyn</a></li>
@@ -895,160 +773,12 @@
               </div>
             </div>
 
-            <!-- MOVED PRODUCTS SECTION -->
-            <div class="mt-14 border-t border-white/10 pt-10">
-              <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <p class="text-sm font-medium tracking-wide text-white/60">ODOT / Products</p>
-                  <h3 class="mt-2 text-2xl font-semibold sm:text-3xl">Products by Odot</h3>
-                  <p class="mt-2 max-w-2xl text-white/70">Innovation lives where imagination exists.</p>
-                  <p class="mt-1 text-xs text-white/45">Tip: click any product to view details.</p>
-                </div>
-              </div>
-
-              <div id="odotProductsGrid" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <article
-                  class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                  tabindex="0"
-                  role="button"
-                  data-title="OdotNYC 'Stars Aligned' Snapback"
-                  data-desc="OdotNYC 'Stars Aligned' Snapback features an embroidered 'Stars Aligned' logo at the front with the OdotNYC signature logo on the side."
-                  data-price="$80.00"
-                  data-img="odotnyc4odc.png"
-                  data-buy="https://odotnyc.bigcartel.com/"
-                >
-                  <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                    <img src="odotnyc4odc.png" alt="OdotNYC Snapback" class="h-full w-full object-cover" loading="lazy" />
-                  </div>
-                  <h3 class="mt-4 font-semibold">- OdotNYC "Stars Aligned" Snapback -</h3>
-                  <p class="mt-1 text-sm text-white/70">
-                    OdotNYC "Stars Aligned" Snapback features an embroidered "Stars Aligned" logo at the front with the OdotNYC signature logo on the side.
-                  </p>
-                </article>
-
-                <article
-                  class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                  tabindex="0"
-                  role="button"
-                  data-title="OdotNYC Signature Crewneck"
-                  data-desc="Whether you're traveling your daily MTA commute or out on leisure, this premium sweatshirt reps OdotNYC with unapologetic energy."
-                  data-price="$60.00"
-                  data-img="odotNYCcrewneckblk.png"
-                  data-buy="https://odotnyc.bigcartel.com/"
-                >
-                  <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                    <img src="odotNYCcrewneckblk.png" alt="OdotNYC Crewneck" class="h-full w-full object-cover" loading="lazy" />
-                  </div>
-                  <h3 class="mt-4 font-semibold">- OdotNYC Signature Crewneck -</h3>
-                  <p class="mt-1 text-sm text-white/70">
-                    Whether you're traveling your daily MTA commute or out on leisure, this premium sweatshirt reps OdotNYC with unapologetic energy.
-                  </p>
-                </article>
-
-                <article
-                  class="product-card glow-card cursor-pointer rounded-2xl border border-white/10 bg-black/20 p-5"
-                  tabindex="0"
-                  role="button"
-                  data-title="OdotNYC Signature Sticker Pack"
-                  data-desc="Signature OdotNYC Sticker Pack (x3)"
-                  data-price="$10.00"
-                  data-img="odotnyc3final.png"
-                  data-buy="https://odotnyc.bigcartel.com/"
-                >
-                  <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                    <img src="odotnyc3.png" alt="ODOTNYC Sticker Pack" class="h-full w-full object-cover" loading="lazy" />
-                  </div>
-                  <h3 class="mt-4 font-semibold">- OdotNYC Signature Sticker Pack -</h3>
-                  <p class="mt-1 text-sm text-white/70">OdotNYC Signature Sticker Pack (x3)</p>
-                </article>
-              </div>
-            </div>
-
             <p class="mt-8 text-xs text-white/50">
               "Keep Your Vision Further Than Your Eyesight!" - OdotNYC
             </p>
           </div>
         </section>
 
-        <!-- EVENTS -->
-        <section id="events" class="events-section scroll-mt-40">
-          <div class="container">
-            <div class="section-header">
-              <p class="section-tag">OdotNYC Community</p>
-              <h2>Upcoming Events</h2>
-              <p>
-                Pull up to OdotNYC events, popups, model calls, creative meetups,
-                and community experiences happening around the city.
-              </p>
-            </div>
-
-            <div class="events-grid">
-              <article class="event-card">
-                <div class="event-image event-expand" data-img="SSv1.png" data-title="Style Syndrome Vol. 1 flyer">
-                  <img src="SSv1.png" alt="Style Syndrome event flyer" />
-                </div>
-                <div class="event-content">
-                  <span class="event-type">Fashion / Popup</span>
-                  <h3>Style Syndrome Vol. 1</h3>
-                  <p class="event-meta">Date Coming Soon • NYC</p>
-                  <p>
-                    A curated fashion and culture experience with streetwear, music,
-                    visuals, and community energy.
-                  </p>
-                  <a href="#contact" class="event-btn">Learn More</a>
-                </div>
-              </article>
-
-              <article class="event-card">
-                <div class="event-image event-expand" data-img="SSv1MC.png" data-title="Style Syndrome Model Call flyer">
-                  <img src="SSv1MC.png" alt="Model call flyer" />
-                </div>
-                <div class="event-content">
-                  <span class="event-type">Casting / Fashion</span>
-                  <h3>Style Syndrome Model Call</h3>
-                  <p class="event-meta">Signup Open • NYC</p>
-                  <p>
-                    Calling models, creatives, and talent to be part of future OdotNYC
-                    campaigns and live experiences.
-                  </p>
-                  <a href="#contact" class="event-btn">Sign Up</a>
-                </div>
-              </article>
-
-              <article class="event-card">
-                <div class="event-image event-expand" data-img="SSv1FF.png" data-title="Style Syndrome Fresh Frames flyer">
-                  <img src="SSv1FF.png" alt="Fresh Frames flyer" />
-                </div>
-                <div class="event-content">
-                  <span class="event-type">Fashion / Popup</span>
-                  <h3>Style Syndrome: Fresh Frames v1</h3>
-                  <p class="event-meta">Date Coming Soon • NYC</p>
-                  <p>
-                    Fresh Frames v1 is a fashion-forward showcase celebrating bold eyewear and street style culture.
-                    Featuring stylish models rocking designer frames, this visual experience highlights how the right pair
-                    of sunglasses can elevate any look.
-                  </p>
-                  <a href="#contact" class="event-btn">Sign Up</a>
-                </div>
-              </article>
-
-              <article class="event-card">
-                <div class="event-image event-expand" data-img="SSv1OM.png" data-title="Style Syndrome Model Call flyer">
-                  <img src="SSv1OM.png" alt="Model call flyer" />
-                </div>
-                <div class="event-content">
-                  <span class="event-type">Casting / Fashion</span>
-                  <h3>Style Syndrome Open Mic</h3>
-                  <p class="event-meta">Signup Open • NYC</p>
-                  <p>
-                    Calling music artist to be part of Style Syndrome Open Mic with live experiences.
-                  </p>
-                  <a href="#contact" class="event-btn">Sign Up</a>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
         <!-- ROBOTECHI -->
         <section id="robotechi" class="mt-14 scroll-mt-40">
           <div class="relative overflow-hidden rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-[#08111a] via-[#0b1320] to-[#04070c] p-6 backdrop-blur sm:p-10">
@@ -1140,157 +870,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- NODEBLK APPLE-STYLE EXPERIENCE -->
-            <div class="nodeblk-shell relative">
-              <div class="nodeblk-hero nodeblk-reveal">
-                <span class="nodeblk-kicker">RoboTechi Product / NodeBlk</span>
-                <h3 class="nodeblk-title">NodeBlk</h3>
-                <p class="nodeblk-subtitle">
-                  A pocket-sized device powered by the Raspberry Pi Zero 2 W and a suitable battery pack, built for fast access to real-world information, emergency guidance, offline-first utility, and purpose-driven technology. Designed to feel premium, useful, and made for the future.
-                </p>
-
-                <div class="nodeblk-hero-grid">
-                  <div class="nodeblk-device">
-                    <img src="nodeblk.png" alt="NodeBlk device render" loading="lazy" />
-                  </div>
-
-                  <div>
-                    <div class="nodeblk-mini-specs">
-                      <div class="nodeblk-mini-spec">
-                        <div class="label">Form</div>
-                        <div class="value">Pi Zero 2 W handheld</div>
-                      </div>
-                      <div class="nodeblk-mini-spec">
-                        <div class="label">Compute</div>
-                        <div class="value">Raspberry Pi Zero 2 W</div>
-                      </div>
-                      <div class="nodeblk-mini-spec">
-                        <div class="label">Power</div>
-                        <div class="value">Portable battery powered</div>
-                      </div>
-                      <div class="nodeblk-mini-spec">
-                        <div class="label">Vision</div>
-                        <div class="value">Offline-first community tech</div>
-                      </div>
-                    </div>
-
-                    <div class="nodeblk-cta">
-                      <a
-                        href="https://odotofrva.github.io/nodeblk/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="nodeblk-btn-primary"
-                      >
-                        Explore NodeBlk →
-                      </a>
-
-                      <a
-                        href="#contact"
-                        class="nodeblk-btn-secondary"
-                      >
-                        Investor / Partner Inquiry
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="nodeblk-story">
-                <article class="nodeblk-panel nodeblk-reveal">
-                  <div class="nodeblk-panel-inner">
-                    <div class="nodeblk-panel-copy">
-                      <h3>Built to put critical information in your hand.</h3>
-                      <p>
-                        NodeBlk is meant to feel immediate. Powered by a Raspberry Pi Zero 2 W with a dedicated battery pack, the experience should be quick, focused, and useful the second someone powers it on. That means clear UI, fast navigation, dependable portable power, and a design language that feels serious enough for real-world use while still looking futuristic.
-                      </p>
-
-                      <div class="nodeblk-stat-row">
-                        <div class="nodeblk-stat">
-                          <strong>Fast-access interface</strong>
-                          <span>Clean screen hierarchy for information that matters now.</span>
-                        </div>
-                        <div class="nodeblk-stat">
-                          <strong>Battery-powered mobility</strong>
-                          <span>Built to move with the user instead of staying tied to a desk or outlet.</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nodeblk-panel-visual">
-                      <div class="nodeblk-placeholder-frame">
-                        <img src="real-world-guidance-placeholder.svg" alt="Real World Guidance placeholder" loading="lazy" />
-                      </div>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="nodeblk-panel nodeblk-reveal">
-                  <div class="nodeblk-panel-inner">
-                    <div class="nodeblk-panel-copy">
-                      <h3>Offline-first thinking for real situations.</h3>
-                      <p>
-                        Whether it is survival information, emergency resources, navigation help, or key educational references, NodeBlk is envisioned as a Pi Zero 2 W based device that remains useful when attention is limited, power needs to stay portable, and internet access is not guaranteed.
-                      </p>
-
-                      <div class="nodeblk-stat-row">
-                        <div class="nodeblk-stat">
-                          <strong>Real-world guidance</strong>
-                          <span>Quick-entry categories and direct access to useful knowledge in the field.</span>
-                        </div>
-                        <div class="nodeblk-stat">
-                          <strong>Offline-first system</strong>
-                          <span>Minimal steps between the user and the answer they need, even without a connection.</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="nodeblk-panel-visual">
-                      <div class="nodeblk-placeholder-frame">
-                        <img src="offline-first-system-placeholder.svg" alt="Offline First System placeholder" loading="lazy" />
-                      </div>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="nodeblk-panel nodeblk-reveal">
-                  <div class="nodeblk-panel-inner">
-                    <div class="nodeblk-panel-copy">
-                      <h3>A startup concept with premium product energy.</h3>
-                      <p>
-                        The site experience should make NodeBlk feel like more than an idea. It should feel investable. That is why this section treats the product like a flagship launch: strong typography, spacious layout, focused messaging, and a premium reveal that guides the visitor down the page while clearly showing a Pi Zero 2 W based hardware direction with portable power.
-                      </p>
-
-                      <div class="nodeblk-stat-row">
-                        <div class="nodeblk-stat">
-                          <strong>Investor-friendly presentation</strong>
-                          <span>Explains the vision fast and gives the product a premium frame.</span>
-                        </div>
-                        <div class="nodeblk-stat">
-                          <strong>Hardware direction made clear</strong>
-                          <span>Easy to understand the Pi Zero 2 W plus battery pack direction and why it matters.</span>
-                        </div>
-                      </div>
-
-                      <div class="nodeblk-cta">
-                        <a
-                          href="https://odotofrva.github.io/nodeblk/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="nodeblk-btn-primary"
-                        >
-                          Visit the NodeBlk Experience →
-                        </a>
-                      </div>
-                    </div>
-
-                    <div class="nodeblk-panel-visual">
-                      <img src="nodeblk.png" alt="NodeBlk premium showcase" loading="lazy" />
-                    </div>
-                  </div>
-                </article>
               </div>
             </div>
           </div>
@@ -1692,24 +1271,29 @@
 
         <!-- BLOG -->
         <section id="blog" class="mt-14 scroll-mt-40">
-          <div class="glow-card rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-10">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div class="blog-shell p-6 sm:p-10">
+            <div class="blog-hero">
               <div>
-                <p class="text-sm font-medium tracking-wide text-white/60">Blog</p>
-                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Read Odot's Tech Blog!</h2>
+                <p class="blog-kicker">Tech Journal / Medium Feed</p>
+                <h2 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Inside the OdotNYC Tech Blog</h2>
+                <p class="blog-summary mt-4">
+                  Notes from the build process, experiments in web and hardware, and stories from the intersection of code, culture, and creative technology.
+                </p>
               </div>
+
               <a
                 id="mediumProfileBtn"
                 href="https://medium.com/@almightyodot"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm text-white/80 transition hover:bg-white/10"
+                class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
               >
-                View on Medium →
+                Visit Medium →
               </a>
             </div>
-            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" id="mediumGrid">
-              <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">Loading Medium posts…</div>
+
+            <div class="blog-grid" id="mediumGrid">
+              <div class="blog-empty">Loading Medium posts…</div>
             </div>
           </div>
         </section>
@@ -1778,82 +1362,6 @@
         </div>
       </div>
     </a>
-
-    <!-- PRODUCT MODAL -->
-    <div id="productModal" class="fixed inset-0 z-[60] hidden">
-      <div id="productModalBackdrop" class="absolute inset-0 bg-black/80"></div>
-
-      <div class="relative mx-auto mt-16 w-[94%] max-w-3xl">
-        <div class="glow-card animate-popIn overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/95 backdrop-blur">
-          <div class="flex items-start justify-between gap-4 border-b border-white/10 p-5 sm:p-6">
-            <div>
-              <p class="text-xs font-medium tracking-wide text-white/60">Product Details</p>
-              <h3 id="pmTitle" class="mt-1 text-xl font-semibold text-white/90">Product</h3>
-              <div id="pmPrice" class="mt-1 text-sm text-white/70">$0.00</div>
-            </div>
-
-            <button
-              id="productModalClose"
-              type="button"
-              class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div class="grid gap-6 p-5 sm:grid-cols-2 sm:p-6">
-            <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/30">
-              <img id="pmImg" src="" alt="" class="h-full w-full object-cover" />
-            </div>
-
-            <div>
-              <p id="pmDesc" class="text-sm text-white/70">Description goes here.</p>
-
-              <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                <a
-                  id="pmBuy"
-                  href="https://odotnyc.bigcartel.com/"
-                  class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-                >
-                  Buy Now →
-                </a>
-
-                <button
-                  id="pmContinue"
-                  type="button"
-                  class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
-                >
-                  Continue Browsing
-                </button>
-              </div>
-
-              <p class="mt-4 text-[11px] text-white/45">Tip: Press ESC to close.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- EVENT IMAGE LIGHTBOX -->
-    <div id="eventLightbox" class="fixed inset-0 z-[70] hidden">
-      <div id="eventLightboxBackdrop" class="absolute inset-0 bg-black/90"></div>
-      <div class="relative flex min-h-screen items-center justify-center px-4 py-8">
-        <div class="relative w-full max-w-5xl">
-          <button
-            id="eventLightboxClose"
-            type="button"
-            class="absolute right-0 top-[-54px] rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white transition hover:bg-white/15"
-          >
-            Close ✕
-          </button>
-          <div class="overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/95 shadow-2xl">
-            <img id="eventLightboxImg" src="" alt="" class="max-h-[82vh] w-full object-contain" />
-          </div>
-          <p id="eventLightboxCaption" class="mt-4 text-center text-sm text-white/65"></p>
-        </div>
-      </div>
-    </div>
 
     <!-- 21+ MODAL -->
     <div id="ageModal" class="fixed inset-0 z-50 hidden">
@@ -2057,9 +1565,6 @@
           initDiscountPopup();
           initCowomoButton();
           initInstagramPopup();
-          initProductModal();
-          initEventLightbox();
-          initNodeBlkReveal();
 
           setActiveNav("about");
         }
@@ -2107,241 +1612,6 @@
             thumbs.forEach((item) => item.classList.remove("active"));
             thumb.classList.add("active");
           });
-        });
-      }
-
-      function initEventLightbox() {
-        const modal = document.getElementById("eventLightbox");
-        const backdrop = document.getElementById("eventLightboxBackdrop");
-        const closeBtn = document.getElementById("eventLightboxClose");
-        const img = document.getElementById("eventLightboxImg");
-        const caption = document.getElementById("eventLightboxCaption");
-        const triggers = document.querySelectorAll(".event-expand");
-
-        if (!modal || !backdrop || !closeBtn || !img || !caption || !triggers.length) return;
-
-        const open = (src, title) => {
-          img.src = src || "";
-          img.alt = title || "Expanded event flyer";
-          caption.textContent = title || "";
-          modal.classList.remove("hidden");
-          document.body.style.overflow = "hidden";
-        };
-
-        const close = () => {
-          modal.classList.add("hidden");
-          document.body.style.overflow = "";
-          img.src = "";
-        };
-
-        triggers.forEach((el) => {
-          el.addEventListener("click", () => {
-            open(el.dataset.img, el.dataset.title);
-          });
-        });
-
-        closeBtn.addEventListener("click", close);
-        backdrop.addEventListener("click", close);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") close();
-        });
-      }
-
-      function initProductModal() {
-        const modal = document.getElementById("productModal");
-        const backdrop = document.getElementById("productModalBackdrop");
-        const closeBtn = document.getElementById("productModalClose");
-        const contBtn = document.getElementById("pmContinue");
-        const titleEl = document.getElementById("pmTitle");
-        const priceEl = document.getElementById("pmPrice");
-        const descEl = document.getElementById("pmDesc");
-        const imgEl = document.getElementById("pmImg");
-        const buyEl = document.getElementById("pmBuy");
-
-        if (!modal || !backdrop || !closeBtn || !contBtn || !titleEl || !priceEl || !descEl || !imgEl || !buyEl) return;
-
-        const open = ({ title, price, desc, img, buyLink }) => {
-          titleEl.textContent = title || "Product";
-          priceEl.textContent = price || "";
-          descEl.textContent = desc || "";
-          imgEl.src = img || "";
-          imgEl.alt = title || "Product image";
-          buyEl.href = buyLink || "#";
-          modal.classList.remove("hidden");
-          document.body.style.overflow = "hidden";
-          closeBtn.focus?.();
-        };
-
-        const close = () => {
-          modal.classList.add("hidden");
-          document.body.style.overflow = "";
-        };
-
-        document.querySelectorAll(".product-card").forEach((card) => {
-          const handler = () => {
-            open({
-              title: card.dataset.title,
-              price: card.dataset.price,
-              desc: card.dataset.desc,
-              img: card.dataset.img,
-              buyLink: card.dataset.buy || "#",
-            });
-          };
-
-          card.addEventListener("click", handler);
-          card.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              handler();
-            }
-          });
-        });
-
-        backdrop.addEventListener("click", close);
-        closeBtn.addEventListener("click", close);
-        contBtn.addEventListener("click", close);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") close();
-        });
-      }
-
-      function initCowomoButton() {
-        const btn = document.getElementById("cowomoBtn");
-        if (btn) btn.href = COWOMO_URL;
-      }
-
-      function initInstagramPopup() {
-        const contact = document.getElementById("contact");
-        const modal = document.getElementById("igModal");
-        const close = document.getElementById("igClose");
-        const later = document.getElementById("igLater");
-
-        if (!contact || !modal || !close || !later) return;
-
-        if (SHOW_IG_ONCE) {
-          try { if (localStorage.getItem(IG_STORAGE_KEY) === "1") return; } catch {}
-        }
-
-        let shown = false;
-
-        const open = () => {
-          if (shown) return;
-          shown = true;
-          modal.classList.remove("hidden");
-          document.body.style.overflow = "hidden";
-          if (SHOW_IG_ONCE) {
-            try { localStorage.setItem(IG_STORAGE_KEY, "1"); } catch {}
-          }
-        };
-
-        const hide = () => {
-          modal.classList.add("hidden");
-          document.body.style.overflow = "";
-        };
-
-        close.addEventListener("click", hide);
-        later.addEventListener("click", hide);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
-        });
-
-        const io = new IntersectionObserver(
-          (entries) => {
-            const hit = entries.find((e) => e.isIntersecting);
-            if (hit) {
-              open();
-              io.disconnect();
-            }
-          },
-          { root: null, threshold: 0.25 }
-        );
-
-        io.observe(contact);
-      }
-
-      function initDiscountPopup() {
-        const trigger = document.getElementById("odotProductsGrid");
-        const modal = document.getElementById("discountModal");
-        const close = document.getElementById("discountClose");
-        const noThanks = document.getElementById("discountNoThanks");
-        const form = document.getElementById("discountForm");
-        const emailInput = document.getElementById("discountEmail");
-        const success = document.getElementById("discountSuccess");
-        const cont = document.getElementById("discountContinue");
-
-        if (!trigger || !modal || !close || !noThanks || !form || !emailInput || !success || !cont) return;
-
-        if (SHOW_DISCOUNT_ONCE) {
-          try { if (localStorage.getItem(DISCOUNT_STORAGE_KEY) === "1") return; } catch {}
-        }
-
-        let opened = false;
-        let hoverTimer = null;
-
-        const open = () => {
-          if (opened) return;
-          opened = true;
-          modal.classList.remove("hidden");
-          document.body.style.overflow = "hidden";
-          success.classList.add("hidden");
-          form.classList.remove("hidden");
-          form.reset?.();
-          setTimeout(() => emailInput.focus?.(), 0);
-
-          if (SHOW_DISCOUNT_ONCE) {
-            try { localStorage.setItem(DISCOUNT_STORAGE_KEY, "1"); } catch {}
-          }
-        };
-
-        const hide = () => {
-          modal.classList.add("hidden");
-          document.body.style.overflow = "";
-        };
-
-        trigger.addEventListener("pointerenter", () => {
-          hoverTimer = setTimeout(open, DISCOUNT_HOVER_DELAY_MS);
-        });
-
-        trigger.addEventListener("pointerleave", () => {
-          if (hoverTimer) clearTimeout(hoverTimer);
-          hoverTimer = null;
-        });
-
-        close.addEventListener("click", hide);
-        noThanks.addEventListener("click", hide);
-        cont.addEventListener("click", hide);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
-        });
-
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const email = (emailInput.value || "").trim();
-          if (!email) return;
-
-          const payload = {
-            email,
-            _subject: "OdotNYC Snapback - 10% Discount Request",
-            message: `New discount signup: ${email}`
-          };
-
-          try {
-            const res = await fetch(DISCOUNT_EMAIL_POST_URL, {
-              method: "POST",
-              headers: { "Content-Type": "application/json", "Accept": "application/json" },
-              body: JSON.stringify(payload),
-            });
-            if (!res.ok) throw new Error(`Email submit failed: ${res.status}`);
-            form.classList.add("hidden");
-            success.classList.remove("hidden");
-          } catch (err) {
-            console.error(err);
-            alert("Could not save your email right now. Please try again later.");
-          }
         });
       }
 
@@ -2459,8 +1729,8 @@
 
         if (!items?.length) {
           grid.innerHTML = `
-            <div class="rounded-2xl border border-white/10 bg-black/20 p-5 text-white/70">
-              No posts found. Update your Medium RSS URL in the script.
+            <div class="blog-empty">
+              No posts found right now. Check back soon for fresh build notes.
             </div>
           `;
           return;
@@ -2470,24 +1740,24 @@
           const title = escapeHtml(it.title || "Untitled");
           const link = sanitizeUrl(it.link || "#");
           const date = escapeHtml(fmtDate(it.pubDate));
-          const descRaw = stripHtml(it.description).slice(0, 140);
+          const descRaw = stripHtml(it.description).slice(0, 150);
           const desc = escapeHtml(descRaw);
           const thumb = sanitizeUrl(it.thumbnail || "", "");
           const thumbHtml = thumb
-            ? `<img src="${thumb}" alt="" class="h-full w-full object-cover" loading="lazy" referrerpolicy="no-referrer" />`
-            : `<div class="grid h-full w-full place-items-center text-xs text-white/40">MEDIUM</div>`;
+            ? `<img src="${thumb}" alt="" loading="lazy" referrerpolicy="no-referrer" />`
+            : `<div class="grid h-full w-full place-items-center text-xs tracking-[0.25em] text-white/35">MEDIUM POST</div>`;
 
           return `
-            <a href="${link}" target="_blank" rel="noopener noreferrer"
-              class="glow-card block rounded-2xl border border-white/10 bg-black/20 p-5 transition hover:bg-black/30">
-              <div class="aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-white/5">
+            <a href="${link}" target="_blank" rel="noopener noreferrer" class="blog-card block">
+              <div class="blog-card__media">
                 ${thumbHtml}
+                <div class="blog-card__overlay"></div>
               </div>
-              <div class="mt-4">
-                <div class="text-xs text-white/50">${date}</div>
-                <div class="mt-1 font-semibold text-white/90">${title}</div>
-                <div class="mt-2 text-sm text-white/70">${desc}${descRaw.length >= 140 ? "…" : ""}</div>
-                <div class="mt-3 text-xs text-white/50">Read on Medium →</div>
+              <div class="blog-card__body">
+                <span class="blog-date">${date}</span>
+                <div class="blog-title">${title}</div>
+                <div class="blog-desc">${desc}${descRaw.length >= 150 ? "…" : ""}</div>
+                <div class="blog-readmore">Read Article →</div>
               </div>
             </a>
           `;
@@ -2559,29 +1829,6 @@
 
         rowA.innerHTML = html;
         rowB.innerHTML = html;
-      }
-
-
-
-      function initNodeBlkReveal() {
-        const items = document.querySelectorAll(".nodeblk-reveal");
-        if (!items.length) return;
-
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("is-visible");
-              }
-            });
-          },
-          {
-            threshold: 0.18,
-            rootMargin: "0px 0px -8% 0px"
-          }
-        );
-
-        items.forEach((item) => io.observe(item));
       }
 
       function initCryptoTicker() {
