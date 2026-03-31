@@ -444,74 +444,114 @@
         position: relative;
         overflow: hidden;
         border-radius: 24px;
-        border: 1px solid rgba(255,255,255,0.1);
-        background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
-        backdrop-filter: blur(12px);
-        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+        border: 1px solid rgba(34,211,238,0.16);
+        background:
+          radial-gradient(circle at top right, rgba(34,211,238,0.10), transparent 28%),
+          linear-gradient(180deg, rgba(6,10,18,0.96), rgba(6,10,18,0.88));
+        backdrop-filter: blur(14px);
+        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+
+      .blog-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          180deg,
+          rgba(255,255,255,0.055) 0px,
+          rgba(255,255,255,0.055) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+        opacity: 0.12;
+        mix-blend-mode: screen;
+      }
+
+      .blog-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(90deg, transparent, rgba(34,211,238,0.12), transparent);
+        transform: translateX(-120%);
+        transition: transform 320ms ease;
       }
 
       .blog-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(255,255,255,0.18);
-        box-shadow: 0 22px 44px rgba(0,0,0,0.28);
+        transform: translateY(-6px) scale(1.01);
+        border-color: rgba(34,211,238,0.4);
+        box-shadow: 0 24px 48px rgba(0,0,0,0.34), 0 0 0 1px rgba(34,211,238,0.12) inset;
+        background:
+          radial-gradient(circle at top right, rgba(34,211,238,0.16), transparent 34%),
+          linear-gradient(180deg, rgba(7,12,22,0.98), rgba(7,12,22,0.92));
       }
 
-      .blog-card__media {
-        position: relative;
-        aspect-ratio: 16 / 10;
-        overflow: hidden;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        background: rgba(255,255,255,0.04);
-      }
-
-      .blog-card__media img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: transform 260ms ease;
-      }
-
-      .blog-card:hover .blog-card__media img {
-        transform: scale(1.04);
-      }
-
-      .blog-card__overlay {
-        position: absolute;
-        inset: auto 0 0 0;
-        height: 50%;
-        background: linear-gradient(180deg, transparent, rgba(0,0,0,0.68));
-        pointer-events: none;
+      .blog-card:hover::after {
+        transform: translateX(120%);
       }
 
       .blog-card__body {
-        padding: 1.2rem;
+        position: relative;
+        z-index: 1;
+        padding: 1.15rem 1.2rem 1.2rem;
+      }
+
+      .blog-card__terminalbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 0.9rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(34,211,238,0.12);
+      }
+
+      .blog-card__dots {
+        display: inline-flex;
+        gap: 0.38rem;
+        align-items: center;
+      }
+
+      .blog-card__dot {
+        width: 0.58rem;
+        height: 0.58rem;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.35);
+        box-shadow: 0 0 12px rgba(255,255,255,0.08);
+      }
+
+      .blog-card__prompt {
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(125,211,252,0.78);
       }
 
       .blog-date {
         display: inline-flex;
         border-radius: 999px;
-        border: 1px solid rgba(255,255,255,0.1);
-        background: rgba(255,255,255,0.05);
-        padding: 0.4rem 0.7rem;
+        border: 1px solid rgba(34,211,238,0.16);
+        background: rgba(34,211,238,0.08);
+        padding: 0.35rem 0.65rem;
         font-size: 11px;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: rgba(255,255,255,0.58);
+        color: rgba(165,243,252,0.84);
       }
 
       .blog-title {
         margin-top: 0.9rem;
         font-size: 1.05rem;
         font-weight: 600;
-        line-height: 1.4;
-        color: rgba(255,255,255,0.94);
+        line-height: 1.45;
+        color: rgba(240,249,255,0.96);
       }
 
       .blog-desc {
         margin-top: 0.75rem;
-        color: rgba(255,255,255,0.68);
-        line-height: 1.65;
+        color: rgba(186,230,253,0.74);
+        line-height: 1.72;
         font-size: 0.92rem;
       }
 
@@ -519,12 +559,12 @@
         margin-top: 1rem;
         display: inline-flex;
         align-items: center;
-        gap: 0.4rem;
+        gap: 0.45rem;
         font-size: 0.78rem;
         font-weight: 700;
-        letter-spacing: 0.16em;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: rgba(255,255,255,0.8);
+        color: rgba(103,232,249,0.94);
       }
 
       .blog-empty {
@@ -560,7 +600,7 @@
       <main class="flex h-screen w-screen items-center justify-center p-6">
         <div class="flex flex-col items-center text-center">
           <div class="logo-glitch glitch-on animate-fadeUp">
-            <img src="odotnyc3final.png" alt="OdotNYC Logo" />
+            
           </div>
 
           <button
@@ -621,7 +661,7 @@
           </div>
 
           <div class="flex items-center justify-center">
-            <img src="odotnyc3final.png" alt="Logo" class="h-16 w-auto sm:h-20" />
+            
           </div>
 
           <button
@@ -687,7 +727,7 @@
               </div>
 
               <div class="rounded-3xl border border-white/10 bg-black/20 p-4">
-                <img src="odotnyctv.jpg" alt="Odot" class="w-full rounded-2xl object-cover" />
+                
               </div>
             </div>
           </div>
@@ -697,24 +737,24 @@
         <section class="about-lookbook" id="about-lookbook" aria-label="About photo gallery">
           <div class="about-lookbook__wrap">
             <div class="about-lookbook__main">
-              <img id="aboutMainPhoto" src="odoteye.jpg" alt="OdotNYC featured photo" />
+              
             </div>
 
             <div class="about-lookbook__thumbs" role="tablist" aria-label="Photo thumbnails">
               <button class="about-thumb active" type="button" data-full="odotbrown.jpg" aria-label="Show photo 1">
-                <img src="odotbrown.jpg" alt="Thumbnail 1" />
+                
               </button>
 
               <button class="about-thumb" type="button" data-full="odotredblkjersey.jpg" aria-label="Show photo 2">
-                <img src="odotredblkjersey.jpg" alt="Thumbnail 2" />
+                
               </button>
 
               <button class="about-thumb" type="button" data-full="odoteagles1.jpg" aria-label="Show photo 3">
-                <img src="odoteagles1.jpg" alt="Thumbnail 3" />
+                
               </button>
 
               <button class="about-thumb" type="button" data-full="odotredwhitehat.jpg" aria-label="Show photo 4">
-                <img src="odotredwhitehat.jpg" alt="Thumbnail 4" />
+                
               </button>
             </div>
           </div>
@@ -737,13 +777,13 @@
               </div>
 
               <div class="overflow-hidden rounded-2xl border border-white/10 bg-black/20">
-                <img src="odotnyc3final.png" alt="OdotNYC logo" class="h-full w-full object-cover" loading="lazy" />
+                
               </div>
             </div>
 
             <div class="mt-10 grid items-center gap-6 lg:grid-cols-2">
               <div class="order-2 overflow-hidden rounded-2xl border border-white/10 bg-black/20 lg:order-1">
-                <img src="odotnycstate.png" alt="OdotNYC brand rebuild" class="h-full w-full object-cover" loading="lazy" />
+                
               </div>
 
               <div class="order-1 lg:order-2">
@@ -849,12 +889,7 @@
                       </div>
 
                       <div class="mt-5 overflow-hidden rounded-2xl border border-cyan-400/10 bg-black/40 p-4">
-                        <img
-                          src="rtlogo.png"
-                          alt="RoboTechi – Embedded Systems & Electronics"
-                          class="mx-auto h-56 w-auto object-contain"
-                          loading="lazy"
-                        />
+                        
                       </div>
 
                       <div class="mt-5 grid grid-cols-2 gap-3">
@@ -1049,7 +1084,7 @@
                       <div class="text-center w-full">
                         <div class="mx-auto max-w-[220px] rounded-2xl border border-orange-400/20 bg-white/[0.03] p-4">
                           <div class="hacim-logo">
-                            <img src="HacimAlyn.png" alt="Hacim Alyn Logo" loading="lazy" />
+                            
                           </div>
                         </div>
                         <p class="mt-4 text-xs uppercase tracking-[0.18em] text-violet-200/60">Gaming Studio</p>
@@ -1126,7 +1161,7 @@
 
                   <div class="mt-6 grid gap-4 sm:grid-cols-2">
                     <div class="overflow-hidden rounded-2xl border border-white/10 bg-[#1c1713] p-4">
-                      <img src="mnclogo.png" alt="MENOCLONE logo" class="mx-auto h-28 w-auto object-contain" loading="lazy" />
+                      
                     </div>
                     <div class="rounded-2xl border border-dashed border-white/15 bg-black/20 p-5">
                       <div class="text-xs uppercase tracking-[0.2em] text-white/45">Aesthetic Notes</div>
@@ -1195,7 +1230,7 @@
                 </div>
 
                 <div class="rounded-[26px] border border-white/10 bg-black/25 p-5 lg:min-w-[330px]">
-                  <img src="cowomo.png" alt="COWOMO Logo" class="mx-auto h-24 w-auto object-contain" loading="lazy" />
+                  
                   <div class="mt-5 grid grid-cols-3 gap-3 text-center">
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
                       <div class="text-[11px] uppercase tracking-[0.15em] text-white/45">Wi-Fi</div>
@@ -1307,7 +1342,7 @@
               Interested in connecting with me? Fill the form completely and I will connect with you soon.
             </p>
 
-            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/odot.rva@proton.me" method="POST" accept-charset="UTF-8" autocomplete="on">
+            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST" accept-charset="UTF-8" autocomplete="on">
               <input type="hidden" name="_subject" value="New Website Contact Submission" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="true" />
@@ -1742,27 +1777,22 @@
           const date = escapeHtml(fmtDate(it.pubDate));
           const descRaw = stripHtml(it.description).slice(0, 150);
           const desc = escapeHtml(descRaw);
-          const thumb = sanitizeUrl(it.thumbnail || "", "");
-          const fallbackLogo = `
-            <div class="grid h-full w-full place-items-center bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.10),transparent_55%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-6">
-              <img src="rtlogo.png" alt="RoboTechi logo" loading="lazy" class="h-24 w-auto object-contain opacity-90" />
-            </div>
-          `;
-          const thumbHtml = thumb
-            ? `<img src="${thumb}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\`${fallbackLogo.replace(/`/g, '\\`')}\`" />`
-            : fallbackLogo;
 
           return `
             <a href="${link}" target="_blank" rel="noopener noreferrer" class="blog-card block">
-              <div class="blog-card__media">
-                ${thumbHtml}
-                <div class="blog-card__overlay"></div>
-              </div>
               <div class="blog-card__body">
+                <div class="blog-card__terminalbar">
+                  <div class="blog-card__dots">
+                    <span class="blog-card__dot"></span>
+                    <span class="blog-card__dot"></span>
+                    <span class="blog-card__dot"></span>
+                  </div>
+                  <span class="blog-card__prompt">robotechi://medium-entry</span>
+                </div>
                 <span class="blog-date">${date}</span>
-                <div class="blog-title">${title}</div>
-                <div class="blog-desc">${desc}${descRaw.length >= 150 ? "…" : ""}</div>
-                <div class="blog-readmore">Read Article →</div>
+                <div class="blog-title">&gt; ${title}</div>
+                <div class="blog-desc">[log] ${desc}${descRaw.length >= 150 ? "…" : ""}</div>
+                <div class="blog-readmore">Open Article →</div>
               </div>
             </a>
           `;
