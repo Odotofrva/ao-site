@@ -1307,7 +1307,7 @@
               Interested in connecting with me? Fill the form completely and I will connect with you soon.
             </p>
 
-            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST" accept-charset="UTF-8" autocomplete="on">
+            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/odot.rva@proton.me" method="POST" accept-charset="UTF-8" autocomplete="on">
               <input type="hidden" name="_subject" value="New Website Contact Submission" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="true" />
@@ -1743,9 +1743,14 @@
           const descRaw = stripHtml(it.description).slice(0, 150);
           const desc = escapeHtml(descRaw);
           const thumb = sanitizeUrl(it.thumbnail || "", "");
+          const fallbackLogo = `
+            <div class="grid h-full w-full place-items-center bg-[radial-gradient(circle_at_top,rgba(34,211,238,0.10),transparent_55%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-6">
+              <img src="rtlogo.png" alt="RoboTechi logo" loading="lazy" class="h-24 w-auto object-contain opacity-90" />
+            </div>
+          `;
           const thumbHtml = thumb
-            ? `<img src="${thumb}" alt="" loading="lazy" referrerpolicy="no-referrer" />`
-            : `<div class="grid h-full w-full place-items-center text-xs tracking-[0.25em] text-white/35">MEDIUM POST</div>`;
+            ? `<img src="${thumb}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\`${fallbackLogo.replace(/`/g, '\\`')}\`" />`
+            : fallbackLogo;
 
           return `
             <a href="${link}" target="_blank" rel="noopener noreferrer" class="blog-card block">
