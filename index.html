@@ -1505,8 +1505,8 @@
           <div class="flex items-start justify-between gap-4">
             <div>
               <p class="text-xs font-medium tracking-wide text-white/60">Social</p>
-              <h3 class="mt-1 text-xl font-semibold">Follow me on Instagram</h3>
-              <p class="mt-2 text-sm text-white/70">@odotnyctv</p>
+              <h3 class="mt-1 text-xl font-semibold">Follow or DM me on Instagram</h3>
+              <p class="mt-2 text-sm text-white/70">Connect with @odotNYCtv as soon as you enter the main screen.</p>
             </div>
 
             <button
@@ -1527,19 +1527,29 @@
               rel="noopener noreferrer"
               class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
             >
-              Open Instagram →
+              Follow @odotNYCtv →
             </a>
 
             <button
-              id="igLater"
+              id="igDm"
               type="button"
               class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+            >
+              Send a DM →
+            </button>
+          </div>
+
+          <div class="mt-3 flex justify-center">
+            <button
+              id="igLater"
+              type="button"
+              class="text-xs uppercase tracking-[0.18em] text-white/45 transition hover:text-white/70"
             >
               Not now
             </button>
           </div>
 
-          <p class="mt-4 text-[11px] text-white/45">This pops once when you reach Contact.</p>
+          <p class="mt-4 text-[11px] text-white/45">This appears right when the main screen loads.</p>
         </div>
       </div>
     </div>
@@ -1886,6 +1896,56 @@
         load();
         setInterval(load, 60000);
       }
+      function initInstagramPopup() {
+        const modal = document.getElementById("igModal");
+        const closeBtn = document.getElementById("igClose");
+        const laterBtn = document.getElementById("igLater");
+        const followBtn = document.getElementById("igVisit");
+        const dmBtn = document.getElementById("igDm");
+
+        if (!modal || !closeBtn || !laterBtn || !followBtn || !dmBtn) return;
+
+        const hide = () => {
+          modal.classList.add("hidden");
+          document.body.style.overflow = "";
+          try {
+            if (SHOW_IG_ONCE) localStorage.setItem(IG_STORAGE_KEY, "1");
+          } catch {}
+        };
+
+        const open = () => {
+          let seen = false;
+          try {
+            seen = SHOW_IG_ONCE && localStorage.getItem(IG_STORAGE_KEY) === "1";
+          } catch {}
+          if (seen) return;
+
+          modal.classList.remove("hidden");
+          document.body.style.overflow = "hidden";
+          followBtn.focus?.();
+        };
+
+        followBtn.href = "https://instagram.com/odotnyctv";
+        dmBtn.addEventListener("click", () => {
+          window.open("https://instagram.com/odotnyctv", "_blank", "noopener,noreferrer");
+          hide();
+        });
+
+        followBtn.addEventListener("click", hide);
+        closeBtn.addEventListener("click", hide);
+        laterBtn.addEventListener("click", hide);
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal || e.target === modal.firstElementChild) hide();
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
+        });
+
+        setTimeout(open, 700);
+      }
+
     </script>
   </body>
 </html>
