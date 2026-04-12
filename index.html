@@ -706,6 +706,7 @@
               <li><a data-section="ar-odotnyc" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#ar-odotnyc">AR-OdotNYC</a></li>
               <li><a data-section="hacim-alyn" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#hacim-alyn">Hacim Alyn</a></li>
               <li><a data-section="menoclone" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#menoclone">MENOCLONE</a></li>
+              <li><a data-section="verde-house" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#verde-house">Verde House</a></li>
               <li><a data-section="cowomo" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#cowomo">CoMoWo</a></li>
               <li><a data-section="blog" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#blog">Blog</a></li>
               <li><a data-section="contact" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#contact">Contact</a></li>
@@ -1201,6 +1202,42 @@
                   <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
                     <div class="text-xs text-white/45">Style</div>
                     <div class="mt-1 text-sm font-semibold text-white/90">Streetwear Archive</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- VERDE HOUSE -->
+        <section id="verde-house" class="mt-14 scroll-mt-40">
+          <div class="relative overflow-hidden rounded-3xl border border-emerald-300/20 bg-gradient-to-br from-[#08110a] via-[#0b130d] to-[#050705] p-6 sm:p-10">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.12),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(34,197,94,0.08),transparent_28%)]"></div>
+            <div class="relative grid items-center gap-8 lg:grid-cols-2">
+              <div>
+                <p class="text-sm font-medium tracking-wide text-emerald-100/60">Luxury Cannabis / Lifestyle / NYC Energy</p>
+                <h2 class="mt-2 text-2xl font-semibold sm:text-3xl">Verde' House</h2>
+                <p class="mt-4 max-w-2xl text-white/70">Verde' House is a premium cannabis-inspired lifestyle brand focused on elevated visuals, curated strain culture, and modern New York energy.</p>
+                <p class="mt-3 max-w-2xl text-white/65">Explore the digital storefront, branded drops, and collector-style experiences built for the culture.</p>
+                <div class="mt-6 flex flex-wrap gap-2">
+                  <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70">Premium Branding</span>
+                  <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70">Curated Strains</span>
+                  <span class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs text-white/70">Collector Vibes</span>
+                </div>
+                <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <a href="https://odotofrva.github.io/VerdeHouseCo/" class="inline-flex items-center justify-center rounded-full bg-emerald-300 px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">Visit Verde' House →</a>
+                  <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">Partner With Us</a>
+                </div>
+              </div>
+              <div class="grid gap-4">
+                <div class="rounded-[28px] border border-white/10 bg-black/25 p-6">
+                  <div class="text-xs uppercase tracking-[0.24em] text-white/45">Verde' House</div>
+                  <div class="mt-2 text-lg font-semibold text-white/90">Elevated Brand Experience</div>
+                  <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3"><div class="text-[11px] text-white/45">Style</div><div class="mt-1 text-sm font-semibold text-white/90">Luxury</div></div>
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3"><div class="text-[11px] text-white/45">Focus</div><div class="mt-1 text-sm font-semibold text-white/90">Culture</div></div>
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3"><div class="text-[11px] text-white/45">Mode</div><div class="mt-1 text-sm font-semibold text-white/90">Online</div></div>
                   </div>
                 </div>
               </div>
@@ -1712,7 +1749,7 @@
           });
         };
 
-        const ids = ["about", "odotnyc", "events", "robotechi", "ar-odotnyc", "hacim-alyn", "menoclone", "cowomo", "blog", "contact"];
+        const ids = ["about", "odotnyc", "events", "robotechi", "ar-odotnyc", "hacim-alyn", "menoclone", "verde-house", "cowomo", "blog", "contact"];
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
 
