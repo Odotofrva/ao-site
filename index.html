@@ -5,10 +5,13 @@
     <meta name="theme-color" content="#000000">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https://api.rss2json.com https://api.coingecko.com https://medium.com https://formsubmit.co; media-src 'self' https: data: blob:; manifest-src 'self'; worker-src 'self' blob:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https://api.rss2json.com https://api.coingecko.com https://formsubmit.co; media-src 'self' https: data: blob:; manifest-src 'self'; worker-src 'self' blob:;">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), midi=(), xr-spatial-tracking=()" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+    <meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin" />
     <title>OdotNYC</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1516,27 +1519,28 @@
               Interested in connecting with me? Fill the form completely and I will connect with you soon.
             </p>
 
-            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST" accept-charset="UTF-8" autocomplete="on">
+            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST" accept-charset="UTF-8" autocomplete="on" novalidate>
               <input type="hidden" name="_subject" value="New Website Contact Submission" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="true" />
+              <input type="hidden" name="_autoresponse" value="Thanks for reaching out to OdotNYC. Your message was received and I will follow up soon." />
               <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
 
               <div class="grid gap-4 sm:grid-cols-2">
                 <label class="grid gap-2">
                   <span class="text-sm text-white/70">Name</span>
-                  <input name="name" required class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="Your name" />
+                  <input name="name" required minlength="2" maxlength="80" class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="Your name" />
                 </label>
 
                 <label class="grid gap-2">
                   <span class="text-sm text-white/70">Email</span>
-                  <input type="email" name="email" required class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="you@example.com" />
+                  <input type="email" name="email" inputmode="email" required maxlength="120" class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="you@example.com" />
                 </label>
               </div>
 
               <label class="grid gap-2">
                 <span class="text-sm text-white/70">Message</span>
-                <textarea name="message" rows="5" required class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="Tell me what you're trying to build..."></textarea>
+                <textarea name="message" rows="5" required minlength="10" maxlength="2000" class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30" placeholder="Tell me what you're trying to build..."></textarea>
               </label>
 
               <button class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl" type="submit">
@@ -1600,17 +1604,17 @@
       </div>
     </div>
 
-    <!-- DISCOUNT MODAL -->
+    <!-- ROBOTECHI SERVICES MODAL -->
     <div id="discountModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/75"></div>
 
       <div class="relative mx-auto mt-24 w-[92%] max-w-md">
-        <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur animate-popIn">
+        <div class="glow-card rounded-3xl border border-cyan-300/20 bg-zinc-950/95 p-6 backdrop-blur animate-popIn">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <p class="text-xs font-medium tracking-wide text-white/60">OdotNYC Snapback</p>
-              <h3 class="mt-1 text-xl font-semibold">Save 10% on your order?</h3>
-              <p class="mt-2 text-sm text-white/70">Drop your email and we’ll send you a 10% discount code.</p>
+              <p class="text-xs font-medium tracking-wide text-cyan-200/70">RoboTechi Creative Services</p>
+              <h3 class="mt-1 text-xl font-semibold">Need web design or social media support?</h3>
+              <p class="mt-2 text-sm text-white/70">Visit RoboTechi for web design, branded digital experiences, and social media visuals built to help your brand stand out.</p>
             </div>
 
             <button
@@ -1623,49 +1627,27 @@
             </button>
           </div>
 
-          <form id="discountForm" class="mt-5 grid gap-3">
-            <label class="grid gap-2">
-              <span class="text-sm text-white/70">Email address</span>
-              <input
-                id="discountEmail"
-                type="email"
-                required
-                class="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/30"
-                placeholder="you@example.com"
-              />
-            </label>
-
-            <div class="grid gap-3 sm:grid-cols-2">
-              <button
-                type="submit"
-                class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-              >
-                Send My Code →
-              </button>
-
-              <button
-                id="discountNoThanks"
-                type="button"
-                class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
-              >
-                No thanks
-              </button>
-            </div>
-
-            <p class="text-[11px] text-white/45">We’ll only use this to send the discount code. No spam.</p>
-          </form>
-
-          <div id="discountSuccess" class="mt-5 hidden rounded-2xl border border-white/10 bg-black/30 p-4">
-            <div class="text-sm font-semibold text-white/90">You’re in.</div>
-            <div class="mt-1 text-sm text-white/70">Check your inbox for your 10% code.</div>
-            <button
-              id="discountContinue"
-              type="button"
-              class="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
+          <div class="mt-5 grid gap-3">
+            <a
+              id="discountVisit"
+              href="https://odotofrva.github.io/rt-site-odotnyc/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center rounded-full bg-cyan-300 px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
             >
-              Continue →
+              Visit RoboTechi →
+            </a>
+
+            <button
+              id="discountNoThanks"
+              type="button"
+              class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+            >
+              Maybe later
             </button>
           </div>
+
+       
         </div>
       </div>
     </div>
@@ -1726,14 +1708,17 @@
       const COWOMO_URL = "https://odotofrva.github.io/CoWoMoSite/";
       const SHOW_DISCOUNT_ONCE = true;
       const DISCOUNT_HOVER_DELAY_MS = 300;
-      const DISCOUNT_STORAGE_KEY = "odot_discount_seen_v1";
-      const DISCOUNT_EMAIL_POST_URL = "https://formsubmit.co/ajax/YOUR_EMAIL@domain.com";
+      const DISCOUNT_STORAGE_KEY = "odot_discount_seen_v2";
       const SHOW_IG_ONCE = true;
       const IG_STORAGE_KEY = "odot_ig_seen_v1";
 
       let setActiveNav = () => {};
 
       document.addEventListener("DOMContentLoaded", () => {
+        hardenExternalLinks();
+        hardenForms();
+        lazyLoadMedia();
+
         const enterBtn = document.getElementById("enterBtn");
         const landing = document.getElementById("landing");
         const home = document.getElementById("home");
@@ -1802,6 +1787,93 @@
         const yearEl = document.getElementById("year");
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
+
+
+      function hardenExternalLinks() {
+        document.querySelectorAll('a[href]').forEach((link) => {
+          const href = link.getAttribute('href') || '';
+          if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+          const safeHref = sanitizeUrl(href, href);
+          link.setAttribute('href', safeHref);
+
+          try {
+            const url = new URL(safeHref, window.location.origin);
+            if (url.origin !== window.location.origin) {
+              link.setAttribute('rel', 'noopener noreferrer external');
+              if (link.getAttribute('target') === '_blank') {
+                link.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+              }
+            }
+          } catch {}
+        });
+      }
+
+      function hardenForms() {
+        document.querySelectorAll('form').forEach((form) => {
+          form.setAttribute('autocomplete', form.getAttribute('autocomplete') || 'on');
+        });
+
+        const contactForm = document.querySelector('#contact form');
+        if (contactForm) {
+          contactForm.addEventListener('submit', (e) => {
+            if (!contactForm.checkValidity()) {
+              e.preventDefault();
+              contactForm.reportValidity();
+            }
+          });
+        }
+      }
+
+      function lazyLoadMedia() {
+        document.querySelectorAll('img').forEach((img, index) => {
+          if (!img.hasAttribute('loading')) img.setAttribute('loading', index < 2 ? 'eager' : 'lazy');
+          if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+          if (!img.hasAttribute('referrerpolicy')) img.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        });
+      }
+
+      function initDiscountPopup() {
+        const modal = document.getElementById('discountModal');
+        const closeBtn = document.getElementById('discountClose');
+        const noThanksBtn = document.getElementById('discountNoThanks');
+        const visitBtn = document.getElementById('discountVisit');
+
+        if (!modal || !closeBtn || !noThanksBtn || !visitBtn) return;
+
+        const hide = () => {
+          modal.classList.add('hidden');
+          document.body.style.overflow = '';
+          try {
+            if (SHOW_DISCOUNT_ONCE) localStorage.setItem(DISCOUNT_STORAGE_KEY, '1');
+          } catch {}
+        };
+
+        const open = () => {
+          let seen = false;
+          try {
+            seen = SHOW_DISCOUNT_ONCE && localStorage.getItem(DISCOUNT_STORAGE_KEY) === '1';
+          } catch {}
+          if (seen) return;
+          modal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        };
+
+        closeBtn.addEventListener('click', hide);
+        noThanksBtn.addEventListener('click', hide);
+        visitBtn.addEventListener('click', hide);
+
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal || e.target === modal.firstElementChild) hide();
+        });
+
+        setTimeout(open, 1800);
+      }
+
+      function initCowomoButton() {
+        const btn = document.getElementById('cowomoEnterBtn');
+        if (!btn) return;
+        btn.setAttribute('href', COWOMO_URL);
+      }
 
       function initLookbookThumbs() {
         const mainPhoto = document.getElementById("aboutMainPhoto");
