@@ -5,7 +5,7 @@
     <meta name="theme-color" content="#000000">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https://api.rss2json.com https://api.coingecko.com https://formsubmit.co; media-src 'self' https: data: blob:; manifest-src 'self'; worker-src 'self' blob:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://s3.tradingview.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https://api.rss2json.com https://api.coingecko.com https://formsubmit.co; media-src 'self' https: data: blob:; manifest-src 'self'; worker-src 'self' blob:; frame-src 'self' https://s.tradingview.com https://www.tradingview.com;">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), midi=(), xr-spatial-tracking=()" />
@@ -589,6 +589,92 @@
         }
       }
 
+    
+      .section-media-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 1rem;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(0,0,0,0.28);
+        min-height: 260px;
+      }
+
+      .section-media-card img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-height: 260px;
+        object-fit: cover;
+      }
+
+      .section-media-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 260px;
+        padding: 1.5rem;
+        background: radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 45%), rgba(0,0,0,0.28);
+      }
+
+      .section-media-logo img {
+        max-width: min(100%, 340px);
+        max-height: 180px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 30px rgba(0,0,0,0.45));
+      }
+
+      .robotechi-wordmark {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        border-radius: 1.5rem;
+        border: 1px solid rgba(34,211,238,0.16);
+        background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(255,255,255,0.04));
+        padding: 1.25rem 1.35rem;
+        box-shadow: 0 18px 48px rgba(0,0,0,0.34);
+      }
+
+      .robotechi-wordmark__kicker {
+        font-size: 0.68rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(165,243,252,0.78);
+      }
+
+      .robotechi-wordmark__title {
+        font-size: clamp(1.9rem, 4vw, 3rem);
+        line-height: 1;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: rgba(255,255,255,0.96);
+      }
+
+      .robotechi-wordmark__sub {
+        font-size: 0.78rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(186,230,253,0.72);
+      }
+
+      .stock-tape-shell {
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
+      }
+
+      .stock-tape-shell .label {
+        flex-shrink: 0;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
+        padding: 0.25rem 0.75rem;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: rgba(255,255,255,0.8);
+      }
+
     </style>
   </head>
 
@@ -622,6 +708,35 @@
     <!-- HOME -->
     <section id="home" class="hidden min-h-screen bg-zinc-950">
       <header class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/75 backdrop-blur-xl">
+        <!-- Stock ticker -->
+        <div class="stock-tape-shell bg-black/40">
+          <div class="mx-auto flex w-full max-w-6xl items-center gap-3 px-5 py-2 sm:px-8">
+            <span class="label">STOCKS</span>
+            <div class="min-w-0 flex-1 overflow-hidden rounded-full border border-white/10 bg-white/[0.03] px-2 py-1">
+              <div class="tradingview-widget-container" style="height:46px;width:100%;">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                {
+                  "symbols": [
+                    {"proName": "NASDAQ:AAPL", "title": "Apple"},
+                    {"proName": "NASDAQ:MSFT", "title": "Microsoft"},
+                    {"proName": "NASDAQ:NVDA", "title": "NVIDIA"},
+                    {"proName": "NASDAQ:AMZN", "title": "Amazon"},
+                    {"proName": "NASDAQ:TSLA", "title": "Tesla"},
+                    {"proName": "AMEX:SPY", "title": "S&P 500"}
+                  ],
+                  "showSymbolLogo": true,
+                  "isTransparent": true,
+                  "displayMode": "regular",
+                  "colorTheme": "dark",
+                  "locale": "en"
+                }
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Crypto ticker -->
         <div class="border-b border-white/10 bg-black/30">
           <div class="mx-auto w-full max-w-6xl px-5 py-2 sm:px-8">
@@ -680,6 +795,12 @@
                 class="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold tracking-wide text-white transition hover:-translate-y-0.5 hover:bg-white/10"
               >
                 Direct Message OdotNYC
+              </a>
+              <a
+                href="#contact"
+                class="inline-flex items-center justify-center rounded-full border border-emerald-300/20 bg-emerald-300/10 px-4 py-2 text-xs font-semibold tracking-wide text-emerald-100 transition hover:-translate-y-0.5 hover:bg-emerald-300/15"
+              >
+                Donate
               </a>
             </div>
           </div>
@@ -908,7 +1029,13 @@
                       </div>
 
                       <div class="mt-5 overflow-hidden rounded-2xl border border-cyan-400/10 bg-black/40 p-4">
-                        
+                        <div class="section-media-logo rounded-2xl border border-cyan-400/10">
+                          <div class="robotechi-wordmark text-center">
+                            <span class="robotechi-wordmark__kicker">RoboTechi Co.</span>
+                            <span class="robotechi-wordmark__title">RoboTechi</span>
+                            <span class="robotechi-wordmark__sub">Dream • Plan • Create</span>
+                          </div>
+                        </div>
                       </div>
 
                       <div class="mt-5 grid grid-cols-2 gap-3">
@@ -1002,36 +1129,9 @@
                     </div>
 
                     <div class="mt-5 overflow-hidden rounded-2xl border border-dashed border-white/10 bg-gradient-to-b from-slate-300/10 via-slate-400/5 to-black/40 p-4 min-h-[260px]">
-                      <svg viewBox="0 0 640 420" class="h-full w-full" role="img" aria-label="Comic black UFO floating in clouds">
-                        <defs>
-                          <linearGradient id="skyGlow" x1="0" x2="0" y1="0" y2="1">
-                            <stop offset="0%" stop-color="#dbe4f0" stop-opacity="0.22"/>
-                            <stop offset="100%" stop-color="#0b0d14" stop-opacity="0.15"/>
-                          </linearGradient>
-                        </defs>
-                        <rect width="640" height="420" rx="28" fill="url(#skyGlow)"/>
-                        <g fill="#d8dee9" opacity="0.88">
-                          <ellipse cx="125" cy="288" rx="92" ry="34"/>
-                          <ellipse cx="210" cy="274" rx="70" ry="28"/>
-                          <ellipse cx="504" cy="286" rx="96" ry="36"/>
-                          <ellipse cx="420" cy="270" rx="78" ry="30"/>
-                          <ellipse cx="312" cy="338" rx="145" ry="42" opacity="0.72"/>
-                        </g>
-                        <g opacity="0.96">
-                          <ellipse cx="322" cy="170" rx="74" ry="38" fill="#141414"/>
-                          <ellipse cx="322" cy="196" rx="156" ry="48" fill="#050505"/>
-                          <ellipse cx="322" cy="197" rx="120" ry="20" fill="#1c1c1c" opacity="0.9"/>
-                          <circle cx="322" cy="162" r="6" fill="#ffffff" opacity="0.5"/>
-                          <circle cx="272" cy="200" r="5" fill="#f5f5f5" opacity="0.65"/>
-                          <circle cx="322" cy="208" r="5" fill="#f5f5f5" opacity="0.65"/>
-                          <circle cx="372" cy="200" r="5" fill="#f5f5f5" opacity="0.65"/>
-                        </g>
-                        <g stroke="#ffffff" stroke-opacity="0.22" stroke-width="3" stroke-linecap="round">
-                          <path d="M115 108c26-18 51-20 74-12"/>
-                          <path d="M475 90c22-10 42-8 60 4"/>
-                          <path d="M118 132c18-8 37-8 54 0"/>
-                        </g>
-                      </svg>
+                      <div class="section-media-card">
+                        <img src="https://source.unsplash.com/1600x1000/?ufo,sky,alien" alt="Unsplash UFO visual" />
+                      </div>
                     </div>
 
                     <div class="mt-5 grid grid-cols-2 gap-3">
@@ -1125,13 +1225,11 @@
 
                     <div class="mt-5 grid place-items-center overflow-hidden rounded-2xl border border-dashed border-emerald-400/20 bg-black/40 p-8 min-h-[260px]">
                       <div class="text-center w-full">
-                        <div class="mx-auto max-w-[240px] rounded-2xl border border-emerald-400/20 bg-white/[0.03] p-6">
+                        <div class="mx-auto max-w-[260px] rounded-2xl border border-emerald-400/20 bg-white/[0.03] p-6">
                           <div class="text-xs uppercase tracking-[0.28em] text-emerald-200/70">AR-OdotNYC</div>
-                          <div class="mt-4 rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-300/10 to-sky-300/10 px-6 py-10 text-sm font-semibold text-white/80">
-                            AR-OdotNYC
-                          </div>
+                          <img src="odotnyc3final.png" alt="OdotNYC splash logo" class="mt-4 mx-auto w-full max-w-[210px] object-contain" />
                         </div>
-                        <p class="mt-4 text-xs uppercase tracking-[0.18em] text-emerald-200/60">Launch-ready experience</p>
+                        <p class="mt-4 text-xs uppercase tracking-[0.18em] text-emerald-200/60">Scan the logo to enter the experience</p>
                       </div>
                     </div>
 
@@ -1224,8 +1322,8 @@
                     <div class="mt-5 grid place-items-center overflow-hidden rounded-2xl border border-dashed border-violet-400/20 bg-black/40 p-8 min-h-[260px]">
                       <div class="text-center w-full">
                         <div class="mx-auto max-w-[220px] rounded-2xl border border-orange-400/20 bg-white/[0.03] p-4">
-                          <div class="hacim-logo">
-                            
+                          <div class="section-media-card min-h-[220px] rounded-2xl">
+                            <img src="https://source.unsplash.com/1600x1000/?gaming,setup,pc" alt="Unsplash gaming setup visual" />
                           </div>
                         </div>
                         <p class="mt-4 text-xs uppercase tracking-[0.18em] text-violet-200/60">Gaming Studio</p>
@@ -1302,7 +1400,9 @@
 
                   <div class="mt-6 grid gap-4 sm:grid-cols-2">
                     <div class="overflow-hidden rounded-2xl border border-white/10 bg-[#1c1713] p-4">
-                      
+                      <div class="section-media-logo rounded-2xl bg-[#100e0b]">
+                        <img src="https://odotofrva.github.io/mnc-dt/mnc.png" alt="MENOCLONE logo" />
+                      </div>
                     </div>
                     <div class="rounded-2xl border border-dashed border-white/15 bg-black/20 p-5">
                       <div class="text-xs uppercase tracking-[0.2em] text-white/45">Aesthetic Notes</div>
@@ -1366,116 +1466,6 @@
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-3"><div class="text-[11px] text-white/45">Mode</div><div class="mt-1 text-sm font-semibold text-white/90">Online</div></div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- COWOMO -->
-        <section id="cowomo" class="mt-14 scroll-mt-40">
-          <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#0d0d0d] via-[#111111] to-[#171717] p-6 sm:p-10">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.07),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.05),transparent_28%)]"></div>
-
-            <div class="relative">
-              <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-                <div class="max-w-2xl">
-                  <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-white/55">
-                    NYC Work Spots / Coffee / Remote Life
-                  </div>
-                  <h2 class="mt-4 text-2xl font-semibold sm:text-3xl">CoMoWo</h2>
-                  <p class="mt-3 text-white/70">
-                    COWOMO is a sleek NYC work-spot guide for founders, freelancers, and creatives searching for cafés,
-                    coffee shops, and hidden corners where productivity actually happens.
-                  </p>
-
-                  <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                    <a
-                      id="cowomoBtn"
-                      href="https://odotofrva.github.io/CoWoMoSite/"
-                      class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl"
-                    >
-                      View CoMoWo →
-                    </a>
-
-                    <a
-                      href="#contact"
-                      class="inline-flex items-center justify-center rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10"
-                    >
-                      Suggest a Spot
-                    </a>
-                  </div>
-                </div>
-
-                <div class="rounded-[26px] border border-white/10 bg-black/25 p-5 lg:min-w-[330px]">
-                  
-                  <div class="mt-5 grid grid-cols-3 gap-3 text-center">
-                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                      <div class="text-[11px] uppercase tracking-[0.15em] text-white/45">Wi-Fi</div>
-                      <div class="mt-1 text-sm font-semibold text-white/90">Fast</div>
-                    </div>
-                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                      <div class="text-[11px] uppercase tracking-[0.15em] text-white/45">Outlets</div>
-                      <div class="mt-1 text-sm font-semibold text-white/90">Available</div>
-                    </div>
-                    <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
-                      <div class="text-[11px] uppercase tracking-[0.15em] text-white/45">Vibe</div>
-                      <div class="mt-1 text-sm font-semibold text-white/90">Focused</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-8 grid gap-4 lg:grid-cols-3">
-                <article class="glow-card rounded-[24px] border border-white/10 bg-white/5 p-5">
-                  <div class="flex items-start justify-between gap-3">
-                    <div>
-                      <div class="text-xs uppercase tracking-[0.2em] text-white/45">Queens</div>
-                      <h3 class="mt-2 text-lg font-semibold text-white/90">Starbucks</h3>
-                    </div>
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[11px] text-white/55">Best 8am–11am</span>
-                  </div>
-                  <p class="mt-4 text-sm text-white/70">
-                    Quiet mornings, dependable Wi-Fi, wall outlets nearby, and enough breathing room for focused laptop sessions.
-                  </p>
-                  <div class="mt-5 flex flex-wrap gap-2">
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Strong espresso</span>
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Deep work</span>
-                  </div>
-                </article>
-
-                <article class="glow-card rounded-[24px] border border-white/10 bg-white/5 p-5">
-                  <div class="flex items-start justify-between gap-3">
-                    <div>
-                      <div class="text-xs uppercase tracking-[0.2em] text-white/45">Brooklyn</div>
-                      <h3 class="mt-2 text-lg font-semibold text-white/90">Bon Tree</h3>
-                    </div>
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[11px] text-white/55">Bring headphones</span>
-                  </div>
-                  <p class="mt-4 text-sm text-white/70">
-                    More social and visually inspiring. Better for lighter work sessions, brainstorming, and quick creative planning.
-                  </p>
-                  <div class="mt-5 flex flex-wrap gap-2">
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Creative energy</span>
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Livelier crowd</span>
-                  </div>
-                </article>
-
-                <article class="glow-card rounded-[24px] border border-white/10 bg-white/5 p-5">
-                  <div class="flex items-start justify-between gap-3">
-                    <div>
-                      <div class="text-xs uppercase tracking-[0.2em] text-white/45">Manhattan</div>
-                      <h3 class="mt-2 text-lg font-semibold text-white/90">Laptop-Friendly Pick</h3>
-                    </div>
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[11px] text-white/55">2–4 hr sessions</span>
-                  </div>
-                  <p class="mt-4 text-sm text-white/70">
-                    Bigger tables, reliable internet, and enough space to stay planted for a longer, more intentional work block.
-                  </p>
-                  <div class="mt-5 flex flex-wrap gap-2">
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Outlets</span>
-                    <span class="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-xs text-white/60">Good seating</span>
-                  </div>
-                </article>
               </div>
             </div>
           </div>
@@ -1944,7 +1934,7 @@
           });
         };
 
-        const ids = ["about", "odotnyc", "events", "robotechi", "ar-ufo", "ar-odotnyc", "hacim-alyn", "menoclone", "verde-house", "cowomo", "blog", "contact"];
+        const ids = ["about", "odotnyc", "robotechi", "ar-ufo", "ar-odotnyc", "hacim-alyn", "menoclone", "verde-house", "blog", "contact"];
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
 
