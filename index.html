@@ -5,7 +5,7 @@
     <meta name="theme-color" content="#000000">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://s3.tradingview.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https://api.rss2json.com https://api.coingecko.com https://formsubmit.co; media-src 'self' https: data: blob:; manifest-src 'self'; worker-src 'self' blob:; frame-src 'self' https://s.tradingview.com https://www.tradingview.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://s3.tradingview.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https://api.rss2json.com https://api.coingecko.com https://formsubmit.co https://api.allorigins.win https://query1.finance.yahoo.com; media-src 'self' https: data: blob:; manifest-src 'self'; worker-src 'self' blob:; frame-src 'self' https://s.tradingview.com https://www.tradingview.com;">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), midi=(), xr-spatial-tracking=()" />
@@ -709,30 +709,34 @@
     <section id="home" class="hidden min-h-screen bg-zinc-950">
       <header class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/75 backdrop-blur-xl">
         <!-- Stock ticker -->
-        <div class="stock-tape-shell bg-black/40">
-          <div class="mx-auto flex w-full max-w-6xl items-center gap-3 px-5 py-2 sm:px-8">
-            <span class="label">STOCKS</span>
-            <div class="min-w-0 flex-1 overflow-hidden rounded-full border border-white/10 bg-white/[0.03] px-2 py-1">
-              <div class="tradingview-widget-container" style="height:46px;width:100%;">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-                {
-                  "symbols": [
-                    {"proName": "NASDAQ:AAPL", "title": "Apple"},
-                    {"proName": "NASDAQ:MSFT", "title": "Microsoft"},
-                    {"proName": "NASDAQ:NVDA", "title": "NVIDIA"},
-                    {"proName": "NASDAQ:AMZN", "title": "Amazon"},
-                    {"proName": "NASDAQ:TSLA", "title": "Tesla"},
-                    {"proName": "AMEX:SPY", "title": "S&P 500"}
-                  ],
-                  "showSymbolLogo": true,
-                  "isTransparent": true,
-                  "displayMode": "regular",
-                  "colorTheme": "dark",
-                  "locale": "en"
-                }
-                </script>
+        <div class="border-b border-white/10 bg-black/35">
+          <div class="mx-auto w-full max-w-6xl px-5 py-2 sm:px-8">
+            <div class="flex items-center gap-3">
+              <span class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold tracking-wide text-white/80">
+                STOCKS
+              </span>
+
+              <div class="relative w-full overflow-hidden">
+                <div class="pointer-events-none absolute left-0 top-0 h-full w-10 bg-gradient-to-r from-zinc-950/90 to-transparent"></div>
+                <div class="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-zinc-950/90 to-transparent"></div>
+
+                <div id="stockTickerMarquee" class="marquee gap-8 text-[12px] text-white/80">
+                  <div class="flex items-center gap-8" id="stockTickerRowA">
+                    <span class="opacity-70">Loading market prices…</span>
+                  </div>
+                  <div class="flex items-center gap-8" id="stockTickerRowB" aria-hidden="true">
+                    <span class="opacity-70">Loading market prices…</span>
+                  </div>
+                </div>
               </div>
+
+              <button
+                id="stockTickerRefresh"
+                class="shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/70 transition hover:bg-white/10"
+                type="button"
+              >
+                Refresh
+              </button>
             </div>
           </div>
         </div>
@@ -2100,6 +2104,72 @@
 
         rowA.innerHTML = html;
         rowB.innerHTML = html;
+      }
+
+      async function fetchStocks() {
+        const symbols = ["AAPL", "MSFT", "NVDA", "AMZN", "TSLA", "SPY"];
+        const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbols.join(",")}`;
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+        const res = await fetch(proxyUrl, { cache: "no-store" });
+        if (!res.ok) throw new Error(`Stock ticker request failed: ${res.status}`);
+        return res.json();
+      }
+
+      function buildStockTickerItems(payload) {
+        const results = Array.isArray(payload?.quoteResponse?.result) ? payload.quoteResponse.result : [];
+        return results.map((item) => {
+          const price = typeof item?.regularMarketPrice === "number" ? item.regularMarketPrice : null;
+          const ch = typeof item?.regularMarketChangePercent === "number" ? item.regularMarketChangePercent : null;
+          const sign = typeof ch === "number" ? (ch >= 0 ? "+" : "") : "";
+          return {
+            sym: item?.symbol || "—",
+            priceTxt: price === null ? "—" : `$${price.toFixed(2)}`,
+            ch,
+            chTxt: typeof ch === "number" ? `${sign}${ch.toFixed(2)}%` : "—"
+          };
+        });
+      }
+
+      function renderStockTicker(items) {
+        const rowA = document.getElementById("stockTickerRowA");
+        const rowB = document.getElementById("stockTickerRowB");
+        if (!rowA || !rowB) return;
+
+        const html = items.map((it) => {
+          const up = typeof it.ch === "number" && it.ch >= 0;
+          const chClass = up ? "text-emerald-300/90" : "text-rose-300/90";
+          return `
+            <span class="inline-flex items-center gap-2">
+              <span class="font-semibold text-white/90">${escapeHtml(it.sym)}</span>
+              <span class="text-white/80">${escapeHtml(it.priceTxt)}</span>
+              <span class="${chClass}">${escapeHtml(it.chTxt)}</span>
+            </span>
+          `;
+        }).join("");
+
+        rowA.innerHTML = html || `<span class="opacity-70">Ticker unavailable</span>`;
+        rowB.innerHTML = html || `<span class="opacity-70">Ticker unavailable</span>`;
+      }
+
+      function initStockTicker() {
+        const btn = document.getElementById("stockTickerRefresh");
+
+        const load = async () => {
+          try {
+            const data = await fetchStocks();
+            renderStockTicker(buildStockTickerItems(data));
+          } catch (e) {
+            console.error(e);
+            const rowA = document.getElementById("stockTickerRowA");
+            const rowB = document.getElementById("stockTickerRowB");
+            if (rowA) rowA.innerHTML = `<span class="opacity-70">Stock ticker unavailable</span>`;
+            if (rowB) rowB.innerHTML = `<span class="opacity-70">Stock ticker unavailable</span>`;
+          }
+        };
+
+        btn?.addEventListener("click", load);
+        load();
+        setInterval(load, 60000);
       }
 
       function initCryptoTicker() {
