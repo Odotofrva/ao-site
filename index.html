@@ -12,7 +12,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
     <meta http-equiv="Cross-Origin-Resource-Policy" content="same-origin" />
-    <title>OdotNYC | Tech Fashion Art</title>
+    <title>OdotNYC | OdotNYC.xyz</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -767,6 +767,47 @@
         filter: drop-shadow(0 0 24px rgba(255,31,31,0.24)) drop-shadow(0 24px 44px rgba(0,0,0,0.65));
       }
 
+
+      @keyframes odotHeroPulse {
+        0% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 24px rgba(255,31,31,0.24)) drop-shadow(0 24px 44px rgba(0,0,0,0.65));
+        }
+        12% {
+          transform: scale(1.025);
+          filter: drop-shadow(0 0 34px rgba(255,31,31,0.42)) drop-shadow(0 0 22px rgba(246,200,95,0.20)) drop-shadow(0 26px 48px rgba(0,0,0,0.70));
+        }
+        24% { transform: scale(1); }
+        36% {
+          transform: scale(1.02);
+          filter: drop-shadow(0 0 38px rgba(255,31,31,0.38)) drop-shadow(0 0 24px rgba(246,200,95,0.18)) drop-shadow(0 26px 48px rgba(0,0,0,0.70));
+        }
+        48% { transform: scale(1); }
+        60% {
+          transform: scale(1.018);
+          filter: drop-shadow(0 0 34px rgba(255,31,31,0.34)) drop-shadow(0 0 20px rgba(246,200,95,0.16)) drop-shadow(0 26px 48px rgba(0,0,0,0.68));
+        }
+        72% { transform: scale(1); }
+        84% {
+          transform: scale(1.012);
+          filter: drop-shadow(0 0 28px rgba(255,31,31,0.28)) drop-shadow(0 24px 44px rgba(0,0,0,0.65));
+        }
+        100% {
+          transform: scale(1);
+          filter: drop-shadow(0 0 24px rgba(255,31,31,0.24)) drop-shadow(0 24px 44px rgba(0,0,0,0.65));
+        }
+      }
+
+      .hero-pulse-10s {
+        animation: odotHeroPulse 10s ease-in-out 1 both;
+        transform-origin: center center;
+        will-change: transform, filter;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .hero-pulse-10s { animation: none; }
+      }
+
       .odot-pill-red {
         border: 1px solid rgba(246,200,95,0.22);
         background: linear-gradient(135deg, rgba(255,31,31,0.28), rgba(246,200,95,0.10));
@@ -983,7 +1024,7 @@
               <img
                 src="odotnyc-splash-heads.png"
                 alt="OdotNYC designer toy three-head artwork"
-                class="mx-auto block w-full rounded-[22px] object-contain"
+                class="hero-pulse-10s mx-auto block w-full rounded-[22px] object-contain"
               />
             </div>
           </div>
