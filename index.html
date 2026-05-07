@@ -77,6 +77,27 @@
         background-size: 26px 26px;
       }
 
+
+      .splash-orb {
+        position: absolute;
+        inset: auto auto 8% 50%;
+        width: min(70vw, 760px);
+        height: min(70vw, 760px);
+        transform: translateX(-50%);
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(56,189,248,0.14), rgba(168,85,247,0.08) 36%, transparent 70%);
+        filter: blur(18px);
+        pointer-events: none;
+      }
+
+      .splash-logo-caption {
+        margin-top: 1rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.66);
+      }
+
       .grain-overlay::before {
         content: "";
         position: absolute;
@@ -154,8 +175,9 @@
       .logo-glitch {
         position: relative;
         display: inline-block;
-        width: min(60vw, 550px);
-        max-width: 550px;
+        width: min(86vw, 920px);
+        max-width: 920px;
+        filter: drop-shadow(0 0 28px rgba(255,255,255,0.16)) drop-shadow(0 0 70px rgba(56,189,248,0.18));
       }
 
       .logo-glitch img {
@@ -169,7 +191,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background-image: url("odotnyc3final.png");
+        background-image: url("odotnyc-splash-heads.png");
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
@@ -684,13 +706,16 @@
       <video id="landingVideo" class="fixed inset-0 -z-20 h-full w-full" autoplay muted loop playsinline>
         <source src="space.mp4" type="video/mp4" />
       </video>
-      <div class="fixed inset-0 -z-10 bg-black/50"></div>
+      <div class="fixed inset-0 -z-10 bg-black/55"></div>
 
-      <main class="flex h-screen w-screen items-center justify-center p-6">
-        <div class="flex flex-col items-center text-center">
+      <main class="relative flex h-screen w-screen items-center justify-center p-6">
+        <div class="splash-orb"></div>
+        <div class="relative z-10 flex flex-col items-center text-center">
           <div class="logo-glitch glitch-on animate-fadeUp">
-            <img src="odotnyc3final.png" alt="OdotNYC Logo" />
+            <img src="odotnyc-splash-heads.png" alt="OdotNYC three-head splash logo" />
           </div>
+
+          <p class="splash-logo-caption animate-fadeUp delay-150">OdotNYC Universe Loading</p>
 
           <button
             id="enterBtn"
