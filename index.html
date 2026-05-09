@@ -5,7 +5,7 @@
     <meta name="theme-color" content="#000000">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests; block-all-mixed-content; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://s3.tradingview.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https://api.rss2json.com https://api.coingecko.com https://formsubmit.co https://api.allorigins.win https://query1.finance.yahoo.com; media-src 'self' https: data: blob:; manifest-src 'self'; worker-src 'self' blob:; frame-src 'self' https://s.tradingview.com https://www.tradingview.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self' https://formsubmit.co; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' https: data:; connect-src 'self' https://api.rss2json.com https://api.coingecko.com https://formsubmit.co https://api.allorigins.win https://query1.finance.yahoo.com; media-src 'self' https: data: blob:; manifest-src 'self'; worker-src 'self' blob:; upgrade-insecure-requests; block-all-mixed-content">
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), midi=(), xr-spatial-tracking=()" />
@@ -2048,7 +2048,7 @@
               Interested in connecting with me? Fill the form completely and I will connect with you soon.
             </p>
 
-            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/YOUR_EMAIL@domain.com" method="POST" accept-charset="UTF-8" autocomplete="on" novalidate>
+            <form class="mt-6 grid gap-4 sm:max-w-2xl" action="https://formsubmit.co/odot.rva@proton.me" method="POST" accept-charset="UTF-8" autocomplete="on" novalidate>
               <input type="hidden" name="_subject" value="New Website Contact Submission" />
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="true" />
@@ -2085,26 +2085,7 @@
       </main>
     </section>
 
-    <!-- FLOATING VR -->
-    <a
-      id="vrOdot"
-      href="https://odotofrva.github.io/VROdotNYC/"
-      class="fixed bottom-5 right-5 z-50 group"
-      aria-label="Open VR OdotNYC"
-    >
-      <div class="glow-card flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur transition hover:bg-white/10">
-        <span class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-black/30 text-white/90">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-            <path d="M5 7a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h2a3 3 0 0 0 2.83-2h4.34A3 3 0 0 0 17 17h2a3 3 0 0 0 3-3v-4a3 3 0 0 0-3-3H5zm2 8H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1zm12 0h-2a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1z"/>
-          </svg>
-        </span>
-        <div class="leading-tight">
-          <div class="text-sm font-semibold text-white/90">VR OdotNYC</div>
-          <div class="text-[11px] text-white/60 group-hover:text-white/70">Experience VR OdotNYC →</div>
-        </div>
-      </div>
-    </a>
-
+    
     <!-- 21+ MODAL -->
     <div id="ageModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/70"></div>
@@ -2283,6 +2264,7 @@
           initActiveMenu();
           initLookbookThumbs();
           initCryptoTicker();
+          initStockTicker();
           initMediumBlog();
           initReleafGate();
           initDiscountPopup();
@@ -2473,7 +2455,7 @@
           });
         };
 
-        const ids = ["about", "odotnyc", "robotechi", "jaii-nails", "ar-ufo", "ar-odotnyc", "hacim-alyn", "menoclone", "verde-house", "blog", "contact"];
+        const ids = ["about", "robotechi", "jaii-nails", "hacim-adventure", "go-ufo", "ar-odotnyc", "hacim-alyn", "menoclone", "cowomo", "blog", "contact"];
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
 
