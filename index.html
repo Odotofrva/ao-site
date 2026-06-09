@@ -1137,6 +1137,156 @@
         }
       }
 
+
+      /* Retro OdotNYC Store-inspired skin */
+      :root {
+        --retro-black: #050505;
+        --retro-panel: #101010;
+        --retro-red: #ff2a1f;
+        --retro-yellow: #ffd34d;
+        --retro-green: #46ff7a;
+        --retro-cyan: #44d9ff;
+        --retro-cream: #fff3cf;
+      }
+
+      body {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        background:
+          linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+          radial-gradient(circle at top, rgba(255,42,31,0.20), transparent 34%),
+          #050505;
+        background-size: 18px 18px, 18px 18px, auto, auto;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0.07;
+        background: repeating-linear-gradient(0deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 4px);
+        mix-blend-mode: screen;
+      }
+
+      #home,
+      header,
+      .stock-tape-shell {
+        background-color: rgba(5,5,5,0.92) !important;
+      }
+
+      h1, h2, h3,
+      .pixel-title,
+      .splash-logo-caption,
+      .section-tag,
+      .blog-kicker,
+      .navlink {
+        letter-spacing: -0.03em;
+        text-shadow: 2px 2px 0 rgba(0,0,0,0.75), 0 0 14px rgba(255,211,77,0.16);
+      }
+
+      header {
+        border-bottom: 3px solid rgba(255,211,77,0.45) !important;
+        box-shadow: 0 0 0 2px rgba(0,0,0,0.8), 0 16px 0 rgba(0,0,0,0.22), 0 0 36px rgba(255,42,31,0.18);
+      }
+
+      .marquee span,
+      .stock-tape-shell .label,
+      header span.shrink-0 {
+        color: var(--retro-cream) !important;
+      }
+
+      .navlink {
+        border: 2px solid rgba(255,211,77,0.30) !important;
+        border-radius: 0.85rem !important;
+        background: linear-gradient(180deg, rgba(255,211,77,0.12), rgba(255,42,31,0.10)) !important;
+        box-shadow: 0 5px 0 rgba(0,0,0,0.85), inset 0 0 0 1px rgba(255,255,255,0.06);
+        text-transform: uppercase;
+      }
+
+      .navlink:hover,
+      .navlink-active {
+        transform: translateY(-2px);
+        color: #050505 !important;
+        background: linear-gradient(180deg, var(--retro-yellow), #ff9f1f) !important;
+        border-color: rgba(255,255,255,0.7) !important;
+        box-shadow: 0 7px 0 rgba(0,0,0,0.9), 0 0 28px rgba(255,211,77,0.25) !important;
+      }
+
+      .designer-hero,
+      .glow-card,
+      .event-card,
+      .blog-card,
+      .section-media-card,
+      .gameboy-preview,
+      .about-lookbook__main,
+      form,
+      #menuPanel > div {
+        border: 2px solid rgba(255,211,77,0.28) !important;
+        border-radius: 1.25rem !important;
+        background:
+          linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(18,18,18,0.96), rgba(6,6,6,0.98)) !important;
+        background-size: 16px 16px, 16px 16px, auto !important;
+        box-shadow: 0 8px 0 rgba(0,0,0,0.86), 0 0 30px rgba(255,42,31,0.12) !important;
+      }
+
+      .glow-card:hover,
+      .event-card:hover,
+      .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 0 rgba(0,0,0,0.9), 0 0 36px rgba(255,211,77,0.18) !important;
+      }
+
+      #enterBtn,
+      .event-btn,
+      button[type="submit"],
+      a[href="#contact"],
+      a[href*="odotnycshop"],
+      a[href*="rt-site-odotnyc"],
+      a[href*="sips"],
+      a[href*="man"] {
+        border: 2px solid rgba(255,255,255,0.78) !important;
+        border-radius: 0.85rem !important;
+        background: linear-gradient(180deg, var(--retro-yellow), #ff9f1f) !important;
+        color: #080808 !important;
+        box-shadow: 0 6px 0 #000, 0 0 24px rgba(255,211,77,0.20) !important;
+        text-transform: uppercase;
+      }
+
+      #enterBtn:hover,
+      .event-btn:hover,
+      button[type="submit"]:hover,
+      a[href*="odotnycshop"]:hover,
+      a[href*="rt-site-odotnyc"]:hover {
+        transform: translateY(-3px) !important;
+        filter: saturate(1.12);
+      }
+
+      .odot-pill-red,
+      .blog-date,
+      .blog-card__prompt,
+      .event-type {
+        color: var(--retro-yellow) !important;
+      }
+
+      input,
+      textarea {
+        border: 2px solid rgba(255,211,77,0.22) !important;
+        border-radius: 0.9rem !important;
+        background: #070707 !important;
+      }
+
+      .about-thumb.active { box-shadow: 0 0 0 3px var(--retro-yellow), 0 6px 0 #000; }
+      .about-thumb { border: 2px solid rgba(255,211,77,0.20); border-radius: 0.85rem; }
+
+      @media (max-width: 640px) {
+        #menuPanel ul { grid-template-columns: 1fr; }
+        .designer-hero, .glow-card { border-radius: 1rem !important; }
+      }
+
     </style>
   </head>
 
@@ -1298,11 +1448,10 @@
               <li><a data-section="robotechi" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#robotechi">RoboTechi</a></li>
               <li><a data-section="jaii-nails" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#jaii-nails">Jaii Nails</a></li>
               <li><a data-section="hacim-adventure" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#hacim-adventure">Hacim Adventure</a></li>
-              <li><a data-section="go-ufo" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#go-ufo">GO-UFO</a></li>
               <li><a data-section="ar-odotnyc" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#ar-odotnyc">AR-OdotNYC</a></li>
               <li><a data-section="menoclone" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#menoclone">MENOCLONE</a></li>
-              <li><a data-section="cowomo" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#cowomo">CoMoWo</a></li>
               <li><a data-section="man" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#man">MAN Nonprofit</a></li>
+              <li><a data-section="sips-of-soul" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#sips-of-soul">Sips of Soul</a></li>
               <li><a data-section="blog" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#blog">Blog</a></li>
               <li><a data-section="contact" class="navlink block rounded-2xl border border-white/5 bg-black/20 px-4 py-3 text-sm font-medium text-white/80 transition hover:bg-white/10" href="#contact">Contact</a></li>
               
@@ -2312,34 +2461,6 @@
     </section>
 
     
-    <!-- 21+ MODAL -->
-    <div id="ageModal" class="fixed inset-0 z-50 hidden">
-      <div class="absolute inset-0 bg-black/70"></div>
-      <div class="relative mx-auto mt-24 w-[92%] max-w-md">
-        <div class="glow-card rounded-3xl border border-white/10 bg-zinc-950/95 p-6 backdrop-blur">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <p class="text-xs font-medium tracking-wide text-white/60">Age Verification</p>
-              <h3 class="mt-1 text-xl font-semibold">Are you 21 or older?</h3>
-              <p class="mt-2 text-sm text-white/70">You must confirm you are 21+ to enter the reLEAF website.</p>
-            </div>
-            <button id="ageClose" type="button" class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition hover:bg-white/10" aria-label="Close">✕</button>
-          </div>
-
-          <div class="mt-6 grid gap-3 sm:grid-cols-2">
-            <button id="ageYes" type="button" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:shadow-xl">
-              Yes, I’m 21+
-            </button>
-            <button id="ageNo" type="button" class="inline-flex items-center justify-center rounded-full border border-white/15 bg-transparent px-6 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/10">
-              No, take me back
-            </button>
-          </div>
-
-          <p class="mt-4 text-[11px] text-white/45">By clicking “Yes”, you confirm you meet the legal age requirement in your location.</p>
-        </div>
-      </div>
-    </div>
-
     <!-- ROBOTECHI SERVICES MODAL -->
     <div id="discountModal" class="fixed inset-0 z-50 hidden">
       <div class="absolute inset-0 bg-black/75"></div>
@@ -2440,10 +2561,7 @@
       const AUTO_ENTER_MS = 3000;
       const MEDIUM_RSS_URL = "https://medium.com/feed/@odotnyc";
       const MEDIUM_PROFILE_URL = "https://medium.com/@odotnyc";
-      const RELEAF_URL = "https://odotofrva.github.io/releafco/#products";
-      const COWOMO_URL = "https://odotofrva.github.io/CoWoMoSite/";
       const SHOW_DISCOUNT_ONCE = true;
-      const DISCOUNT_HOVER_DELAY_MS = 300;
       const DISCOUNT_STORAGE_KEY = "odot_discount_seen_v2";
       const SHOW_IG_ONCE = true;
       const IG_STORAGE_KEY = "odot_ig_seen_v1";
@@ -2492,9 +2610,7 @@
           initCryptoTicker();
           initStockTicker();
           initMediumBlog();
-          initReleafGate();
           initDiscountPopup();
-          initCowomoButton();
           initInstagramPopup();
 
           setActiveNav("about");
@@ -2605,13 +2721,6 @@
 
         setTimeout(open, 1800);
       }
-
-      function initCowomoButton() {
-        const btn = document.getElementById('cowomoEnterBtn');
-        if (!btn) return;
-        btn.setAttribute('href', COWOMO_URL);
-      }
-
       function initLookbookThumbs() {
         const mainPhoto = document.getElementById("aboutMainPhoto");
         const thumbs = document.querySelectorAll(".about-thumb");
@@ -2632,43 +2741,6 @@
           });
         });
       }
-
-      function initReleafGate() {
-        const openBtn = document.getElementById("releafEnterBtn");
-        const modal = document.getElementById("ageModal");
-        const yes = document.getElementById("ageYes");
-        const no = document.getElementById("ageNo");
-        const close = document.getElementById("ageClose");
-
-        if (!openBtn || !modal || !yes || !no || !close) return;
-
-        const open = () => {
-          modal.classList.remove("hidden");
-          document.body.style.overflow = "hidden";
-          yes.focus?.();
-        };
-
-        const hide = () => {
-          modal.classList.add("hidden");
-          document.body.style.overflow = "";
-          openBtn.focus?.();
-        };
-
-        openBtn.addEventListener("click", open);
-
-        yes.addEventListener("click", () => {
-          try { localStorage.setItem("releaf_age_ok", "1"); } catch {}
-          window.location.href = RELEAF_URL;
-        });
-
-        no.addEventListener("click", hide);
-        close.addEventListener("click", hide);
-
-        document.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("hidden") && e.key === "Escape") hide();
-        });
-      }
-
       function initActiveMenu() {
         const links = Array.from(document.querySelectorAll(".navlink"));
 
@@ -2681,7 +2753,7 @@
           });
         };
 
-        const ids = ["about", "robotechi", "jaii-nails", "hacim-adventure", "go-ufo", "ar-odotnyc", "hacim-alyn", "menoclone", "cowomo", "blog", "contact"];
+        const ids = ["about", "shop", "robotechi", "man", "sips-of-soul", "jaii-nails", "hacim-adventure", "ar-odotnyc", "menoclone", "blog", "contact"];
         const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
         if (!sections.length) return;
 
