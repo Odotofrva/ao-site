@@ -1287,10 +1287,63 @@
         .designer-hero, .glow-card { border-radius: 1rem !important; }
       }
 
+
+      /* Retro hand cursor - desktop + mobile/touch friendly */
+      :root {
+        --retro-hand-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23fff3cf' stroke='%23050505' stroke-width='2' d='M11 3h5v12h1V8h4v7h1v-5h4v8c0 6-4 10-10 10h-3c-3 0-5-1-7-4L3 19c-.7-1.2-.2-2.8 1-3.4 1.1-.6 2.4-.2 3.1.8l2.9 4.1z'/%3E%3Cpath fill='%23ffd34d' d='M12 5h3v10h-3zM18 10h2v6h-2zM23 12h2v5h-2z'/%3E%3C/svg%3E") 8 2, pointer;
+      }
+
+      html,
+      body,
+      a,
+      button,
+      input,
+      textarea,
+      select,
+      summary,
+      label,
+      [role="button"],
+      [tabindex]:not([tabindex="-1"]) {
+        cursor: var(--retro-hand-cursor);
+      }
+
+      body {
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      .retro-hand-cursor {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 10000;
+        width: 34px;
+        height: 34px;
+        pointer-events: none;
+        opacity: 0;
+        transform: translate3d(-100px, -100px, 0) rotate(-10deg);
+        transition: opacity 120ms ease, transform 80ms linear;
+        filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.85)) drop-shadow(0 0 10px rgba(255,211,77,0.22));
+      }
+
+      .retro-hand-cursor.is-visible { opacity: 1; }
+      .retro-hand-cursor.is-tapping { transform: translate3d(var(--cursor-x, -100px), var(--cursor-y, -100px), 0) rotate(-10deg) scale(0.88); }
+
+      @media (hover: hover) and (pointer: fine) {
+        body.retro-cursor-ready,
+        body.retro-cursor-ready * {
+          cursor: none !important;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .retro-hand-cursor { display: none; }
+      }
+
     </style>
   </head>
 
-  <body class="w-screen bg-black text-white">
+  <body class="min-h-screen overflow-x-hidden bg-black text-white">
     <!-- LANDING -->
     <section id="landing" class="relative h-screen w-screen">
       <video id="landingVideo" class="fixed inset-0 -z-20 h-full w-full" autoplay muted loop playsinline>
@@ -1514,19 +1567,19 @@
         <section class="about-lookbook" id="about-lookbook" aria-label="About photo gallery">
           <div class="about-lookbook__wrap">
             <div class="about-lookbook__main">
-              <img id="aboutMainPhoto" src="odotnyc-photo-grid.png" alt="OdotNYC featured photo" />
+              <img id="aboutMainPhoto" src="odotbrown.jpg" alt="OdotNYC featured photo" />
             </div>
 
             <div class="about-lookbook__thumbs" role="tablist" aria-label="Photo thumbnails">
-              <button class="about-thumb active" type="button" data-full="odotbrown.png" aria-label="Show photo 1">
+              <button class="about-thumb active" type="button" data-full="odotbrown.jpg" aria-label="Show photo 1">
                 <img src="odotbrown.jpg" alt="Thumbnail 1" />
               </button>
 
-              <button class="about-thumb" type="button" data-full="odotredblkjersey.png" aria-label="Show photo 2">
+              <button class="about-thumb" type="button" data-full="odotredblkjersey.jpg" aria-label="Show photo 2">
                 <img src="odotredblkjersey.jpg" alt="Thumbnail 2" />
               </button>
 
-              <button class="about-thumb" type="button" data-full="odoteagles1.png" aria-label="Show photo 3">
+              <button class="about-thumb" type="button" data-full="odoteagles1.jpg" aria-label="Show photo 3">
                 <img src="odoteagles1.jpg" alt="Thumbnail 3" />
               </button>
 
@@ -2572,6 +2625,7 @@
         hardenExternalLinks();
         hardenForms();
         lazyLoadMedia();
+        initRetroCursor();
 
         const enterBtn = document.getElementById("enterBtn");
         const landing = document.getElementById("landing");
@@ -2641,6 +2695,51 @@
         if (yearEl) yearEl.textContent = new Date().getFullYear();
       });
 
+
+
+      function initRetroCursor() {
+        if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+        if (document.getElementById("retroHandCursor")) return;
+
+        const cursor = document.createElement("div");
+        cursor.id = "retroHandCursor";
+        cursor.className = "retro-hand-cursor";
+        cursor.setAttribute("aria-hidden", "true");
+        cursor.innerHTML = `
+          <svg viewBox="0 0 32 32" width="34" height="34" focusable="false">
+            <path fill="#fff3cf" stroke="#050505" stroke-width="2" stroke-linejoin="round" d="M11 3h5v12h1V8h4v7h1v-5h4v8c0 6-4 10-10 10h-3c-3 0-5-1-7-4L3 19c-.7-1.2-.2-2.8 1-3.4 1.1-.6 2.4-.2 3.1.8l2.9 4.1z"/>
+            <path fill="#ffd34d" d="M12 5h3v10h-3zM18 10h2v6h-2zM23 12h2v5h-2z"/>
+            <path fill="#ff2a1f" d="M7 22h13v3H9z" opacity=".9"/>
+          </svg>
+        `;
+        document.body.appendChild(cursor);
+
+        const setPosition = (x, y) => {
+          const left = Math.max(0, Math.min(window.innerWidth - 34, x - 8));
+          const top = Math.max(0, Math.min(window.innerHeight - 34, y - 2));
+          cursor.style.setProperty("--cursor-x", `${left}px`);
+          cursor.style.setProperty("--cursor-y", `${top}px`);
+          cursor.style.transform = `translate3d(${left}px, ${top}px, 0) rotate(-10deg)`;
+        };
+
+        window.addEventListener("pointermove", (e) => {
+          if (e.pointerType === "mouse") document.body.classList.add("retro-cursor-ready");
+          setPosition(e.clientX, e.clientY);
+          cursor.classList.add("is-visible");
+        }, { passive: true });
+
+        window.addEventListener("pointerdown", (e) => {
+          setPosition(e.clientX, e.clientY);
+          cursor.classList.add("is-visible", "is-tapping");
+        }, { passive: true });
+
+        window.addEventListener("pointerup", () => {
+          cursor.classList.remove("is-tapping");
+          window.setTimeout(() => cursor.classList.remove("is-visible"), 520);
+        }, { passive: true });
+
+        document.addEventListener("mouseleave", () => cursor.classList.remove("is-visible"));
+      }
 
       function hardenExternalLinks() {
         document.querySelectorAll('a[href]').forEach((link) => {
