@@ -8,6 +8,13 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action https://formsubmit.co; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests; block-all-mixed-content" />
   <link rel="icon" type="image/png" sizes="512x512" href="favicon.png" />
   <title>OdotNYC | OBIOS OS v1</title>
+  <script>
+    try {
+      document.documentElement.dataset.uiTheme = localStorage.getItem('odotnyc-ui-theme') || 'win95';
+    } catch (error) {
+      document.documentElement.dataset.uiTheme = 'win95';
+    }
+  </script>
   <style>
     :root {
       --desktop: #008080;
@@ -341,7 +348,6 @@
     .window {
       margin: 0 0 1rem;
       scroll-margin-top: 88px;
-      transition: opacity 420ms ease, transform 420ms ease, box-shadow 180ms ease;
     }
 
     .window__body { padding: clamp(1rem, 2.5vw, 1.5rem); }
@@ -659,7 +665,7 @@
 
     .mobile-nav-row {
       display: none;
-      grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.45rem;
       margin: 0.6rem 0 1rem;
     }
@@ -789,6 +795,258 @@
       font-size: 0.86rem;
     }
 
+    .theme-toggle {
+      flex: 0 0 auto;
+      min-height: 36px;
+      padding-inline: 0.7rem;
+    }
+
+    .theme-toggle__dot {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      background: #000080;
+      box-shadow: 0 0 0 2px #fff inset;
+    }
+
+    html[data-ui-theme="terminal"] body {
+      --desktop: #020402;
+      --desktop-dark: #010201;
+      --win-face: #06120a;
+      --win-face-light: #081b0e;
+      --win-light: #54ff83;
+      --win-mid: #155b2c;
+      --win-dark: #000000;
+      --win-blue: #05240d;
+      --win-blue-bright: #138c3a;
+      --win-yellow: #c9ffd5;
+      --text: #d8ffe3;
+      --muted: #95e8aa;
+      --shadow: rgba(22, 255, 94, 0.18);
+      color: var(--text);
+      font-family: "Courier New", "Liberation Mono", Consolas, monospace;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(28, 255, 92, 0.15), transparent 22rem),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 4px),
+        linear-gradient(135deg, #020402, #041408 55%, #020402);
+    }
+
+    html[data-ui-theme="terminal"] body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at center, transparent 0 58%, rgba(0,0,0,0.34) 100%);
+      mix-blend-mode: multiply;
+    }
+
+    html[data-ui-theme="terminal"] .boot-screen,
+    html[data-ui-theme="terminal"] .taskbar,
+    html[data-ui-theme="terminal"] .start-menu,
+    html[data-ui-theme="terminal"] .desktop {
+      position: relative;
+      z-index: 1;
+    }
+
+    html[data-ui-theme="terminal"] .boot-screen {
+      position: fixed;
+      z-index: 100;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 5px),
+        #020402;
+    }
+
+    html[data-ui-theme="terminal"] .win-border,
+    html[data-ui-theme="terminal"] .win-inset {
+      border: 1px solid rgba(84, 255, 131, 0.72);
+      background: rgba(2, 13, 5, 0.9);
+      box-shadow: 0 0 0 1px rgba(84,255,131,0.12), 0 0 24px rgba(84,255,131,0.16);
+    }
+
+    html[data-ui-theme="terminal"] .titlebar {
+      min-height: 36px;
+      color: #baffc7;
+      background: linear-gradient(90deg, #031707, #063114);
+      border-bottom: 1px solid rgba(84,255,131,0.65);
+      text-transform: lowercase;
+      letter-spacing: 0.045em;
+    }
+
+    html[data-ui-theme="terminal"] .titlebar__icon,
+    html[data-ui-theme="terminal"] .desktop-icon__tile {
+      border: 1px solid #54ff83;
+      background: #020402;
+      box-shadow: 0 0 12px rgba(84,255,131,0.35) inset;
+      position: relative;
+    }
+
+    html[data-ui-theme="terminal"] .titlebar__icon::after,
+    html[data-ui-theme="terminal"] .desktop-icon__tile::after {
+      content: ">_";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: #54ff83;
+      font-size: 0.55rem;
+      font-weight: 900;
+    }
+
+    html[data-ui-theme="terminal"] .titlebar__text::before {
+      content: "./";
+      color: #54ff83;
+    }
+
+    html[data-ui-theme="terminal"] .window-control {
+      border: 1px solid rgba(84,255,131,0.65);
+      background: #020402;
+      color: #54ff83;
+    }
+
+    html[data-ui-theme="terminal"] .start-button,
+    html[data-ui-theme="terminal"] .button-95,
+    html[data-ui-theme="terminal"] .mobile-nav-row a,
+    html[data-ui-theme="terminal"] .contact-list a {
+      border: 1px solid rgba(84,255,131,0.8);
+      background: #020402;
+      color: #d8ffe3;
+      box-shadow: 0 0 12px rgba(84,255,131,0.16);
+      text-shadow: 0 0 7px rgba(84,255,131,0.38);
+    }
+
+    html[data-ui-theme="terminal"] .start-logo {
+      background: #54ff83;
+      color: #020402;
+      border-radius: 0;
+    }
+
+    html[data-ui-theme="terminal"] .theme-toggle__dot {
+      background: #54ff83;
+      box-shadow: 0 0 10px rgba(84,255,131,0.85);
+    }
+
+    html[data-ui-theme="terminal"] .taskbar-title,
+    html[data-ui-theme="terminal"] .clock {
+      border: 1px solid rgba(84,255,131,0.55);
+      background: rgba(3, 21, 8, 0.88);
+      color: #baffc7;
+      box-shadow: inset 0 0 12px rgba(84,255,131,0.08);
+    }
+
+    html[data-ui-theme="terminal"] .taskbar-title::before {
+      content: "orion@odotnyc:~$ ";
+      color: #54ff83;
+    }
+
+    html[data-ui-theme="terminal"] .start-menu__brand {
+      background: linear-gradient(180deg, #0b441d, #010301);
+      color: #d8ffe3;
+    }
+
+    html[data-ui-theme="terminal"] .navlink {
+      color: #d8ffe3;
+    }
+
+    html[data-ui-theme="terminal"] .navlink::before,
+    html[data-ui-theme="terminal"] .tag::before {
+      background: #54ff83;
+      box-shadow: 0 0 10px rgba(84,255,131,0.75);
+    }
+
+    html[data-ui-theme="terminal"] .navlink:hover,
+    html[data-ui-theme="terminal"] .navlink.is-active {
+      color: #020402;
+      background: #54ff83;
+      text-shadow: none;
+    }
+
+    html[data-ui-theme="terminal"] .desktop-icon {
+      color: #d8ffe3;
+      text-shadow: 0 0 8px rgba(84,255,131,0.65);
+    }
+
+    html[data-ui-theme="terminal"] .hero-screen,
+    html[data-ui-theme="terminal"] .lookbook-main,
+    html[data-ui-theme="terminal"] .about-photo {
+      background:
+        linear-gradient(45deg, rgba(84,255,131,0.04) 25%, transparent 25%) 0 0 / 12px 12px,
+        #041008;
+    }
+
+    html[data-ui-theme="terminal"] h1,
+    html[data-ui-theme="terminal"] h2,
+    html[data-ui-theme="terminal"] h3 {
+      color: #e7ffed;
+      text-shadow: 0 0 12px rgba(84,255,131,0.25);
+      letter-spacing: -0.025em;
+    }
+
+    html[data-ui-theme="terminal"] h1::before {
+      content: "sudo launch ";
+      display: block;
+      margin-bottom: 0.4rem;
+      color: #54ff83;
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    html[data-ui-theme="terminal"] .eyebrow {
+      color: #020402;
+      background: #54ff83;
+      text-shadow: none;
+    }
+
+    html[data-ui-theme="terminal"] .eyebrow::before {
+      background: #020402;
+      box-shadow: none;
+    }
+
+    html[data-ui-theme="terminal"] .mini-card,
+    html[data-ui-theme="terminal"] .project-card,
+    html[data-ui-theme="terminal"] .status-item,
+    html[data-ui-theme="terminal"] .tag,
+    html[data-ui-theme="terminal"] input,
+    html[data-ui-theme="terminal"] textarea,
+    html[data-ui-theme="terminal"] .fallback-note {
+      background: rgba(3, 18, 7, 0.96);
+      color: #d8ffe3;
+      border-color: rgba(84,255,131,0.55);
+    }
+
+    html[data-ui-theme="terminal"] .project-card__label {
+      color: #020402;
+      background: #54ff83;
+    }
+
+    html[data-ui-theme="terminal"] .project-card__icon {
+      border: 1px solid rgba(84,255,131,0.72);
+      background: #020402;
+      box-shadow: inset 0 0 12px rgba(84,255,131,0.16);
+    }
+
+    html[data-ui-theme="terminal"] .thumb.is-active {
+      outline: 2px solid #54ff83;
+      box-shadow: 0 0 18px rgba(84,255,131,0.45);
+    }
+
+    html[data-ui-theme="terminal"] .progress {
+      background: #010301;
+    }
+
+    html[data-ui-theme="terminal"] .progress span {
+      background: repeating-linear-gradient(90deg, #54ff83 0 14px, #16652e 14px 28px);
+    }
+
+    html[data-ui-theme="terminal"] img {
+      filter: saturate(0.9) contrast(1.06) drop-shadow(0 0 10px rgba(84,255,131,0.16));
+    }
+
+    html[data-ui-theme="terminal"] .hero-screen img {
+      filter: saturate(0.9) contrast(1.06) drop-shadow(0 0 16px rgba(84,255,131,0.22));
+    }
+
     @keyframes titleSweep {
       0%, 68% { transform: translateX(-120%); }
       82%, 100% { transform: translateX(120%); }
@@ -896,6 +1154,13 @@
       .titlebar__text { font-size: 0.85rem; }
       h1 { font-size: clamp(2.25rem, 15vw, 3.6rem); }
       .button-95 { width: 100%; }
+      .taskbar .button-95,
+      .theme-toggle {
+        width: auto;
+        min-height: 34px;
+        padding: 0.42rem 0.55rem;
+        font-size: 0.78rem;
+      }
       .hero-actions .button-95,
       .card-actions .button-95 { flex: 1 1 100%; }
     }
@@ -945,6 +1210,10 @@
         Start
       </button>
       <div class="taskbar-title">OBIOS-OS | Powered by: RoboTechi. </div>
+      <button class="button-95 theme-toggle" type="button" id="themeToggle" aria-pressed="false" aria-label="Switch to Linux Terminal UI">
+        <span class="theme-toggle__dot" aria-hidden="true"></span>
+        <span id="themeToggleText">Linux UI</span>
+      </button>
       <div class="clock" id="clock" aria-label="Current time">--:--</div>
     </div>
   </header>
@@ -954,9 +1223,9 @@
       <div class="start-menu__brand">OBIOS OS</div>
       <div class="start-menu__links">
         <a class="navlink" href="#about" data-section="about">About OdotNYC</a>
-        <a class="navlink" href="#lookbook" data-section="lookbook">Lookbook</a>
         <a class="navlink" href="#focus" data-section="focus">What I Build</a>
         <a class="navlink" href="#ecosystem" data-section="ecosystem">Ecosystem</a>
+        <a class="navlink" href="#lookbook" data-section="lookbook">Lookbook</a>
         <a class="navlink" href="#blog" data-section="blog">Tech Blog</a>
         <a class="navlink" href="#contact" data-section="contact">Contact</a>
       </div>
@@ -973,7 +1242,6 @@
 
     <div class="mobile-nav-row" aria-label="Mobile quick navigation">
       <a href="#about">About</a>
-      <a href="#lookbook">Lookbook</a>
       <a href="#ecosystem">Projects</a>
       <a href="#contact">Contact</a>
     </div>
@@ -1245,6 +1513,36 @@
       const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
       const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
       const motionAllowed = !motionQuery.matches;
+      const root = document.documentElement;
+      const themeToggle = $('#themeToggle');
+      const themeToggleText = $('#themeToggleText');
+      const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+      const getStoredTheme = () => {
+        try { return localStorage.getItem('odotnyc-ui-theme'); } catch (error) { return null; }
+      };
+      const storeTheme = (theme) => {
+        try { localStorage.setItem('odotnyc-ui-theme', theme); } catch (error) {}
+      };
+      const setTheme = (theme, { save = true } = {}) => {
+        const nextTheme = theme === 'terminal' ? 'terminal' : 'win95';
+        root.dataset.uiTheme = nextTheme;
+        if (themeColorMeta) themeColorMeta.setAttribute('content', nextTheme === 'terminal' ? '#020402' : '#008080');
+        if (themeToggle) {
+          const isTerminal = nextTheme === 'terminal';
+          themeToggle.setAttribute('aria-pressed', String(isTerminal));
+          themeToggle.setAttribute('aria-label', isTerminal ? 'Switch to Windows 95 UI' : 'Switch to Linux Terminal UI');
+          themeToggle.classList.toggle('is-active', isTerminal);
+        }
+        if (themeToggleText) themeToggleText.textContent = nextTheme === 'terminal' ? 'Win95 UI' : 'Linux UI';
+        if (save) storeTheme(nextTheme);
+      };
+      setTheme(getStoredTheme() || root.dataset.uiTheme || 'win95', { save: false });
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const nextTheme = root.dataset.uiTheme === 'terminal' ? 'win95' : 'terminal';
+          setTheme(nextTheme);
+        });
+      }
 
       const bootScreen = $('#bootScreen');
       const skipBoot = $('#skipBoot');
