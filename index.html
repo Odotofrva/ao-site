@@ -7,7 +7,7 @@
   <meta name="description" content="OdotNYC is a creative ecosystem connecting technology, street culture, fashion, games, AR, community projects, and maker education." />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action https://formsubmit.co; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests; block-all-mixed-content" />
   <link rel="icon" type="image/png" sizes="512x512" href="favicon.png" />
-  <title>OdotNYC | OBIOS OS v1</title>
+  <title>OdotNYC | OBIOS OS </title>
   <script>
     try {
       document.documentElement.dataset.uiTheme = localStorage.getItem('odotnyc-ui-theme') || 'win95';
@@ -597,6 +597,21 @@
     .thumb.is-active {
       outline: 2px dotted var(--win-dark);
       outline-offset: -6px;
+    }
+
+    .blog-center {
+      display: grid;
+      place-items: center;
+    }
+
+    .blog-card {
+      width: min(100%, 720px);
+      padding: clamp(1rem, 2vw, 1.35rem);
+      text-align: center;
+    }
+
+    .blog-card .button-95 {
+      margin-inline: auto;
     }
 
     .contact-grid {
@@ -1821,17 +1836,10 @@
           </article>
 
           <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Arcade Mission</span><span class="project-card__icon" aria-hidden="true">🛸</span></div>
-            <h3>GO-UFO</h3>
-            <p>A sci-fi arcade experience inspired by UFO technology, retro gaming, and cosmic storytelling.</p>
-            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/GoUFO-RT/" target="_blank" rel="noopener noreferrer">Launch GO-UFO</a><a class="button-95" href="#contact">Explore Games</a></div>
-          </article>
-
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Web AR</span><span class="project-card__icon" aria-hidden="true">📡</span></div>
-            <h3>AR-OdotNYC</h3>
-            <p>A browser-based augmented reality experience that blends digital identity, interactive branding, and web visuals.</p>
-            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/OdotNYC-AR/" target="_blank" rel="noopener noreferrer">Launch AR</a><a class="button-95" href="#contact">Build AR</a></div>
+            <div class="project-card__top"><span class="project-card__label">Art + Maps</span><span class="project-card__icon" aria-hidden="true">🗺️</span></div>
+            <h3>OdotNYC Art Locator</h3>
+            <p>An interactive map experience that helps visitors discover OdotNYC art installation locations across NYC and zoom into each spot.</p>
+            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/OdotNYCArtMap/" target="_blank" rel="noopener noreferrer">Open Art Locator</a><a class="button-95" href="#contact">Submit Location</a></div>
           </article>
 
           <article class="project-card win-inset">
@@ -1850,8 +1858,8 @@
         <div class="window-controls" aria-hidden="true"><span class="window-control">_</span><span class="window-control">□</span><span class="window-control">×</span></div>
       </div>
       <div class="window__body">
-        <div class="two-col">
-          <div class="win-inset" style="padding: clamp(1rem, 2vw, 1.35rem);">
+        <div class="blog-center">
+          <div class="blog-card win-inset">
             <span class="eyebrow">Tech Journal</span>
             <h2 id="blog-title" style="margin-top:.8rem;">Inside the OdotNYC Tech Blog</h2>
             <p>Notes from the build process, experiments in web and hardware, and stories from the intersection of code, culture, and creative technology.</p>
