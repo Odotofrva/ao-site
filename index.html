@@ -348,7 +348,7 @@
     .hero-grid {
       display: grid;
       gap: 1rem;
-      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
       align-items: stretch;
     }
 
@@ -412,16 +412,16 @@
     .hero-screen {
       display: grid;
       place-items: center;
-      min-height: 340px;
-      padding: 1rem;
+      min-height: 430px;
+      padding: 0.65rem;
       background:
         linear-gradient(45deg, rgba(0,0,0,0.07) 25%, transparent 25%) 0 0 / 14px 14px,
         #ffffff;
     }
 
     .hero-screen img {
-      width: min(100%, 440px);
-      max-height: 420px;
+      width: min(100%, 560px);
+      max-height: 540px;
       object-fit: contain;
       filter: drop-shadow(8px 8px 0 rgba(0,0,0,0.2));
     }
@@ -708,7 +708,7 @@
       height: 100%;
       width: 0%;
       background: repeating-linear-gradient(90deg, var(--win-blue) 0 16px, var(--win-blue-bright) 16px 32px);
-      animation: load 950ms ease forwards;
+      animation: load 2850ms ease forwards;
     }
 
     @keyframes load { to { width: 100%; } }
@@ -751,7 +751,11 @@
       .desktop { padding: 0.65rem 0.65rem 5rem; }
       .desktop-icons { display: none; }
       .mobile-nav-row { display: grid; }
-      .hero-screen { min-height: 240px; }
+      .hero-screen { min-height: 310px; }
+      .hero-screen img {
+        width: min(100%, 420px);
+        max-height: 380px;
+      }
       .status-strip,
       .grid-4,
       .ecosystem-grid,
@@ -1101,7 +1105,7 @@
       const bootScreen = $('#bootScreen');
       const skipBoot = $('#skipBoot');
       const hideBoot = () => bootScreen && bootScreen.classList.add('is-hidden');
-      window.setTimeout(hideBoot, 1200);
+      window.setTimeout(hideBoot, 3000);
       if (skipBoot) skipBoot.addEventListener('click', hideBoot);
 
       const startButton = $('#startButton');
