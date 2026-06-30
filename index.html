@@ -499,61 +499,153 @@
     }
 
     .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .ecosystem-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .ecosystem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; }
 
-    .mini-card,
-    .project-card {
+    .mini-card {
       padding: 0.9rem;
       background: #fff;
     }
 
-    .mini-card p,
-    .project-card p {
+    .mini-card p {
       color: var(--muted);
       font-size: 0.94rem;
       margin-bottom: 0;
     }
 
-    .project-card {
+    .project-folder {
+      min-height: 330px;
+      padding: 0.85rem;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.62), rgba(255,255,255,0.16)),
+        var(--win-face);
       display: flex;
       flex-direction: column;
-      min-height: 265px;
+      gap: 0.65rem;
     }
 
-    .project-card__top {
+    .project-folder__shell {
+      position: relative;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
+      flex: 1 1 auto;
+      min-height: 245px;
+      color: #000;
+      text-decoration: none;
+      filter: drop-shadow(8px 8px 0 rgba(0,0,0,0.20));
     }
 
-    .project-card__icon {
+    .project-folder__shape {
+      position: relative;
+      width: 100%;
+      margin-top: 34px;
+      padding: clamp(1rem, 2.2vw, 1.35rem);
+      display: grid;
+      grid-template-columns: minmax(96px, 0.32fr) minmax(0, 1fr);
+      gap: clamp(0.8rem, 2vw, 1.15rem);
+      align-items: center;
+      border-top: 2px solid #fff4a3;
+      border-left: 2px solid #fff4a3;
+      border-right: 3px solid #7c5300;
+      border-bottom: 3px solid #7c5300;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.42), transparent 42%),
+        linear-gradient(180deg, #ffe784 0%, #f7c852 100%);
+      overflow: visible;
+    }
+
+    .project-folder__shape::before {
+      content: attr(data-label);
+      position: absolute;
+      left: -2px;
+      top: -36px;
+      min-width: min(72%, 260px);
+      min-height: 37px;
+      padding: 0.48rem 0.82rem 0.38rem;
+      border-top: 2px solid #fff4a3;
+      border-left: 2px solid #fff4a3;
+      border-right: 3px solid #7c5300;
+      background: linear-gradient(180deg, #ffdf70, #f2b83a);
+      color: #2c2100;
+      font-size: 0.78rem;
+      font-weight: 900;
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.035em;
+      z-index: 1;
+    }
+
+    .project-folder__shape::after {
+      content: "";
+      position: absolute;
+      inset: 14px 14px auto auto;
+      width: 38px;
+      height: 28px;
+      border-top: 2px solid rgba(255,255,255,0.75);
+      border-left: 2px solid rgba(255,255,255,0.75);
+      border-right: 2px solid rgba(124,83,0,0.8);
+      border-bottom: 2px solid rgba(124,83,0,0.8);
+      background: rgba(255,255,255,0.24);
+      opacity: 0.8;
+    }
+
+    .project-folder__icon {
+      position: relative;
       display: grid;
       place-items: center;
-      width: 44px;
-      height: 44px;
-      flex: 0 0 auto;
-      border-top: 2px solid var(--win-light);
-      border-left: 2px solid var(--win-light);
-      border-right: 2px solid var(--win-dark);
-      border-bottom: 2px solid var(--win-dark);
-      background: var(--win-face);
-      font-size: 1.3rem;
+      width: min(100%, 126px);
+      aspect-ratio: 1 / 0.78;
+      margin-inline: auto;
+      border-top: 2px solid #fff8b8;
+      border-left: 2px solid #fff8b8;
+      border-right: 3px solid #865700;
+      border-bottom: 3px solid #865700;
+      background:
+        linear-gradient(180deg, #fff5a6, #f4b938);
+      font-size: clamp(2.25rem, 5vw, 3.8rem);
+      box-shadow: inset 8px 8px 0 rgba(255,255,255,0.22);
     }
 
-    .project-card__label {
-      display: inline-flex;
-      width: fit-content;
-      padding: 0.2rem 0.42rem;
-      color: #fff;
-      background: var(--win-blue);
-      font-size: 0.75rem;
+    .project-folder__icon::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: -18px;
+      width: 58%;
+      height: 18px;
+      border-top: 2px solid #fff8b8;
+      border-left: 2px solid #fff8b8;
+      border-right: 3px solid #865700;
+      background: #ffd85d;
+    }
+
+    .project-folder__content {
+      position: relative;
+      z-index: 2;
+      min-width: 0;
+    }
+
+    .project-folder__content h3 {
+      margin-bottom: 0.45rem;
+      font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+      letter-spacing: -0.04em;
+    }
+
+    .project-folder__content p {
+      width: min(100%, 48ch);
+      margin-bottom: 0;
+      color: #3d3100;
+      font-size: 0.98rem;
+      line-height: 1.48;
       font-weight: 700;
-      margin-bottom: 0.5rem;
     }
 
-    .project-card .card-actions { margin-top: auto; }
+    .project-folder .card-actions {
+      margin-top: auto;
+      padding-top: 0.2rem;
+    }
+
+    .project-folder .card-actions .button-95 {
+      flex: 1 1 150px;
+    }
 
     .lookbook-grid {
       display: grid;
@@ -703,7 +795,7 @@
     .navlink,
     .desktop-icon,
     .mini-card,
-    .project-card,
+    .project-folder,
     .status-item,
     .thumb,
     .contact-list a,
@@ -735,7 +827,7 @@
     }
 
     .mini-card:hover,
-    .project-card:hover,
+    .project-folder:hover,
     .status-item:hover,
     .thumb:hover {
       transform: translateY(-3px);
@@ -1087,7 +1179,6 @@
     }
 
     html[data-ui-theme="terminal"] .mini-card,
-    html[data-ui-theme="terminal"] .project-card,
     html[data-ui-theme="terminal"] .status-item,
     html[data-ui-theme="terminal"] .tag,
     html[data-ui-theme="terminal"] input,
@@ -1098,15 +1189,44 @@
       border-color: rgba(84,255,131,0.55);
     }
 
-    html[data-ui-theme="terminal"] .project-card__label {
-      color: #020402;
-      background: #54ff83;
+    html[data-ui-theme="terminal"] .project-folder {
+      background:
+        radial-gradient(circle at 16% 8%, rgba(233,84,32,0.16), transparent 12rem),
+        linear-gradient(180deg, rgba(48,10,36,0.92), rgba(2,13,5,0.92));
+      border-color: rgba(255,177,66,0.62);
     }
 
-    html[data-ui-theme="terminal"] .project-card__icon {
-      border: 1px solid rgba(84,255,131,0.72);
-      background: #020402;
-      box-shadow: inset 0 0 12px rgba(84,255,131,0.16);
+    html[data-ui-theme="terminal"] .project-folder__shell {
+      color: #f7f7f7;
+      filter: drop-shadow(0 0 18px rgba(233,84,32,0.24));
+    }
+
+    html[data-ui-theme="terminal"] .project-folder__shape,
+    html[data-ui-theme="terminal"] .project-folder__icon {
+      border: 1px solid rgba(255,177,66,0.88);
+      background:
+        linear-gradient(135deg, rgba(255,177,66,0.22), transparent 42%),
+        linear-gradient(180deg, #e95420 0%, #77216f 100%);
+      box-shadow: inset 0 0 18px rgba(255,255,255,0.08), 0 0 22px rgba(233,84,32,0.22);
+    }
+
+    html[data-ui-theme="terminal"] .project-folder__shape::before,
+    html[data-ui-theme="terminal"] .project-folder__icon::before {
+      border: 1px solid rgba(255,177,66,0.88);
+      background: linear-gradient(180deg, #ffb142, #e95420);
+      color: #1d0616;
+      text-shadow: none;
+    }
+
+    html[data-ui-theme="terminal"] .project-folder__shape::after {
+      border-color: rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.22);
+    }
+
+    html[data-ui-theme="terminal"] .project-folder__content h3,
+    html[data-ui-theme="terminal"] .project-folder__content p {
+      color: #ffffff;
+      text-shadow: 0 0 9px rgba(0,0,0,0.42);
     }
 
     html[data-ui-theme="terminal"] .thumb.is-active {
@@ -1511,7 +1631,7 @@
       }
 
       .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .ecosystem-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ecosystem-grid { grid-template-columns: 1fr; }
       .desktop-icons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
@@ -1540,7 +1660,12 @@
       .form-grid {
         grid-template-columns: 1fr;
       }
-      .project-card { min-height: auto; }
+      .project-folder { min-height: auto; }
+      .project-folder__shape {
+        grid-template-columns: 1fr;
+        min-height: 260px;
+      }
+      .project-folder__content p { width: 100%; }
       .window__body { padding: 0.85rem; }
       .titlebar__text { font-size: 0.85rem; }
       h1 { font-size: clamp(2.25rem, 15vw, 3.6rem); }
@@ -1644,10 +1769,10 @@
       <div class="start-menu__links">
         <div class="terminal-menu__prompt" aria-hidden="true"><span class="prompt-user">orion@odotnyc</span>:<span class="prompt-path">~/navigation</span>$ ls</div>
         <a class="navlink" href="#about" data-section="about" data-command="cd ./about"><span class="navlink__title">About OdotNYC</span></a>
-        <a class="navlink" href="#focus" data-section="focus" data-command="cat ./what-i-build.md"><span class="navlink__title">What I Build</span></a>
-        <a class="navlink" href="#ecosystem" data-section="ecosystem" data-command="ls ./ecosystem"><span class="navlink__title">Ecosystem</span></a>
         <a class="navlink" href="#lookbook" data-section="lookbook" data-command="open ./lookbook"><span class="navlink__title">Lookbook</span></a>
         <a class="navlink" href="#blog" data-section="blog" data-command="nano ./tech-blog"><span class="navlink__title">Tech Blog</span></a>
+        <a class="navlink" href="#focus" data-section="focus" data-command="cat ./what-i-build.md"><span class="navlink__title">What I Build</span></a>
+        <a class="navlink" href="#ecosystem" data-section="ecosystem" data-command="ls ./ecosystem"><span class="navlink__title">Ecosystem</span></a>
         <a class="navlink" href="#contact" data-section="contact" data-command="mail ./contact"><span class="navlink__title">Contact</span></a>
       </div>
     </div>
@@ -1754,6 +1879,23 @@
       </div>
     </section>
 
+    <section class="window win-border" id="blog" aria-labelledby="blog-title">
+      <div class="titlebar">
+        <div class="titlebar__left"><span class="titlebar__icon" aria-hidden="true"></span><span class="titlebar__text">Tech_Blog.url</span></div>
+        <div class="window-controls" aria-hidden="true"><span class="window-control">_</span><span class="window-control">□</span><span class="window-control">×</span></div>
+      </div>
+      <div class="window__body">
+        <div class="blog-center">
+          <div class="blog-card win-inset">
+            <span class="eyebrow">Tech Journal</span>
+            <h2 id="blog-title" style="margin-top:.8rem;">Inside the OdotNYC Tech Blog</h2>
+            <p>Notes from the build process, experiments in web and hardware, and stories from the intersection of code, culture, and creative technology.</p>
+            <a class="button-95" href="https://medium.com/@odotnyc" target="_blank" rel="noopener noreferrer">Visit Medium</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="window win-border" id="focus" aria-labelledby="focus-title">
       <div class="titlebar">
         <div class="titlebar__left"><span class="titlebar__icon" aria-hidden="true"></span><span class="titlebar__text">What_I_Build</span></div>
@@ -1793,81 +1935,114 @@
         <h2 id="ecosystem-title" style="margin-top:.8rem;">Open a folder.</h2>
         <p class="lead">Each project is part of the larger OdotNYC universe: build, teach, design, experiment, and create value.</p>
         <div class="ecosystem-grid">
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Merch + Collectibles</span><span class="project-card__icon" aria-hidden="true">🛍️</span></div>
-            <h3>Shop OdotNYC Merch</h3>
-            <p>Sticker packs, tote bags, and tech-driven merch drops built around art, culture, and interactive collector experiences.</p>
+          <article class="project-folder win-inset">
+            <a class="project-folder__shell" href="https://odotofrva.github.io/odotnycshop/" target="_blank" rel="noopener noreferrer" aria-label="Open Shop OdotNYC Merch project folder">
+              <div class="project-folder__shape" data-label="Merch + Collectibles">
+                <span class="project-folder__icon" aria-hidden="true">🛍️</span>
+                <div class="project-folder__content">
+                  <h3>Shop OdotNYC Merch</h3>
+                  <p>Sticker packs, tote bags, and tech-driven merch drops built around art, culture, and interactive collector experiences.</p>
+                </div>
+              </div>
+            </a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/odotnycshop/" target="_blank" rel="noopener noreferrer">Visit Store</a><a class="button-95" href="#contact">Ask About Drop</a></div>
           </article>
 
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Embedded / IoT</span><span class="project-card__icon" aria-hidden="true">🤖</span></div>
-            <h3>RoboTechi Co.</h3>
-            <p>The technology division focused on electronics, modern embedded systems, hardware concepts, creative coding, and maker education.</p>
+          <article class="project-folder win-inset">
+            <a class="project-folder__shell" href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer" aria-label="Open RoboTechi Co. project folder">
+              <div class="project-folder__shape" data-label="Embedded / IoT">
+                <span class="project-folder__icon" aria-hidden="true">🤖</span>
+                <div class="project-folder__content">
+                  <h3>RoboTechi Co.</h3>
+                  <p>The technology division focused on electronics, modern embedded systems, hardware concepts, creative coding, and maker education.</p>
+                </div>
+              </div>
+            </a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer">Enter RoboTechi</a><a class="button-95" href="#contact">Build With Me</a></div>
           </article>
 
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Reentry + Literacy</span><span class="project-card__icon" aria-hidden="true">✊🏾</span></div>
-            <h3>MAN: Mental Adjusted Now</h3>
-            <p>A nonprofit vision supporting African American men after incarceration through job readiness, basic digital skills, and stability pathways.</p>
+          <article class="project-folder win-inset">
+            <a class="project-folder__shell" href="https://odotofrva.github.io/mansolutions/" target="_blank" rel="noopener noreferrer" aria-label="Open MAN: Mental Adjusted Now project folder">
+              <div class="project-folder__shape" data-label="Reentry + Literacy">
+                <span class="project-folder__icon" aria-hidden="true">✊🏾</span>
+                <div class="project-folder__content">
+                  <h3>MAN: Mental Adjusted Now</h3>
+                  <p>A nonprofit vision supporting African American men after incarceration through job readiness, basic digital skills, and stability pathways.</p>
+                </div>
+              </div>
+            </a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/mansolutions/" target="_blank" rel="noopener noreferrer">Visit MAN</a><a class="button-95" href="#contact">Support Mission</a></div>
           </article>
 
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Coffee + Community</span><span class="project-card__icon" aria-hidden="true">☕</span></div>
-            <h3>Sips Of Soul</h3>
-            <p>A warm coffee experience built around connection, inspiration, culture, and uplifting energy.</p>
+          <article class="project-folder win-inset">
+            <a class="project-folder__shell" href="https://odotofrva.github.io/sipsofsoul/" target="_blank" rel="noopener noreferrer" aria-label="Open Sips Of Soul project folder">
+              <div class="project-folder__shape" data-label="Coffee + Community">
+                <span class="project-folder__icon" aria-hidden="true">☕</span>
+                <div class="project-folder__content">
+                  <h3>Sips Of Soul</h3>
+                  <p>A warm coffee experience built around connection, inspiration, culture, and uplifting energy.</p>
+                </div>
+              </div>
+            </a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/sipsofsoul/" target="_blank" rel="noopener noreferrer">Visit Sips</a><a class="button-95" href="#contact">Connect</a></div>
           </article>
 
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Beauty</span><span class="project-card__icon" aria-hidden="true">💅🏾</span></div>
-            <h3>Jaii Nails</h3>
-            <p>A colorful beauty brand built around nail art, confidence, family support, and young entrepreneurship.</p>
+          <article class="project-folder win-inset">
+            <a class="project-folder__shell" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer" aria-label="Open Jaii Nails project folder">
+              <div class="project-folder__shape" data-label="Beauty">
+                <span class="project-folder__icon" aria-hidden="true">💅🏾</span>
+                <div class="project-folder__content">
+                  <h3>Jaii Nails</h3>
+                  <p>A colorful beauty brand built around nail art, confidence, family support, and young entrepreneurship.</p>
+                </div>
+              </div>
+            </a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer">Visit Jaii Nails</a><a class="button-95" href="#contact">Support</a></div>
           </article>
 
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Retro Game</span><span class="project-card__icon" aria-hidden="true">🎮</span></div>
-            <h3>Hacim Adventure</h3>
-            <p>A retro-inspired game world with handheld energy, playful exploration, and story-driven creative direction.</p>
+          <article class="project-folder win-inset">
+            <a class="project-folder__shell" href="https://odotofrva.github.io/HacimAdventure/" target="_blank" rel="noopener noreferrer" aria-label="Open Hacim Adventure project folder">
+              <div class="project-folder__shape" data-label="Retro Game">
+                <span class="project-folder__icon" aria-hidden="true">🎮</span>
+                <div class="project-folder__content">
+                  <h3>Hacim Adventure</h3>
+                  <p>A retro-inspired game world with handheld energy, playful exploration, and story-driven creative direction.</p>
+                </div>
+              </div>
+            </a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/HacimAdventure/" target="_blank" rel="noopener noreferrer">Play Game</a><a class="button-95" href="#contact">Game Collab</a></div>
           </article>
 
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Art + Maps</span><span class="project-card__icon" aria-hidden="true">🗺️</span></div>
-            <h3>OdotNYC Art Locator</h3>
-            <p>An interactive map experience that helps visitors discover OdotNYC art installation locations across NYC and zoom into each spot.</p>
+          <article class="project-folder win-inset">
+            <a class="project-folder__shell" href="https://odotofrva.github.io/OdotNYCArtMap/" target="_blank" rel="noopener noreferrer" aria-label="Open OdotNYC Art Locator project folder">
+              <div class="project-folder__shape" data-label="Art + Maps">
+                <span class="project-folder__icon" aria-hidden="true">🗺️</span>
+                <div class="project-folder__content">
+                  <h3>OdotNYC Art Locator</h3>
+                  <p>An interactive map experience that helps visitors discover OdotNYC art installation locations across NYC and zoom into each spot.</p>
+                </div>
+              </div>
+            </a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/OdotNYCArtMap/" target="_blank" rel="noopener noreferrer">Open Art Locator</a><a class="button-95" href="#contact">Submit Location</a></div>
           </article>
 
-          <article class="project-card win-inset">
-            <div class="project-card__top"><span class="project-card__label">Streetwear</span><span class="project-card__icon" aria-hidden="true">🧥</span></div>
-            <h3>MENOCLONE</h3>
-            <p>A curated streetwear concept built around vintage discovery, rare energy, expressive style, and collected pieces.</p>
+          <article class="project-folder win-inset">
+            <a class="project-folder__shell" href="https://odotofrva.github.io/mnc-dt/" target="_blank" rel="noopener noreferrer" aria-label="Open MENOCLONE project folder">
+              <div class="project-folder__shape" data-label="Streetwear">
+                <span class="project-folder__icon" aria-hidden="true">🧥</span>
+                <div class="project-folder__content">
+                  <h3>MENOCLONE</h3>
+                  <p>A curated streetwear concept built around vintage discovery, rare energy, expressive style, and collected pieces.</p>
+                </div>
+              </div>
+            </a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/mnc-dt/" target="_blank" rel="noopener noreferrer">Visit MENOCLONE</a><a class="button-95" href="#contact">Collab</a></div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="window win-border" id="blog" aria-labelledby="blog-title">
-      <div class="titlebar">
-        <div class="titlebar__left"><span class="titlebar__icon" aria-hidden="true"></span><span class="titlebar__text">Tech_Blog.url</span></div>
-        <div class="window-controls" aria-hidden="true"><span class="window-control">_</span><span class="window-control">□</span><span class="window-control">×</span></div>
-      </div>
-      <div class="window__body">
-        <div class="blog-center">
-          <div class="blog-card win-inset">
-            <span class="eyebrow">Tech Journal</span>
-            <h2 id="blog-title" style="margin-top:.8rem;">Inside the OdotNYC Tech Blog</h2>
-            <p>Notes from the build process, experiments in web and hardware, and stories from the intersection of code, culture, and creative technology.</p>
-            <a class="button-95" href="https://medium.com/@odotnyc" target="_blank" rel="noopener noreferrer">Visit Medium</a>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <section class="window win-border" id="contact" aria-labelledby="contact-title">
       <div class="titlebar">
