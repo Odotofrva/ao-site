@@ -617,6 +617,35 @@
       background: #ffd85d;
     }
 
+
+
+    .project-folder__icon--logo {
+      padding: 0.58rem;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.74));
+      overflow: hidden;
+    }
+
+    .project-folder__icon--logo img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.16));
+    }
+
+    .project-folder__icon--logo .brand-logo-img--head {
+      width: 116%;
+      height: 116%;
+      object-fit: contain;
+      filter: drop-shadow(3px 4px 0 rgba(0,0,0,0.18));
+    }
+
+    html[data-ui-theme="terminal"] .project-folder__icon--logo img {
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.22));
+    }
+
     .project-folder__content {
       position: relative;
       z-index: 2;
@@ -1933,28 +1962,15 @@
       <div class="window__body">
         <span class="eyebrow">Projects</span>
         <h2 id="ecosystem-title" style="margin-top:.8rem;">Open a folder.</h2>
-        <p class="lead">Each project is part of the larger OdotNYC universe: build, teach, design, experiment, and create value.</p>
+        <p class="lead">The desktop now highlights the core project folders: RoboTechi, Jaii Nails, Art Locator, and the new Soap Money brand system.</p>
         <div class="ecosystem-grid">
-          <article class="project-folder win-inset">
-            <a class="project-folder__shell" href="https://odotofrva.github.io/odotnycshop/" target="_blank" rel="noopener noreferrer" aria-label="Open Shop OdotNYC Merch project folder">
-              <div class="project-folder__shape" data-label="Merch + Collectibles">
-                <span class="project-folder__icon" aria-hidden="true">🛍️</span>
-                <div class="project-folder__content">
-                  <h3>Shop OdotNYC Merch</h3>
-                  <p>Sticker packs, tote bags, and tech-driven merch drops built around art, culture, and interactive collector experiences.</p>
-                </div>
-              </div>
-            </a>
-            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/odotnycshop/" target="_blank" rel="noopener noreferrer">Visit Store</a><a class="button-95" href="#contact">Ask About Drop</a></div>
-          </article>
-
           <article class="project-folder win-inset">
             <a class="project-folder__shell" href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer" aria-label="Open RoboTechi Co. project folder">
               <div class="project-folder__shape" data-label="Embedded / IoT">
-                <span class="project-folder__icon" aria-hidden="true">🤖</span>
+                <span class="project-folder__icon project-folder__icon--logo" aria-hidden="true"><img src="assets/logo-robotechi.svg" alt="" /></span>
                 <div class="project-folder__content">
                   <h3>RoboTechi Co.</h3>
-                  <p>The technology division focused on electronics, modern embedded systems, hardware concepts, creative coding, and maker education.</p>
+                  <p>The technology division focused on electronics, embedded systems, hardware concepts, creative coding, and maker education.</p>
                 </div>
               </div>
             </a>
@@ -1962,35 +1978,9 @@
           </article>
 
           <article class="project-folder win-inset">
-            <a class="project-folder__shell" href="https://odotofrva.github.io/mansolutions/" target="_blank" rel="noopener noreferrer" aria-label="Open MAN: Mental Adjusted Now project folder">
-              <div class="project-folder__shape" data-label="Reentry + Literacy">
-                <span class="project-folder__icon" aria-hidden="true">✊🏾</span>
-                <div class="project-folder__content">
-                  <h3>MAN: Mental Adjusted Now</h3>
-                  <p>A nonprofit vision supporting African American men after incarceration through job readiness, basic digital skills, and stability pathways.</p>
-                </div>
-              </div>
-            </a>
-            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/mansolutions/" target="_blank" rel="noopener noreferrer">Visit MAN</a><a class="button-95" href="#contact">Support Mission</a></div>
-          </article>
-
-          <article class="project-folder win-inset">
-            <a class="project-folder__shell" href="https://odotofrva.github.io/sipsofsoul/" target="_blank" rel="noopener noreferrer" aria-label="Open Sips Of Soul project folder">
-              <div class="project-folder__shape" data-label="Coffee + Community">
-                <span class="project-folder__icon" aria-hidden="true">☕</span>
-                <div class="project-folder__content">
-                  <h3>Sips Of Soul</h3>
-                  <p>A warm coffee experience built around connection, inspiration, culture, and uplifting energy.</p>
-                </div>
-              </div>
-            </a>
-            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/sipsofsoul/" target="_blank" rel="noopener noreferrer">Visit Sips</a><a class="button-95" href="#contact">Connect</a></div>
-          </article>
-
-          <article class="project-folder win-inset">
             <a class="project-folder__shell" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer" aria-label="Open Jaii Nails project folder">
               <div class="project-folder__shape" data-label="Beauty">
-                <span class="project-folder__icon" aria-hidden="true">💅🏾</span>
+                <span class="project-folder__icon project-folder__icon--logo" aria-hidden="true"><img src="assets/logo-jaii-nails.svg" alt="" /></span>
                 <div class="project-folder__content">
                   <h3>Jaii Nails</h3>
                   <p>A colorful beauty brand built around nail art, confidence, family support, and young entrepreneurship.</p>
@@ -2001,22 +1991,9 @@
           </article>
 
           <article class="project-folder win-inset">
-            <a class="project-folder__shell" href="https://odotofrva.github.io/HacimAdventure/" target="_blank" rel="noopener noreferrer" aria-label="Open Hacim Adventure project folder">
-              <div class="project-folder__shape" data-label="Retro Game">
-                <span class="project-folder__icon" aria-hidden="true">🎮</span>
-                <div class="project-folder__content">
-                  <h3>Hacim Adventure</h3>
-                  <p>A retro-inspired game world with handheld energy, playful exploration, and story-driven creative direction.</p>
-                </div>
-              </div>
-            </a>
-            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/HacimAdventure/" target="_blank" rel="noopener noreferrer">Play Game</a><a class="button-95" href="#contact">Game Collab</a></div>
-          </article>
-
-          <article class="project-folder win-inset">
             <a class="project-folder__shell" href="https://odotofrva.github.io/OdotNYCArtMap/" target="_blank" rel="noopener noreferrer" aria-label="Open OdotNYC Art Locator project folder">
               <div class="project-folder__shape" data-label="Art + Maps">
-                <span class="project-folder__icon" aria-hidden="true">🗺️</span>
+                <span class="project-folder__icon project-folder__icon--logo" aria-hidden="true"><img class="brand-logo-img--head" src="assets/odotnyc-art-locator-logo.png" alt="" /></span>
                 <div class="project-folder__content">
                   <h3>OdotNYC Art Locator</h3>
                   <p>An interactive map experience that helps visitors discover OdotNYC art installation locations across NYC and zoom into each spot.</p>
@@ -2027,16 +2004,16 @@
           </article>
 
           <article class="project-folder win-inset">
-            <a class="project-folder__shell" href="https://odotofrva.github.io/mnc-dt/" target="_blank" rel="noopener noreferrer" aria-label="Open MENOCLONE project folder">
-              <div class="project-folder__shape" data-label="Streetwear">
-                <span class="project-folder__icon" aria-hidden="true">🧥</span>
+            <a class="project-folder__shell" href="https://odotofrva.github.io/SoapMoney/" target="_blank" rel="noopener noreferrer" aria-label="Open Soap Money project folder">
+              <div class="project-folder__shape" data-label="Clean Culture">
+                <span class="project-folder__icon project-folder__icon--logo" aria-hidden="true"><img src="assets/logo-soap-money.svg" alt="" /></span>
                 <div class="project-folder__content">
-                  <h3>MENOCLONE</h3>
-                  <p>A curated streetwear concept built around vintage discovery, rare energy, expressive style, and collected pieces.</p>
+                  <h3>Soap Money</h3>
+                  <p>A clean-culture lifestyle brand mixing laundromat energy, minimal black-and-white design, product drops, pop-ups, and premium wash-inspired goods.</p>
                 </div>
               </div>
             </a>
-            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/mnc-dt/" target="_blank" rel="noopener noreferrer">Visit MENOCLONE</a><a class="button-95" href="#contact">Collab</a></div>
+            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/SoapMoney/" target="_blank" rel="noopener noreferrer">Open Soap Money</a><a class="button-95" href="#contact">Launch Collab</a></div>
           </article>
         </div>
       </div>

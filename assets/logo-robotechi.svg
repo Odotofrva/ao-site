@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">RoboTechi logo</title><desc id="desc">RoboTechi RT tech logo.</desc>
+<rect width="512" height="512" rx="96" fill="#101010"/>
+<path d="M108 148h296v216H108z" rx="38" fill="#f7d84a"/>
+<path d="M147 190h102c58 0 94 31 94 78 0 32-15 56-42 69l54 78h-71l-43-65h-31v65h-63V190Zm96 108c23 0 36-11 36-29 0-19-13-29-36-29h-33v58h33Z" fill="#111"/>
+<path d="M92 237h-45v38h45v-38Zm373 0h-45v38h45v-38ZM238 83h38v53h-38V83Zm-85 331h206v26H153z" fill="#f7d84a"/>
+<circle cx="177" cy="120" r="18" fill="#fff7a8"/><circle cx="335" cy="120" r="18" fill="#fff7a8"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">SOAP MONEY logo</title><desc id="desc">Black and white SOAP MONEY SM brand mark.</desc>
+<rect width="512" height="512" rx="92" fill="#050505"/>
+<circle cx="148" cy="104" r="22" fill="#fff" opacity=".92"/>
+<circle cx="198" cy="75" r="13" fill="#fff" opacity=".7"/>
+<circle cx="385" cy="121" r="18" fill="#fff" opacity=".78"/>
+<path d="M108 333c36 31 85 48 148 48 91 0 151-38 151-98 0-54-42-78-126-91-43-7-66-12-66-29 0-15 18-24 49-24 36 0 70 12 101 35l36-63c-39-29-83-43-136-43-84 0-141 39-141 98 0 56 43 81 131 94 41 6 61 12 61 29 0 17-22 26-58 26-44 0-84-15-119-43l-31 61Z" fill="#fff"/>
+<path d="M115 413h282v34H115z" fill="#fff"/><text x="256" y="445" text-anchor="middle" font-family="Arial Black, Impact, sans-serif" font-size="30" letter-spacing="4" fill="#050505">SOAP MONEY</text>
+</svg>

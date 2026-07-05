@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">Jaii Nails logo</title><desc id="desc">Jaii Nails beauty logo with nail polish mark.</desc>
+<defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ff66c4"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+<rect width="512" height="512" rx="92" fill="#fff"/>
+<path d="M174 136h164c18 0 32 14 32 32v32H142v-32c0-18 14-32 32-32Z" fill="url(#g)"/>
+<path d="M156 196h200v197c0 28-23 51-51 51h-98c-28 0-51-23-51-51V196Z" fill="#111"/>
+<path d="M197 231h118v153c0 18-14 32-32 32h-54c-18 0-32-14-32-32V231Z" fill="url(#g)"/>
+<text x="256" y="309" text-anchor="middle" font-family="Georgia, serif" font-size="66" font-weight="700" fill="#fff">Jaii</text>
+<text x="256" y="358" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="32" letter-spacing="4" fill="#fff">NAILS</text>
+<circle cx="122" cy="112" r="18" fill="#ff66c4" opacity=".95"/><circle cx="392" cy="105" r="14" fill="#8b5cf6" opacity=".9"/>
+</svg>
