@@ -1824,6 +1824,10 @@ html[data-ui-theme="terminal"] .window {scroll-margin-top:72px}
 .jaii-gallery-preview span{position:absolute;bottom:0;left:0;right:0;padding:1.1rem .85rem .65rem;color:white;background:linear-gradient(transparent,rgba(20,7,23,.92));font-weight:700;font-size:.9rem}
 @media(max-width:640px){.jaii-gallery-preview img{height:310px}}
 @media(prefers-reduced-motion:reduce){.jaii-gallery-preview img{transition:none}}
+/* Nail collection replaces the original Jaii Nails placeholder, not a separate gallery */
+.project-folder__icon--logo.jaii-inline-photo{padding:0!important;overflow:hidden;border-radius:12px;background:#241827!important;aspect-ratio:4/5;width:min(100%,140px);height:auto;box-shadow:0 8px 20px rgba(0,0,0,.24)}
+.project-folder__icon--logo.jaii-inline-photo::before{display:none!important}
+.project-folder__icon--logo.jaii-inline-photo img{width:100%;height:100%;object-fit:cover;object-position:center;filter:none!important}
 </style>
 </head>
 <body>
@@ -2058,14 +2062,13 @@ html[data-ui-theme="terminal"] .window {scroll-margin-top:72px}
           <article class="project-folder win-inset">
             <a class="project-folder__shell" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer" aria-label="Open Jaii Nails project folder">
               <div class="project-folder__shape" data-label="Beauty">
-                <span class="project-folder__icon project-folder__icon--logo" aria-hidden="true"><img src="assets/logo-jaii-nails.svg" alt="" /></span>
+                <span class="project-folder__icon project-folder__icon--logo jaii-inline-photo" aria-hidden="true"><img src="assets/jaii-nails-collection.png" alt="" /></span>
                 <div class="project-folder__content">
                   <h3>Jaii Nails</h3>
                   <p>A colorful beauty brand built around nail art, confidence, family support, and young entrepreneurship.</p>
                 </div>
               </div>
             </a>
-            <a class="jaii-gallery-preview" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer" aria-label="Explore Jaii Nails nail art collection"><img src="assets/jaii-nails-collection.png" alt="Jaii Nails collection of colorful nail art designs in pink, purple, burgundy, white, and gold" loading="lazy" /><span>Explore the nail collection ↗</span></a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer">Visit Jaii Nails</a><a class="button-95" href="#contact">Support</a></div>
           </article>
 
