@@ -1816,6 +1816,15 @@ html[data-ui-theme="terminal"] .window {scroll-margin-top:72px}
 @media(prefers-reduced-motion:reduce) {.ubuntu-welcome img,.brand-feature img {animation:none!important}}
 
   </style>
+<style>
+/* Jaii Nails gallery preview — responsive Ubuntu desktop card */
+.jaii-gallery-preview{display:block;position:relative;overflow:hidden;border-radius:14px;background:#25152c;border:1px solid rgba(255,255,255,.18);text-decoration:none;margin-top:.35rem}
+.jaii-gallery-preview img{width:100%;height:clamp(220px,34vw,370px);object-fit:cover;object-position:center 37%;transition:transform .25s ease}
+.jaii-gallery-preview:hover img,.jaii-gallery-preview:focus-visible img{transform:scale(1.035)}
+.jaii-gallery-preview span{position:absolute;bottom:0;left:0;right:0;padding:1.1rem .85rem .65rem;color:white;background:linear-gradient(transparent,rgba(20,7,23,.92));font-weight:700;font-size:.9rem}
+@media(max-width:640px){.jaii-gallery-preview img{height:310px}}
+@media(prefers-reduced-motion:reduce){.jaii-gallery-preview img{transition:none}}
+</style>
 </head>
 <body>
   <div class="boot-screen" id="bootScreen" aria-label="OdotNYC loading screen">
@@ -1846,7 +1855,7 @@ html[data-ui-theme="terminal"] .window {scroll-margin-top:72px}
         <span class="start-logo" aria-hidden="true"></span>
         <span class="start-button__label" id="startButtonLabel">Start</span>
       </button>
-      <div class="taskbar-title">OBIOS-OS | Powered by: RoboTechi. </div>
+      <div class="taskbar-title">OBIOS-OS | OdotNYC </div>
       <div class="theme-pointer" aria-hidden="true">
         <span class="theme-pointer__label"></span>
         <span class="theme-pointer__arrow">➜</span>
@@ -2043,20 +2052,8 @@ html[data-ui-theme="terminal"] .window {scroll-margin-top:72px}
       <div class="window__body">
         <span class="eyebrow">Projects</span>
         <h2 id="ecosystem-title" style="margin-top:.8rem;">Open a folder.</h2>
-        <p class="lead">The desktop now highlights the core project folders: RoboTechi, Jaii Nails, Art Locator, and the MENOCLONE brand system.</p>
+        <p class="lead">Explore Jaii Nails, Art Locator, and the MENOCLONE creative ecosystem.</p>
         <div class="ecosystem-grid">
-          <article class="project-folder win-inset">
-            <a class="project-folder__shell" href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer" aria-label="Open RoboTechi Co. project folder">
-              <div class="project-folder__shape" data-label="Embedded / IoT">
-                <span class="project-folder__icon project-folder__icon--logo" aria-hidden="true"><img src="assets/logo-robotechi.svg" alt="" /></span>
-                <div class="project-folder__content">
-                  <h3>RoboTechi Co.</h3>
-                  <p>The technology division focused on electronics, embedded systems, hardware concepts, creative coding, and maker education.</p>
-                </div>
-              </div>
-            </a>
-            <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer">Enter RoboTechi</a><a class="button-95" href="#contact">Build With Me</a></div>
-          </article>
 
           <article class="project-folder win-inset">
             <a class="project-folder__shell" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer" aria-label="Open Jaii Nails project folder">
@@ -2068,6 +2065,7 @@ html[data-ui-theme="terminal"] .window {scroll-margin-top:72px}
                 </div>
               </div>
             </a>
+            <a class="jaii-gallery-preview" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer" aria-label="Explore Jaii Nails nail art collection"><img src="assets/jaii-nails-collection.png" alt="Jaii Nails collection of colorful nail art designs in pink, purple, burgundy, white, and gold" loading="lazy" /><span>Explore the nail collection ↗</span></a>
             <div class="card-actions"><a class="button-95" href="https://odotofrva.github.io/JaiiN/" target="_blank" rel="noopener noreferrer">Visit Jaii Nails</a><a class="button-95" href="#contact">Support</a></div>
           </article>
 
@@ -2126,7 +2124,6 @@ html[data-ui-theme="terminal"] .window {scroll-margin-top:72px}
             <ul class="contact-list">
               <li><a href="https://instagram.com/odotnyctv" target="_blank" rel="noopener noreferrer">Instagram: @odotnyctv</a></li>
               <li><a href="https://ig.me/m/odotnyctv" target="_blank" rel="noopener noreferrer">Direct Message OdotNYC</a></li>
-              <li><a href="https://odotofrva.github.io/rt-site-odotnyc/" target="_blank" rel="noopener noreferrer">RoboTechi Website</a></li>
             </ul>
           </div>
           <form class="win-inset" style="padding: clamp(1rem, 2vw, 1.35rem);" action="https://formsubmit.co/odot.rva@proton.me" method="POST" accept-charset="UTF-8" autocomplete="on">
