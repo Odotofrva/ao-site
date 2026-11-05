@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#008080" />
+  <meta name="theme-color" content="#300a24" />
   <meta name="description" content="OdotNYC is a creative ecosystem connecting technology, street culture, fashion, games, AR, community projects, and maker education." />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action https://formsubmit.co; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; font-src 'self' data:; connect-src 'self'; upgrade-insecure-requests; block-all-mixed-content" />
   <link rel="icon" type="image/png" sizes="512x512" href="favicon.png" />
   <title>OdotNYC | OBIOS OS </title>
   <script>
     try {
-      document.documentElement.dataset.uiTheme = localStorage.getItem('odotnyc-ui-theme') || 'win95';
+      document.documentElement.dataset.uiTheme = localStorage.getItem('odotnyc-ui-theme') || 'terminal';
     } catch (error) {
-      document.documentElement.dataset.uiTheme = 'win95';
+      document.documentElement.dataset.uiTheme = 'terminal';
     }
   </script>
   <style>
@@ -1755,6 +1755,66 @@
       }
       .hero-screen img { animation: none; }
     }
+  
+/* MENOCLONE Ubuntu-inspired desktop — mobile first */
+html[data-ui-theme="terminal"] body {font-family: Ubuntu, "Noto Sans", "Segoe UI", Arial, sans-serif; background: radial-gradient(ellipse at 90% 3%,#6d245d 0,transparent 45%),radial-gradient(ellipse at 0 85%,#c34721 0,transparent 43%),linear-gradient(145deg,#2c001e,#46153b 52%,#1a122b);color:#f7f4f7}
+html[data-ui-theme="terminal"] .taskbar {position:sticky;top:0;z-index:80;background:rgba(30,25,33,.94);backdrop-filter:blur(18px);border-bottom:1px solid #ffffff25}
+html[data-ui-theme="terminal"] .taskbar__inner {padding:.55rem .75rem;gap:.5rem}
+html[data-ui-theme="terminal"] .taskbar-title {background:transparent;border:0;box-shadow:none;font-size:.8rem;flex:1;white-space:nowrap}
+html[data-ui-theme="terminal"] .taskbar-title::before {content:none}
+html[data-ui-theme="terminal"] .start-button {border:1px solid #ffffff30;background:#e95420;border-radius:12px;padding:.45rem .7rem;text-transform:none}
+html[data-ui-theme="terminal"] .start-logo {background:#fff;color:#e95420;box-shadow:none}
+html[data-ui-theme="terminal"] .start-logo::before {content:'◉'}
+html[data-ui-theme="terminal"] .clock {background:transparent;border:0;box-shadow:none;font-size:.8rem;padding:.35rem}
+.theme-toggle,.theme-pointer {display:none!important}
+html[data-ui-theme="terminal"] .desktop {width:min(100%,1240px);padding:1rem 1rem 7.5rem}
+.ubuntu-welcome {display:flex;flex-direction:column;align-items:center;gap:.5rem;text-align:center;padding:1.5rem 1rem 1rem;color:#ffffffc9;font-size:.7rem;letter-spacing:.14em}
+.ubuntu-welcome img {width:min(85%,390px);height:100px;object-fit:contain;filter:drop-shadow(0 8px 18px #0009)!important}
+.ubuntu-welcome__indicator {color:#ffb88b;font-size:.7rem;font-weight:800}
+html[data-ui-theme="terminal"] .win-border {border:1px solid #ffffff24;border-radius:15px;background:#211e27ee;box-shadow:0 14px 36px #0005;overflow:hidden}
+html[data-ui-theme="terminal"] .win-inset {border:1px solid #ffffff20;border-radius:12px;box-shadow:none;background:#302a38}
+html[data-ui-theme="terminal"] .titlebar {background:#343039;border:0;border-bottom:1px solid #ffffff12;min-height:42px;color:#fff;text-transform:none;letter-spacing:0}
+html[data-ui-theme="terminal"] .titlebar__text::before {content:none}
+html[data-ui-theme="terminal"] .titlebar__icon {width:13px;height:13px;border:0;border-radius:50%;background:#e95420;box-shadow:none}
+html[data-ui-theme="terminal"] .titlebar__icon::after {content:none}
+html[data-ui-theme="terminal"] .window-control {border:0;background:#55505a;border-radius:50%;width:19px;height:19px;color:#fff;font-size:11px}
+html[data-ui-theme="terminal"] .button-95 {background:#e95420;border:1px solid #ff925f;border-radius:10px;color:white;box-shadow:none;text-shadow:none;white-space:normal;text-align:center;min-height:44px}
+html[data-ui-theme="terminal"] .eyebrow {background:#e95420;color:white;border-radius:999px}
+html[data-ui-theme="terminal"] .eyebrow::before {background:#fff}
+html[data-ui-theme="terminal"] .mini-card,html[data-ui-theme="terminal"] .status-item,html[data-ui-theme="terminal"] .tag {background:#342e3c;border:1px solid #ffffff18;color:#fff;border-radius:12px}
+html[data-ui-theme="terminal"] .project-folder {background:#29242f;border:1px solid #ffffff20;border-radius:14px}
+html[data-ui-theme="terminal"] .project-folder__shape {background:linear-gradient(145deg,#6a335d,#3d2b48);border:1px solid #ffffff35;border-radius:12px;box-shadow:none}
+html[data-ui-theme="terminal"] .project-folder__shape::before {background:#e95420;border:0;border-radius:8px 8px 0 0;color:#fff}
+html[data-ui-theme="terminal"] .project-folder__icon {border-radius:12px;background:#fff4e9;border:0}
+html[data-ui-theme="terminal"] .project-folder__icon::before {display:none}
+html[data-ui-theme="terminal"] .project-folder__content p {color:#f6edf4}
+html[data-ui-theme="terminal"] .desktop-icon {border-radius:12px;flex-direction:column;justify-content:center;text-align:center;gap:.35rem;font-size:.78rem;min-height:82px;background:#ffffff12;text-shadow:none}
+html[data-ui-theme="terminal"] .desktop-icon__tile {width:36px;height:36px;border-radius:10px;background:linear-gradient(145deg,#ff9c59,#e95420);border:0}
+html[data-ui-theme="terminal"] .desktop-icon__tile::after {content:'▣';color:#fff;font-size:18px}
+html[data-ui-theme="terminal"] .desktop-icons {grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
+html[data-ui-theme="terminal"] .start-menu {position:fixed;top:60px;left:.75rem;width:min(calc(100vw - 1.5rem),420px);border-radius:14px;background:#28212e}
+html[data-ui-theme="terminal"] .start-menu__layout {background:#28212e}
+html[data-ui-theme="terminal"] .navlink {border-radius:9px}
+html[data-ui-theme="terminal"] .navlink:hover {background:#e95420;color:#fff}
+html[data-ui-theme="terminal"] .navlink::before {background:#e95420;border-radius:5px}
+.ubuntu-dock {position:fixed;bottom:0;left:0;right:0;z-index:70;display:flex;justify-content:space-around;align-items:center;gap:.4rem;padding:.55rem max(.6rem,env(safe-area-inset-right)) calc(.55rem + env(safe-area-inset-bottom));background:#241b2de8;backdrop-filter:blur(18px);border-top:1px solid #ffffff30}
+.ubuntu-dock a {display:grid;place-items:center;width:48px;height:48px;border-radius:12px;background:linear-gradient(145deg,#e95420,#913a78);color:white;text-decoration:none;font-size:1.55rem;box-shadow:0 4px 14px #0005}
+.brand-feature {display:grid;gap:1.5rem;align-items:center}
+.brand-feature__art {background:#09090b;border:1px solid #ffffff20;border-radius:14px;min-height:240px;display:grid;place-items:center;padding:1rem}
+.brand-feature__art img {width:100%;max-width:360px;max-height:320px;object-fit:contain;filter:none!important}
+.brand-feature__art--studio {background:radial-gradient(circle,#123b1b,#050a08 65%)}
+.brand-feature__copy h2 {margin-top:1rem;overflow-wrap:anywhere}
+.brand-feature__copy p {color:#e3dbe5;max-width:55ch}
+html[data-ui-theme="terminal"] .hero-grid,html[data-ui-theme="terminal"] .two-col,html[data-ui-theme="terminal"] .lookbook-grid,html[data-ui-theme="terminal"] .contact-grid {grid-template-columns:1fr}
+html[data-ui-theme="terminal"] .grid-4,html[data-ui-theme="terminal"] .ecosystem-grid {grid-template-columns:1fr}
+html[data-ui-theme="terminal"] .hero-screen {min-height:240px}
+html[data-ui-theme="terminal"] .form-grid {grid-template-columns:1fr}
+html[data-ui-theme="terminal"] .window {scroll-margin-top:72px}
+@media(min-width:700px) {.brand-feature {grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)} html[data-ui-theme="terminal"] .ecosystem-grid {grid-template-columns:repeat(2,minmax(0,1fr))} html[data-ui-theme="terminal"] .grid-4 {grid-template-columns:repeat(2,minmax(0,1fr))} html[data-ui-theme="terminal"] .hero-grid {grid-template-columns:1fr 1fr} html[data-ui-theme="terminal"] .two-col {grid-template-columns:1fr .78fr} html[data-ui-theme="terminal"] .lookbook-grid {grid-template-columns:1.15fr .85fr} html[data-ui-theme="terminal"] .contact-grid {grid-template-columns:.8fr 1.2fr} html[data-ui-theme="terminal"] .form-grid {grid-template-columns:1fr 1fr} html[data-ui-theme="terminal"] .desktop-icons {grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(min-width:1000px) {html[data-ui-theme="terminal"] .desktop {padding-left:92px;padding-bottom:3rem} .ubuntu-dock {top:70px;bottom:auto;left:12px;right:auto;width:65px;flex-direction:column;padding:12px 8px;border:1px solid #ffffff30;border-radius:18px} html[data-ui-theme="terminal"] .grid-4 {grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:420px) {html[data-ui-theme="terminal"] .taskbar-title {font-size:.67rem} html[data-ui-theme="terminal"] .clock {font-size:.7rem;padding:.2rem} html[data-ui-theme="terminal"] .desktop-icon span:last-child {font-size:.7rem} .ubuntu-dock a {width:43px;height:43px}}
+@media(prefers-reduced-motion:reduce) {.ubuntu-welcome img,.brand-feature img {animation:none!important}}
+
   </style>
 </head>
 <body>
@@ -1815,22 +1875,30 @@
         <a class="navlink" href="#blog" data-section="blog" data-command="nano ./tech-blog"><span class="navlink__title">Tech Blog</span></a>
         <a class="navlink" href="#focus" data-section="focus" data-command="cat ./what-i-build.md"><span class="navlink__title">What I Build</span></a>
         <a class="navlink" href="#ecosystem" data-section="ecosystem" data-command="ls ./ecosystem"><span class="navlink__title">Ecosystem</span></a>
+        <a class="navlink" href="#motorsports" data-section="motorsports"><span class="navlink__title">MENOCLONE Motorsports</span></a>
+        <a class="navlink" href="#studios" data-section="studios"><span class="navlink__title">MENOCLONE Studios</span></a>
         <a class="navlink" href="#contact" data-section="contact" data-command="mail ./contact"><span class="navlink__title">Contact</span></a>
       </div>
     </div>
   </nav>
 
+  <aside class="ubuntu-dock" aria-label="Ubuntu style quick launch dock"><a href="#home" aria-label="Home" title="Home">⌂</a><a href="#ecosystem" aria-label="Projects" title="Projects">▦</a><a href="#motorsports" aria-label="Motorsports" title="Motorsports">◉</a><a href="#studios" aria-label="Studios" title="Studios">▣</a><a href="#contact" aria-label="Contact" title="Contact">✉</a></aside>
   <main class="desktop">
+    <div class="ubuntu-welcome"><span class="ubuntu-welcome__indicator">● SYSTEM ONLINE</span><img src="assets/menoclone-wordmark.png" alt="MENOCLONE" /><span>ODOTNYC / CREATIVE OPERATING SYSTEM</span></div>
     <div class="desktop-icons" aria-label="Quick links">
       <a class="desktop-icon" href="#about"><span class="desktop-icon__tile" aria-hidden="true"></span><span>About.txt</span></a>
       <a class="desktop-icon" href="#ecosystem"><span class="desktop-icon__tile" aria-hidden="true"></span><span>Projects</span></a>
       <a class="desktop-icon" href="https://odotofrva.github.io/odotnycshop/" target="_blank" rel="noopener noreferrer"><span class="desktop-icon__tile" aria-hidden="true"></span><span>Shop.exe</span></a>
+      <a class="desktop-icon" href="#motorsports"><span class="desktop-icon__tile" aria-hidden="true"></span><span>Motorsports</span></a>
+      <a class="desktop-icon" href="#studios"><span class="desktop-icon__tile" aria-hidden="true"></span><span>Studios</span></a>
       <a class="desktop-icon" href="#contact"><span class="desktop-icon__tile" aria-hidden="true"></span><span>Contact.mail</span></a>
     </div>
 
     <div class="mobile-nav-row" aria-label="Mobile quick navigation">
       <a href="#about">About</a>
       <a href="#ecosystem">Projects</a>
+      <a href="#motorsports">Motorsports</a>
+      <a href="#studios">Studios</a>
       <a href="#contact">Contact</a>
     </div>
 
@@ -2019,7 +2087,7 @@
           <article class="project-folder win-inset">
             <a class="project-folder__shell" href="https://instagram.com/menoclone" target="_blank" rel="noopener noreferrer" aria-label="Open MENOCLONE on Instagram">
               <div class="project-folder__shape" data-label="Fashion + Art + Technology">
-                <span class="project-folder__icon project-folder__icon--logo project-folder__icon--menoclone" aria-hidden="true"><img src="assets/menoclone-logo-black.png" alt="" /></span>
+                <span class="project-folder__icon project-folder__icon--logo project-folder__icon--menoclone" aria-hidden="true"><img src="assets/menoclone-wordmark.png" alt="" /></span>
                 <div class="project-folder__content">
                   <h3>MENOCLONE</h3>
                   <p>A lifestyle brand merging fashion, art, design, and technology through original products, experimental concepts, and creative experiences.</p>
@@ -2033,6 +2101,16 @@
     </section>
 
 
+
+    <section class="window win-border" id="motorsports" aria-labelledby="motorsports-title">
+      <div class="titlebar"><div class="titlebar__left"><span class="titlebar__icon" aria-hidden="true"></span><span class="titlebar__text">motorsports — MENOCLONE</span></div><div class="window-controls" aria-hidden="true"><span class="window-control">●</span><span class="window-control">−</span><span class="window-control">□</span></div></div>
+      <div class="window__body brand-feature"><div class="brand-feature__art"><img src="assets/menoclone-motorsports.png" alt="MENOCLONE Motorsports gold and black UFO badge" loading="lazy"></div><div class="brand-feature__copy"><span class="eyebrow">Garage journal / Automotive culture</span><h2 id="motorsports-title">MENOCLONE MOTORSPORTS</h2><p>Originality Has Origins. Explore our automotive journal, electronics, learning projects, community and the machines that inspire us.</p><a class="button-95" href="https://substack.com/@mncmotorsports" target="_blank" rel="noopener noreferrer">Read the Motorsports Blog ↗</a></div></div>
+    </section>
+
+    <section class="window win-border" id="studios" aria-labelledby="studios-title">
+      <div class="titlebar"><div class="titlebar__left"><span class="titlebar__icon" aria-hidden="true"></span><span class="titlebar__text">studios — MENOCLONE</span></div><div class="window-controls" aria-hidden="true"><span class="window-control">●</span><span class="window-control">−</span><span class="window-control">□</span></div></div>
+      <div class="window__body brand-feature"><div class="brand-feature__art brand-feature__art--studio"><img src="assets/menoclone-studios.png" alt="Neon green MENOCLONE Studios UFO and camera logo" loading="lazy"></div><div class="brand-feature__copy"><span class="eyebrow">Film / Photography / Culture</span><h2 id="studios-title">MENOCLONE STUDIOS</h2><p>Stories and images made for the culture. Discover our visual storytelling, films, photography and creative productions.</p><a class="button-95" href="https://odotofrva.github.io/mncstudios/" target="_blank" rel="noopener noreferrer">Launch Studios ↗</a></div></div>
+    </section>
 
     <section class="window win-border" id="contact" aria-labelledby="contact-title">
       <div class="titlebar">
@@ -2126,7 +2204,7 @@
         if (startMenuEl) startMenuEl.setAttribute('aria-label', nextTheme === 'terminal' ? 'OdotNYC shell navigation menu' : 'OdotNYC start menu');
         if (save) storeTheme(nextTheme);
       };
-      setTheme(getStoredTheme() || root.dataset.uiTheme || 'win95', { save: false });
+      setTheme('terminal', { save: false });
       if (themeToggle) {
         themeToggle.addEventListener('click', () => {
           const nextTheme = root.dataset.uiTheme === 'terminal' ? 'win95' : 'terminal';
